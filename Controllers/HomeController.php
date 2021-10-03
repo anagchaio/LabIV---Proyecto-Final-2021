@@ -5,7 +5,7 @@
     {
         public function Index()
         {
-            require_once(VIEWS_PATH."index.php");
+            require_once("index.php");
         }
 
         public function Logout()
