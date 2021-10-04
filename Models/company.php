@@ -1,4 +1,4 @@
-<?php namespace Model;
+<?php namespace Models;
 
 class Company {
 

@@ -1,23 +1,17 @@
 <?php
 
-namespace Repository;
+namespace DAO;
 
-require_once("../Config/Autoload.php");
+use Models\Company as Company;
 
-use Config\Autoload as Autoload;
-
-Autoload::Start();
-
-use Model\Company as Company;
-
-class CompanyRepository
+class CompanyDAO
 {
     private $listOfCompanies = array();
     private $fileName;
 
     public function __construct()
     {
-        $this->fileName = dirname(__DIR__) . "/Data/Repository.json";
+        $this->fileName = ROOT . "Data/companies.json";
     }
 
     private function retrieveData()
