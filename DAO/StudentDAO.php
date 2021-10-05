@@ -43,7 +43,6 @@ class StudentDAO implements IStudentDAO
             $student->setEmail($values['email']);
             $student->setPhoneNumber($values['phoneNumber']);
             $student->setActive($values['active']);
-            var_dump($student);
             array_push($this->listOfStudents, $student);
         }
     
@@ -61,6 +60,19 @@ class StudentDAO implements IStudentDAO
 
         foreach ($this->listOfStudents as $student) {
             if ($student->getEmail() == $email){
+                return $student;
+            }
+        }
+
+        return null;
+    }
+
+    public function GetByStudentId($studentId)
+    {
+        $this->RetrieveData();
+
+        foreach ($this->listOfStudents as $student) {
+            if ($student->getStudentId() == $studentId){
                 return $student;
             }
         }
