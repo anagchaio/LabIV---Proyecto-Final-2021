@@ -1,4 +1,5 @@
 <?php
+    namespace Models;
 
 class User {
     private $email;
@@ -6,7 +7,7 @@ class User {
 
     function __construct($email)
     {
-        $this->$email;
+        $this->email = $email;
     }
 
     /**
