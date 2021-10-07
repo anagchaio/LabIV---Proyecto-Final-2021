@@ -22,8 +22,8 @@ class StudentController
 
         public function ShowStudent($studentId)
         {
+            Utils::checkSession();
             $student = $this->studentDAO->GetByStudentId($studentId);
-
             require_once(VIEWS_PATH."student-show.php");
         }
 
