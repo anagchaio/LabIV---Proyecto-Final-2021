@@ -1,5 +1,5 @@
 <?php
-    namespace Models;
+namespace Models;
 
 class User {
     private $email;

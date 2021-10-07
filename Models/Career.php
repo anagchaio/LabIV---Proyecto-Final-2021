@@ -1,84 +1,33 @@
 <?php
+namespace Models;
 
 class Career {
-    private $name;
-    private $year;
-    private $city;
+    private $careerId;
     private $description;
-    private $image;
-    private $email;
-    private $phoneNumber;
+    private $active;
 
-
-    function __construct($name, $year, $city, $description,
-    $image, $email, $phoneNumber)
-    {
-        $this->name = $name;
-        $this->year = $year;
-        $this->city = $city;
-        $this->desription = $description;
-        $this->image = $image;
-        $this->email = $email;
-     $this->phoneNumber = $phoneNumber;
+    public function __construct(){
+       
     }
-    
+   
+  
 
     /**
-     * Get the value of name
+     * Get the value of careerId
      */ 
-    public function getName()
+    public function getCareerId()
     {
-        return $this->name;
+        return $this->careerId;
     }
 
     /**
-     * Set the value of name
+     * Set the value of careerId
      *
      * @return  self
      */ 
-    public function setName($name)
+    public function setCareerId($careerId)
     {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of year
-     */ 
-    public function getYear()
-    {
-        return $this->year;
-    }
-
-    /**
-     * Set the value of year
-     *
-     * @return  self
-     */ 
-    public function setYear($year)
-    {
-        $this->year = $year;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of city
-     */ 
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * Set the value of city
-     *
-     * @return  self
-     */ 
-    public function setCity($city)
-    {
-        $this->city = $city;
+        $this->careerId = $careerId;
 
         return $this;
     }
@@ -104,61 +53,21 @@ class Career {
     }
 
     /**
-     * Get the value of image
+     * Get the value of active
      */ 
-    public function getImage()
+    public function getActive()
     {
-        return $this->image;
+        return $this->active;
     }
 
     /**
-     * Set the value of image
+     * Set the value of active
      *
      * @return  self
      */ 
-    public function setImage($image)
+    public function setActive($active)
     {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of email
-     */ 
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set the value of email
-     *
-     * @return  self
-     */ 
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of phoneNumber
-     */ 
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
-    }
-
-    /**
-     * Set the value of phoneNumber
-     *
-     * @return  self
-     */ 
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->phoneNumber = $phoneNumber;
+        $this->active = $active;
 
         return $this;
     }
