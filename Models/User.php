@@ -7,7 +7,7 @@ class User {
 
     function __construct($email)
     {
-        $this->$email;
+        $this->email = $email;
     }
 
     /**
