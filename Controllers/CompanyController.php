@@ -25,6 +25,7 @@ class CompanyController
         {
             Utils::checkSession();
             $company = $this->companyDAO->GetByCompanyName($companyName);
+            require_once(VIEWS_PATH."showCompany.php");
 
            // require_once(VIEWS_PATH."company-show.php");
         }

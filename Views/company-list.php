@@ -22,7 +22,7 @@
                                 echo  "<td>" . $company->getDescription() . "</td>";
     
                                 $companyId = $company->getIdCompany();
-                                echo "<td><a href=" . FRONT_ROOT . "Company/ShowListView/". $companyId .">Ver</a></td>";
+                                echo "<td><a href=" . FRONT_ROOT . "Company/ShowCompany/". $companyId .">Ver</a></td>";
                             }
                         }
                     ?>
