@@ -18,7 +18,7 @@ class CompanyController
         {
             Utils::checkSession();
             $companies = $this->companyDAO->GetAll();
-            //require_once(VIEWS_PATH."company-list.php");
+            require_once(VIEWS_PATH."company-list.php");
         }
 
         public function ShowCompany($companyName)
