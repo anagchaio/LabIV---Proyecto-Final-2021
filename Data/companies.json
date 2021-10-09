@@ -2,10 +2,61 @@
     {
         "idCompany": 1,
         "name": "Ana Paula Gonzalez Chaio",
-        "yearFoundantion": "2019",
+        "yearFoundantion": "2013",
         "description": "test",
-        "logo": "",
+        "logo": {
+            "name": "foto.png",
+            "type": "image\/png",
+            "tmp_name": "C:\\wamp64\\tmp\\php9C9E.tmp",
+            "error": 0,
+            "size": 273439
+        },
         "email": "anagchaio@gmail.com",
-        "phoneNumber": "555"
+        "phoneNumber": "234567"
+    },
+    {
+        "idCompany": 2,
+        "name": "Ana Paula Gonzalez Chaio",
+        "yearFoundantion": "2020",
+        "description": "test2",
+        "logo": {
+            "name": "Test image2.png",
+            "type": "image\/png",
+            "tmp_name": "C:\\wamp64\\tmp\\phpAA47.tmp",
+            "error": 0,
+            "size": 7431
+        },
+        "email": "test@gmail.com",
+        "phoneNumber": "88899000"
+    },
+    {
+        "idCompany": 3,
+        "name": "Test3",
+        "yearFoundantion": "2015",
+        "description": "Test3",
+        "logo": {
+            "name": "Test image3.jpg",
+            "type": "image\/jpeg",
+            "tmp_name": "C:\\wamp64\\tmp\\phpDCC.tmp",
+            "error": 0,
+            "size": 29130
+        },
+        "email": "test3@gmail.com",
+        "phoneNumber": "555555"
+    },
+    {
+        "idCompany": 4,
+        "name": "Test4",
+        "yearFoundantion": "2015",
+        "description": "Test4",
+        "logo": {
+            "name": "image.jpg",
+            "type": "image\/jpeg",
+            "tmp_name": "C:\\wamp64\\tmp\\php331E.tmp",
+            "error": 0,
+            "size": 960997
+        },
+        "email": "test4@gmail.com",
+        "phoneNumber": "33344556"
     }
 ]

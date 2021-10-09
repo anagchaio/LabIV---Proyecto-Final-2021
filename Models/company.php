@@ -124,6 +124,11 @@ class Company {
         return $this->logo;
     }
 
+    public function getLogoFileName()
+    {
+        return $this->logo["name"];
+    }
+
     /**
      * Set the value of logo
      *

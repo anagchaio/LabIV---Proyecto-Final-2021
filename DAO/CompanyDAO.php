@@ -79,12 +79,25 @@ class CompanyDAO implements ICompanyDAO
         return $this->listOfCompanies;
     }
 
-    public function GetByCompanyName($companyName)
+    public function GetByCompanyEmail($companyEmail)
     {
         $this->RetrieveData();
 
         foreach ($this->listOfCompanies as $company) {
-            if ($company->getName() == $companyName){
+            if ($company->getEmail() == $companyEmail){
+                return $company;
+            }
+        }
+
+        return null;
+    }
+
+    public function GetByCompanyId($idCompany)
+    {
+        $this->RetrieveData();
+
+        foreach ($this->listOfCompanies as $company) {
+            if ($company->getIdCompany() == $idCompany){
                 return $company;
             }
         }

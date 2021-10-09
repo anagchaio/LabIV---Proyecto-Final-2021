@@ -21,37 +21,66 @@ class CompanyController
             //require_once(VIEWS_PATH."company-list.php");
         }
 
-        public function ShowCompany($companyName)
+        public function ShowCompany($idCompany)
         {
             Utils::checkSession();
-            $company = $this->companyDAO->GetByCompanyName($companyName);
+            $company = $this->companyDAO->GetByCompanyId($idCompany);
 
            // require_once(VIEWS_PATH."company-show.php");
         }
 
-        public function AddCompany($companyName,$yearFoundantion, $city, $description, $logo, $email, $phoneNumber){
+        public function AddCompany($companyName,$yearFoundantion, $city, $description, $email, $phoneNumber, $logo){
             
             Utils::checkSession();
-            if ($this->companyDAO->GetByCompanyName($companyName) == null) {
-
+            if ($this->companyDAO->GetByCompanyEmail($email) == null) {
                 $newCompany = new Company();
                 $newCompany->setIdCompany($this->companyDAO->getCompanyLastId());
                 $newCompany->setName($companyName);
                 $newCompany->setYearFoundantion($yearFoundantion);
                 $newCompany->setCity($city);
                 $newCompany->setDescription($description);
-                $newCompany->setLogo($logo);
                 $newCompany->setEmail($email);
                 $newCompany->setPhoneNumber($phoneNumber);
+                $uploadSuccess = $this->UploadLogo($logo);
+                $newCompany->setLogo($logo);
+                if($uploadSuccess){
+                    $this->companyDAO->add($newCompany);
+                    require_once(VIEWS_PATH."company-show.php");
+                }
 
-                $this->companyDAO->add($newCompany);
-
-                require_once(VIEWS_PATH."company-list.php");
             } else {
-                $usedCompanyName = true;
+                $usedCompanyEmail = true;
                 require_once(VIEWS_PATH."company-add.php");
             }
         }
 
-    }    
-?>
+        public function UploadLogo($logo)
+        {
+            $uploadSuccess = false;
+            $fileName = $logo["name"];
+            $tempFileName = $logo["tmp_name"];
+            $type = $logo["type"];
+            
+            $filePath = UPLOADS_PATH.basename($fileName);            
+
+            $fileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+
+            $imageSize = getimagesize($tempFileName); //se puede usar
+
+            if(in_array($type,IMAGES_TYPE)){
+                if (move_uploaded_file($tempFileName, $filePath))
+                {
+                    $uploadSuccess = true;
+                    
+                } else {
+                    $uploadError = true;
+                    require_once(VIEWS_PATH."company-add.php");
+                }
+                    
+            } else {
+                $notImageError = true;
+                require_once(VIEWS_PATH."company-add.php");
+            }
+            return $uploadSuccess;
+        }
+    }
