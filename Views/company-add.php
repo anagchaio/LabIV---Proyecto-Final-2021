@@ -3,13 +3,19 @@ require_once('nav.php');
 ?>
 <main class="py-5">
      <section id="listado" class="mb-5">
-          <form action="<?php echo FRONT_ROOT ?>Company/AddCompany" method="POST">
+          <form action="<?php echo FRONT_ROOT ?>Company/AddCompany" method="POST" enctype="multipart/form-data">
                <div class="container">
                     <h3 class="mb-3">Agregar Empresa</h3>
                     <h4 style="color: rgb(145, 39, 177)">
                          <?php
-                         if (isset($usedCompanyName)) {
-                              echo "Ya existe una empresa con ese nombre";
+                         if (isset($usedCompanyEmail)) {
+                              echo "Ya existe una empresa con ese email";
+                         }
+                         if (isset($uploadError)) {
+                              echo "Hubo un error y la imagen no se subio";
+                         }
+                         if (isset($notImageError)) {
+                              echo "El archivo seleccionado no es una imagen";
                          }
                          ?>
                     </h4>
@@ -37,29 +43,28 @@ require_once('nav.php');
                               </div>
 
                               <div class="col-lg-4">
-                                   <label for="">Logo</label>
-                                   <input type="text" name="logo" class="form-control form-control-ml"  value="">
-                              </div>
-
-                              <div class="col-lg-4">
                                    <label for="">Email</label>
                                    <input type="email" name="email" class="form-control form-control-ml" required value="">
                               </div>
 
                               <div class="col-lg-4">
                                    <label for="">Telefono</label>
-                                   <input type="number"  name="phoneNumber" class="form-control form-control-ml" required value="">
+                                   <input type="number" name="phoneNumber" class="form-control form-control-ml" required value="">
                               </div>
 
-                             
-                         </div>
-                         <div class="row">
-                              <div class="col-lg-4">
-                                   <span>&nbsp;</span>
-                                   <button type="submit" name="add-company-button" class="btn btn-primary ml-auto d-block">Agregar</button>
+                              <div class="container">
+                                   <div class="row">
+                                        <div class="col-lg-4">
+                                             <div class="form-group">
+                                                  <label for="">Logo:</label>
+                                                  <input type="file" name="logo" required class="form-control-file">
+                                                  
+                                             </div>
+                                        </div>
+                                   </div>
                               </div>
-
                          </div>
+                         <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
                     </div>
                </div>
           </form>

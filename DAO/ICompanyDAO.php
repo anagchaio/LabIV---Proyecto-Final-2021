@@ -7,6 +7,6 @@
     {
         function Add(Company $company);
         function GetAll();
-        function GetByCompanyName($companyName);
+        function GetByCompanyEmail($email);
     }
 ?>
