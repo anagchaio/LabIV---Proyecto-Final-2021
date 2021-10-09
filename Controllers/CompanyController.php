@@ -63,10 +63,6 @@ class CompanyController
             
             $filePath = UPLOADS_PATH.basename($fileName);            
 
-            $fileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
-
-            $imageSize = getimagesize($tempFileName); //se puede usar
-
             if(in_array($type,IMAGES_TYPE)){
                 if (move_uploaded_file($tempFileName, $filePath))
                 {

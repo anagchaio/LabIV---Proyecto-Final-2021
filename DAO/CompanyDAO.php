@@ -28,6 +28,7 @@ class CompanyDAO implements ICompanyDAO
                 $company->setName($values['name']);
                 $company->setYearFoundantion($values['yearFoundantion']);
                 $company->setDescription(($values['description']));
+                $company->setCity($values['city']);
                 $company->setLogo($values['logo']);
                 $company->setEmail($values['email']);
                 $company->setPhoneNumber($values['phoneNumber']);
@@ -45,6 +46,7 @@ class CompanyDAO implements ICompanyDAO
             $values['name'] = $company->getName();
             $values['yearFoundantion'] = $company->getYearFoundantion();
             $values['description'] = $company->getDescription();
+            $values['city'] = $company->getCity();
             $values['logo'] = $company->getLogo();
             $values['email'] = $company->getEmail();
             $values['phoneNumber'] = $company->getPhoneNumber();
