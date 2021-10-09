@@ -4,6 +4,7 @@ define("ROOT", dirname(__DIR__) . "/");
 //define("FRONT_ROOT", "/Lab4/practicaTPfinal/");
 define("FRONT_ROOT", "http://localhost/Projecto%20Final/");
 define("VIEWS_PATH", "Views/");
+define("UPLOADS_PATH", "Uploads/");
 define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "css/");
 define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "js/");
 
