@@ -30,5 +30,21 @@
         },
         "email": "test2@gmail.com",
         "phoneNumber": "22233344"
+    },
+    {
+        "idCompany": 3,
+        "name": "modifyCompany",
+        "yearFoundantion": "2016",
+        "description": "Test",
+        "city": "Test",
+        "logo": {
+            "name": "Test image3.jpg",
+            "type": "image\/jpeg",
+            "tmp_name": "C:\\wamp64\\tmp\\phpD24D.tmp",
+            "error": 0,
+            "size": 29130
+        },
+        "email": "modify@test.com",
+        "phoneNumber": "3345689"
     }
 ]

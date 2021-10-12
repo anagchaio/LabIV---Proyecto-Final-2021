@@ -115,4 +115,16 @@ class CompanyDAO implements ICompanyDAO
         }
         return $id;
     }
+
+    public function modifyCompany(Company $modifiedCompany)
+    {
+        $this->RetrieveData();
+
+        foreach ($this->listOfCompanies as $company) {
+            if ($company->getIdCompany() == $modifiedCompany->getIdCompany()){
+                $company = $modifiedCompany;
+            }
+        }
+        $this->saveData();
+    }
 }

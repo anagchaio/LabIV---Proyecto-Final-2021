@@ -1,4 +1,4 @@
 <?php 
-    echo "Student login successful";
+    require_once('nav.php');
 
 ?>
