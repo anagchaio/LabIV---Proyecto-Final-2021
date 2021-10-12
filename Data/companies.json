@@ -2,6 +2,7 @@
     {
         "idCompany": 1,
         "name": "Ana Paula Gonzalez Chaio",
+        "city": "cityTest4",
         "yearFoundantion": "2019",
         "description": "test",
         "logo": "",

@@ -9,8 +9,6 @@
           <li class="nav-item"> 
           <a class="nav-link" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Listado Empresas</a>
           </li>
-          <li class="nav-item">               
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Listar Empresas</a>
-          </li>
+
      </ul>
 </nav>
