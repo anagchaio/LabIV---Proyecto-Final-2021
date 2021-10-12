@@ -5,7 +5,7 @@
      <section id="listado" class="mb-5">
           <div class="container">
             <h2 class="mb-4">Empresa</h2>
-               <?php
+            <?php
                     if(isset($company))
                     {
                          echo  "<h4> Nombre: " . $company->getName() . "</h4>";
@@ -16,7 +16,7 @@
                          echo  "<h4> Email: " . $company->getEmail() . "</h4>";
                          echo  "<h4> Telefono: " . $company->getPhoneNumber() . "</h4>";
                          }
-               ?>               
+            ?>               
           </div>
      </section>
 </main>
