@@ -34,13 +34,6 @@ class CompanyController
         
     }
 
-<<<<<<< HEAD
-        public function ShowListView()
-        {
-            Utils::checkSession();
-            $companies = $this->companyDAO->GetAll();
-            require_once(VIEWS_PATH."company-list.php");
-=======
     public function AddCompany($companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logo)
     {
         Utils::checkAdminSession();
@@ -64,18 +57,10 @@ class CompanyController
         } else {
             $usedCompanyEmail = true;
             require_once(VIEWS_PATH . "company-add.php");
->>>>>>> prueba
         }
     }
 
-<<<<<<< HEAD
-        public function ShowCompany($companyName)
-        {
-            Utils::checkSession();
-            $company = $this->companyDAO->GetByCompanyName($companyName);
-            require_once(VIEWS_PATH."showCompany.php");
-        }
-=======
+
     public function UploadLogo($logo, $method)
     {
         Utils::checkAdminSession();
@@ -85,7 +70,6 @@ class CompanyController
         $type = $logo["type"];
 
         $filePath = UPLOADS_PATH . basename($fileName);
->>>>>>> prueba
 
         if (in_array($type, IMAGES_TYPE)) {
             if (move_uploaded_file($tempFileName, $filePath)) {

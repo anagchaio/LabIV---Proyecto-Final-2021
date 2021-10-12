@@ -1,7 +1,6 @@
 <?php
     require_once('nav.php');
 ?>
-<<<<<<< HEAD
 <main class="py-5">
     <section id="listado" class="mb-5">
         <div class="container">
@@ -33,5 +32,4 @@
         </div>
     </section>
 </main>
-=======
->>>>>>> prueba
+
