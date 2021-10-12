@@ -15,5 +15,5 @@
 
      <title>Bolsa de trabajo UTN</title>
 
-}</head>
+</head>
 

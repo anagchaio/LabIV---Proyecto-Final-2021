@@ -6,7 +6,7 @@
 
 
         <div class="menu-title">
-            <a href="#">
+            <a href="<?php echo FRONT_ROOT ?>Home/login">
                 <i class="fa fa-home fa-2x"></i>
                 <h3 class="title">MENU</h3>
             </a>
@@ -56,47 +56,6 @@
                 </a>
 
             </li>
-            <!-- <li>
-                <a href="#">
-                    <i class="fa fa-bar-chart-o fa-2x"></i>
-                    <span class="nav-text">
-                        Graphs and Statistics
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-font fa-2x"></i>
-                    <span class="nav-text">
-                        Quotes
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-table fa-2x"></i>
-                    <span class="nav-text">
-                        Tables
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-map-marker fa-2x"></i>
-                    <span class="nav-text">
-                        Maps
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-info fa-2x"></i>
-                    <span class="nav-text">
-                        Documentation
-                    </span>
-                </a>
-            </li>
-        </ul> -->
 
             <ul class="logout">
                 <li>
@@ -108,8 +67,7 @@
                     </a>
                 </li>
             </ul>
-    </nav>
-    <!--     
+    </nav>    
 
     <!-- Header-->
     <header class="masthead d-flex align-items-center">
@@ -119,7 +77,7 @@
             <h2> Fuiste reconocido como Admin </h2>
             <h3 class="mb-5"><em>En esta interfaz prodrás realizar las siguientes acciones</em></h3>
             <a class="btn btn-primary btn-xl" href="#">Ver Empresas</a>
-            <a class="btn btn-primary btn-xl" href="#t">Ver Alumnos</a>
+            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Ver Alumnos</a>
             <a class="btn btn-primary btn-xl" href="#">Ver Propuestas</a>
         </div>
     </header>
