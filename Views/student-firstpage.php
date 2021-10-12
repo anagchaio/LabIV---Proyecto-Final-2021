@@ -21,7 +21,7 @@
 
             </li> -->
             <li class="has-subnav">
-                <a href="#">
+                <a href="<?php echo FRONT_ROOT ?>Company/ShowListView">
                     <i class="fa fa-home fa-2x"></i>
                     <span class="nav-text">
                         Empresas
@@ -40,15 +40,6 @@
             </li>
             <li class="has-subnav">
                 <a href="#">
-                    <i class="fa fa-list fa-2x"></i>
-                    <span class="nav-text">
-                        Alumnos
-                    </span>
-                </a>
-
-            </li>
-            <li class="has-subnav">
-                <a href="#">
                     <i class="fa fa-folder-open fa-2x"></i>
                     <span class="nav-text">
                         Mensajes
@@ -59,7 +50,7 @@
 
             <ul class="logout">
                 <li>
-                    <a href="#">
+                    <a href="<?php echo FRONT_ROOT ?>Home/Logout">
                         <i class="fa fa-power-off fa-2x"></i>
                         <span class="nav-text">
                             Logout
@@ -76,8 +67,7 @@
             <h1 class="mb-1">Bienvenido</h1>
             <h2> Fuiste reconocido como Admin </h2>
             <h3 class="mb-5"><em>En esta interfaz prodrás realizar las siguientes acciones</em></h3>
-            <a class="btn btn-primary btn-xl" href="#">Ver Empresas</a>
-            <a class="btn btn-primary btn-xl" href="#t">Ver Alumnos</a>
+            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Ver Empresas</a>
             <a class="btn btn-primary btn-xl" href="#">Ver Propuestas</a>
         </div>
     </header>
