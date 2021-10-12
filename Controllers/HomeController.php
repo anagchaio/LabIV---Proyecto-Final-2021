@@ -35,6 +35,10 @@ class HomeController
             }
         }
 
+        public function RedirectAdm () {
+            require_once(VIEWS_PATH."admin-firstpage.php");
+        }
+
 
         public function Logout()
         {
