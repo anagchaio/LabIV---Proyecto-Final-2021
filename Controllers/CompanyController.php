@@ -60,6 +60,7 @@ class CompanyController
         }
     }
 
+
     public function UploadLogo($logo, $method)
     {
         Utils::checkAdminSession();
