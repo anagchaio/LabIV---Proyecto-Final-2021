@@ -28,6 +28,7 @@ class CompanyDAO implements ICompanyDAO
                 $company->setName($values['name']);
                 $company->setYearFoundantion($values['yearFoundantion']);
                 $company->setDescription(($values['description']));
+                $company->setCity($values['city']);
                 $company->setLogo($values['logo']);
                 $company->setEmail($values['email']);
                 $company->setPhoneNumber($values['phoneNumber']);
@@ -45,6 +46,7 @@ class CompanyDAO implements ICompanyDAO
             $values['name'] = $company->getName();
             $values['yearFoundantion'] = $company->getYearFoundantion();
             $values['description'] = $company->getDescription();
+            $values['city'] = $company->getCity();
             $values['logo'] = $company->getLogo();
             $values['email'] = $company->getEmail();
             $values['phoneNumber'] = $company->getPhoneNumber();
@@ -79,12 +81,25 @@ class CompanyDAO implements ICompanyDAO
         return $this->listOfCompanies;
     }
 
-    public function GetByCompanyName($companyName)
+    public function GetByCompanyEmail($companyEmail)
     {
         $this->RetrieveData();
 
         foreach ($this->listOfCompanies as $company) {
-            if ($company->getName() == $companyName){
+            if ($company->getEmail() == $companyEmail){
+                return $company;
+            }
+        }
+
+        return null;
+    }
+
+    public function GetByCompanyId($idCompany)
+    {
+        $this->RetrieveData();
+
+        foreach ($this->listOfCompanies as $company) {
+            if ($company->getIdCompany() == $idCompany){
                 return $company;
             }
         }
@@ -99,5 +114,17 @@ class CompanyDAO implements ICompanyDAO
             $id = $company->getIdCompany() + 1;
         }
         return $id;
+    }
+
+    public function modifyCompany(Company $modifiedCompany)
+    {
+        $this->RetrieveData();
+
+        foreach ($this->listOfCompanies as $company) {
+            if ($company->getIdCompany() == $modifiedCompany->getIdCompany()){
+                $company = $modifiedCompany;
+            }
+        }
+        $this->saveData();
     }
 }

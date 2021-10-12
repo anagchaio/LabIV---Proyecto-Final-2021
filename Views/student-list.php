@@ -10,13 +10,10 @@ require_once('nav.php');
                     <thead>
                          <th>Nombre</th>
                          <th>Apellido</th>
-                         <th>DNI</th>
-                         <th>Genero</th>
-                         <th>Fecha Nacimiento</th>
                          <th>Legajo</th>
                          <th>Carrera</th>
-                         <th>Email</th>
-                         <th>Telefono</th>
+                         <th></th>
+
                     </thead>
                     <tbody>
                          <?php
@@ -25,13 +22,10 @@ require_once('nav.php');
                                    echo  "<tr>";
                                    echo  "<td>" . $student->getFirstName() . "</td>";
                                    echo  "<td>" . $student->getLastName() . "</td>";
-                                   echo  "<td>" . $student->getDni() . "</td>";
-                                   echo  "<td>" . $student->getGender() . "</td>";
-                                   echo  "<td>" . $student->getBirthDate() . "</td>";
                                    echo  "<td>" . $student->getFileNumber() . "</td>";
                                    echo  "<td>" . $student->getCareerId() . "</td>";
-                                   echo  "<td>" . $student->getEmail() . "</td>";
-                                   echo  "<td>" . $student->getPhoneNumber() . "</td>";
+                                   $studentId = $student->getStudentId();
+                                   echo "<td><a href=" . FRONT_ROOT . "Student/ShowStudent/". $studentId .">Ver</a></td>";
                               }
                          }
                          ?>
