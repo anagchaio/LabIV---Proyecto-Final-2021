@@ -43,7 +43,7 @@
           $response = curl_exec($ch);
 
           $arrayToDecode = json_decode($response,true);
-
+          
           foreach($arrayToDecode as $valuesArray){
             $career = new Career();
             $career->setCareerId($valuesArray['careerId']);
@@ -54,16 +54,15 @@
 
           }
 
-
         }
 
         public function GetAllActive(){
-
+/* 
             $this->RetrieveData();
             return array_filter(
                 $this->careerList,
                 fn($activeCareer) => $activeCareer->getActive() === true
-             );
+             ); */
 
         }
 
