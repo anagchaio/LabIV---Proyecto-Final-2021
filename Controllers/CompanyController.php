@@ -34,6 +34,12 @@ class CompanyController
         
     }
 
+    public function RedirectAddForm(){
+        Utils::checkAdminSession();
+        require_once(VIEWS_PATH . "company-add.php");
+
+    }
+
     public function AddCompany($companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logo)
     {
         Utils::checkAdminSession();

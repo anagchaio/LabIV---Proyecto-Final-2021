@@ -78,6 +78,8 @@
             <h2> Fuiste reconocido como Admin </h2>
             <h3 class="mb-5"><em>En esta interfaz prodrás realizar las siguientes acciones</em></h3>
             <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Ver Empresas</a>
+            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Company/RedirectAddForm">Agregar Empresa</a>
+            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Company/">Eliminar Empresa</a>
             <a class="btn btn-primary btn-xl" href="#">Ver Propuestas</a>
             <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Ver Alumnos</a>
         </div>
