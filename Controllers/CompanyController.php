@@ -26,18 +26,31 @@ class CompanyController
     {
         Utils::checkSession();
         $company = $this->companyDAO->GetByCompanyId($idCompany);
-        if(isset($adminLogged)){
+        if (isset($adminLogged)) {
             require_once(VIEWS_PATH . "admin-company-show.php");
         } else {
             require_once(VIEWS_PATH . "student-company-show.php");
         }
-        
     }
 
-    public function RedirectAddForm(){
+    public function RedirectAddForm()
+    {
         Utils::checkAdminSession();
         require_once(VIEWS_PATH . "company-add.php");
+    }
+    public function RedirectShowForm()
+    {
+        Utils::checkAdminSession();
+        require_once(VIEWS_PATH . "admin-company-show.php");
+    }
 
+    public function DeleteCompany($idCompany)
+    {
+        Utils::checkSession();
+        if (isset($adminLogged)) {
+            $company = $this->companyDAO->GetByCompanyId($idCompany);
+            $this->companyDAO->delete($company);
+        }
     }
 
     public function AddCompany($companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logo)
