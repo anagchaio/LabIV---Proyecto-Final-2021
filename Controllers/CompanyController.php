@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use DAO\CompanyDAO as CompanyDAO;
-use Models\Company;
+use Models\Company as Company;
 use Utils\Utils as Utils;
 
 class CompanyController
@@ -26,7 +26,7 @@ class CompanyController
     {
         Utils::checkSession();
         $company = $this->companyDAO->GetByCompanyId($idCompany);
-        if (isset($adminLogged)) {
+        if (isset($_SESSION['admin'])) {
             require_once(VIEWS_PATH . "admin-company-show.php");
         } else {
             require_once(VIEWS_PATH . "student-company-show.php");
@@ -132,4 +132,21 @@ class CompanyController
 
         $this->ShowListView();
     }
+
+    public function FilterList($searchedWord)
+    {
+
+        $searchedWord = strtolower($searchedWord);
+        $filteredCompanies = array();
+        foreach ($this->companyDAO->getAll() as $company) {
+            $companyName = strtolower($company->getName());
+
+            if (Utils::strStartsWith($companyName, $searchedWord)) {
+                array_push($filteredCompanies, $company);
+            }
+        }
+        $companies = $filteredCompanies;
+        require_once(VIEWS_PATH . "company-list.php");
+    }
+ 
 }
