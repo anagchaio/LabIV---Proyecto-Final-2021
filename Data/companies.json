@@ -2,7 +2,7 @@
     {
         "idCompany": 1,
         "name": "company1",
-        "yearFoundantion": "2015",
+        "yearFoundantion": "2016",
         "description": "Test1",
         "city": "cityTest",
         "logo": {
@@ -33,7 +33,7 @@
     },
     {
         "idCompany": 3,
-        "name": "testing3",
+        "name": "Random3",
         "yearFoundantion": "2015",
         "description": "test3",
         "city": "cityTest",
@@ -62,5 +62,21 @@
         },
         "email": "test4@gmail.com",
         "phoneNumber": "22233344"
+    },
+    {
+        "idCompany": 5,
+        "name": "Company5",
+        "yearFoundantion": "2015",
+        "description": "test5",
+        "city": "Mar del Plata",
+        "logo": {
+            "name": "Test image4.jpg",
+            "type": "image\/jpeg",
+            "tmp_name": "C:\\wamp64\\tmp\\php4C0E.tmp",
+            "error": 0,
+            "size": 29129
+        },
+        "email": "test5@gmail.com",
+        "phoneNumber": "57277872"
     }
 ]

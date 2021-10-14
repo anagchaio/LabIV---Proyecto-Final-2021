@@ -2,7 +2,7 @@
 
 <body>
     <!-- <div class="area"></div> -->
-    <nav class="main-menu">
+     <nav class="main-menu">
 
 
         <div class="menu-title">
@@ -19,7 +19,7 @@
                     <h3>MENU</h3>
                 </a>
 
-            </li> -->
+            </li>  -->
             <li class="has-subnav">
                 <a href="<?php echo FRONT_ROOT ?>Company/ShowListView">
                     <i class="fa fa-home fa-2x"></i>
