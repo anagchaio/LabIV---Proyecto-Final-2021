@@ -106,10 +106,6 @@ class CompanyController
 
     public function ModifyCompany($companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logoName, $logo)
     {
-        var_dump($companyId);
-        var_dump($companyName);
-        var_dump($yearFoundantion);
-        var_dump($logo);
         Utils::checkAdminSession();
         $company = $this->companyDAO->GetByCompanyId($companyId);
 
@@ -129,7 +125,6 @@ class CompanyController
         $company->setPhoneNumber($phoneNumber);
         if (isset($logo['name'])) {
             $uploadSuccess = $this->UploadLogo($logo, "modify");
-            var_dump($logo);
             $company->setLogo($logo);
         }
         $this->companyDAO->modifyCompany($company);
