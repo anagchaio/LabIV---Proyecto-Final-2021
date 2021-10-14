@@ -28,8 +28,11 @@ class StudentController
         {
             Utils::checkSession();
             $student = $this->studentDAO->GetByStudentId($studentId);
+            $career = $this->careerDAO->getCareerStudent($student);
+
             require_once(VIEWS_PATH."student-show.php");
         }
+
 
         public function getByEmail($email){
             $student = $this->studentDAO->GetByStudentEmail($email);

@@ -33,8 +33,9 @@ require_once('nav.php');
                                         }
                                    } 
                                    $studentId = $student->getStudentId();
+                                   $careerName = $career->getDescription();
                                    
-                                   echo "<td><a href=" . FRONT_ROOT . "Student/ShowStudent/". $studentId .">+ info</a></td>";
+                                   echo "<td><a href=" . FRONT_ROOT . "Student/ShowStudent/". $studentId . ">+ info</a></td>";
                               }
                          }
                          ?>

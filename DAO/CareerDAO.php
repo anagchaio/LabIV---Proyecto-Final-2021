@@ -26,23 +26,20 @@
         }
 
         private function RetrieveData(){
-          //curl - api 
+         
+            $this->careerList = array();
 
-          $ch = curl_init();
+            $options = array(
+                'http' => array(
+                'method'=>"GET",
+                'header'=>"x-api-key: " . API_KEY)
+            );
 
-          $url = API_URL .'Career';
+            $context = stream_context_create($options);
 
-          //no me toma la constante de la key por eso la uso aca. 
-          $header = array(
-              'x-api-key: 4f3bceed-50ba-4461-a910-518598664c08'
-          );
+            $response = file_get_contents(API_URL .'Career', false, $context);
 
-          curl_setopt($ch, CURLOPT_URL, $url);
-          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-          curl_setopt($ch, CURLOPT_HTTPHEADER,$header);
-          $response = curl_exec($ch);
-
-          $arrayToDecode = json_decode($response,true);
+            $arrayToDecode = json_decode($response, true);
           
           foreach($arrayToDecode as $valuesArray){
             $career = new Career();
@@ -57,14 +54,33 @@
         }
 
         public function GetAllActive(){
-/* 
             $this->RetrieveData();
             return array_filter(
                 $this->careerList,
                 fn($activeCareer) => $activeCareer->getActive() === true
-             ); */
+             );
 
         }
+
+        public function GetCareerById($careerId){
+            $this->RetrieveData();
+
+            foreach ($this->careerList as $career) {
+                if ($career->getCareerId() == $careerId){
+                    return $career;
+                }
+            }
+            return null;
+    }
+
+    public function getCareerStudent($student){
+        $this->RetrieveData();
+            foreach($this->careerList as $career){
+                if($student->getCareerId() == $career->getCareerId())
+                return $career;
+            }
+        
+    }
 
     }
 
