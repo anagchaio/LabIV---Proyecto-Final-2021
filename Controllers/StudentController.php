@@ -28,6 +28,11 @@ class StudentController
         {
             Utils::checkSession();
             $student = $this->studentDAO->GetByStudentId($studentId);
+            foreach($this->careerDAO->GetAll() as $career){
+                if($career->getCareerId() == $student->getCareerId()){
+                     $careerName = $career->getDescription();
+                }
+           }
             require_once(VIEWS_PATH."student-show.php");
         }
 
