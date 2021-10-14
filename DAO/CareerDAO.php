@@ -57,14 +57,33 @@
         }
 
         public function GetAllActive(){
-/* 
             $this->RetrieveData();
             return array_filter(
                 $this->careerList,
                 fn($activeCareer) => $activeCareer->getActive() === true
-             ); */
+             );
 
         }
+
+        public function GetCareerById($careerId){
+            $this->RetrieveData();
+
+            foreach ($this->careerList as $career) {
+                if ($career->getCareerId() == $careerId){
+                    return $career;
+                }
+            }
+            return null;
+    }
+
+    public function getCareerStudent($student){
+        $this->RetrieveData();
+            foreach($this->careerList as $career){
+                if($student->getCareerId() == $career->getCareerId())
+                return $career;
+            }
+        
+    }
 
     }
 
