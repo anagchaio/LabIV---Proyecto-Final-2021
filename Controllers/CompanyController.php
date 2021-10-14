@@ -38,18 +38,20 @@ class CompanyController
         Utils::checkAdminSession();
         require_once(VIEWS_PATH . "company-add.php");
     }
+
     public function RedirectShowForm()
     {
-        Utils::checkAdminSession();
+        //Utils::checkAdminSession();
         require_once(VIEWS_PATH . "admin-company-show.php");
     }
 
     public function DeleteCompany($idCompany)
     {
-        Utils::checkSession();
-        if (isset($adminLogged)) {
+        Utils::checkAdminSession();
+        if (isset($_SESSION['admin'])) {
             $company = $this->companyDAO->GetByCompanyId($idCompany);
             $this->companyDAO->delete($company);
+            $this->ShowListView();
         }
     }
 
