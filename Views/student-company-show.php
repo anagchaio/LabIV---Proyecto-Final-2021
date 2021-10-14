@@ -4,7 +4,9 @@
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
-            <h2 class="mb-4">Empresa</h2>
+            <div>
+               <img src="<?php echo FRONT_ROOT . UPLOADS_PATH . $company->getLogoFileName(); ?>" alt="Company-Logo" width="100" height="100">   
+            </div>
             <?php
                     if(isset($company))
                     {
@@ -12,7 +14,6 @@
                          echo  "<h4> Año de fundacion: " . $company->getYearFoundantion() . "</h4>";
                          echo  "<h4> Ciudad: " . $company->getCity() . "</h4>";
                          echo  "<h4> Descripcion: " . $company->getDescription() . "</h4>";
-                         echo  "<h4> Logo: " . $company->getLogo() . "</h4>";
                          echo  "<h4> Email: " . $company->getEmail() . "</h4>";
                          echo  "<h4> Telefono: " . $company->getPhoneNumber() . "</h4>";
                          }
