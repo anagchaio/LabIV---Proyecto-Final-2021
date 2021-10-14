@@ -33,6 +33,28 @@ class CompanyController
         }
     }
 
+    public function RedirectAddForm()
+    {
+        Utils::checkAdminSession();
+        require_once(VIEWS_PATH . "company-add.php");
+    }
+
+    public function RedirectShowForm()
+    {
+        //Utils::checkAdminSession();
+        require_once(VIEWS_PATH . "admin-company-show.php");
+    }
+
+    public function DeleteCompany($idCompany)
+    {
+        Utils::checkAdminSession();
+        if (isset($_SESSION['admin'])) {
+            $company = $this->companyDAO->GetByCompanyId($idCompany);
+            $this->companyDAO->delete($company);
+            $this->ShowListView();
+        }
+    }
+
     public function AddCompany($companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logo)
     {
         Utils::checkAdminSession();
@@ -45,7 +67,7 @@ class CompanyController
             $newCompany->setDescription($description);
             $newCompany->setEmail($email);
             $newCompany->setPhoneNumber($phoneNumber);
-            $uploadSuccess = $this->UploadLogo($logo, "add");
+            $uploadSuccess = $this->UploadLogo($logo, "company-add.php");
             $newCompany->setLogo($logo);
             if ($uploadSuccess) {
                 $this->companyDAO->add($newCompany);
@@ -60,7 +82,7 @@ class CompanyController
     }
 
 
-    public function UploadLogo($logo, $method)
+    public function UploadLogo($logo, $fileView)
     {
         Utils::checkAdminSession();
         $uploadSuccess = false;
@@ -75,16 +97,16 @@ class CompanyController
                 $uploadSuccess = true;
             } else {
                 $uploadError = true;
-                require_once(VIEWS_PATH . "company-" . $method . ".php");
+                require_once(VIEWS_PATH . $fileView); 
             }
         } else {
             $notImageError = true;
-            require_once(VIEWS_PATH . "company-" . $method . ".php");
+            require_once(VIEWS_PATH . $fileView); 
         }
         return $uploadSuccess;
     }
 
-    public function ModifyCompany($companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logo)
+    public function ModifyCompany($companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logoName, $logo)
     {
         Utils::checkAdminSession();
         $company = $this->companyDAO->GetByCompanyId($companyId);
@@ -92,7 +114,7 @@ class CompanyController
         if ($company->getEmail() != $email) {
             if ($this->companyDAO->GetByCompanyEmail($email) != null) {
                 $usedCompanyEmail = true;
-                require_once(VIEWS_PATH . "company-modify.php");
+                require_once(VIEWS_PATH . "admin-company-show.php");
             } else {
                 $company->setEmail($email);
             }
@@ -103,11 +125,12 @@ class CompanyController
         $company->setDescription($description);
         $company->setEmail($email);
         $company->setPhoneNumber($phoneNumber);
-        if (isset($logo['name'])) {
-            $uploadSuccess = $this->UploadLogo($logo, "modify");
-            $company->setLogo($logo);
+        if ($logo['error'] == 0) {
+            $uploadSuccess = $this->UploadLogo($logo, "admin-company-show.php");
+            if($uploadSuccess){
+                $company->setLogo($logo);
+            }
         }
-        var_dump($company);
         $this->companyDAO->modifyCompany($company);
 
         $this->ShowListView();

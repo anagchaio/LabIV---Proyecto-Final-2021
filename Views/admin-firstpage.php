@@ -2,7 +2,7 @@
 
 <body>
     <!-- <div class="area"></div> -->
-    <nav class="main-menu">
+     <nav class="main-menu">
 
 
         <div class="menu-title">
@@ -19,7 +19,7 @@
                     <h3>MENU</h3>
                 </a>
 
-            </li> -->
+            </li>  -->
             <li class="has-subnav">
                 <a href="<?php echo FRONT_ROOT ?>Company/ShowListView">
                     <i class="fa fa-home fa-2x"></i>
@@ -72,14 +72,15 @@
 
     <!-- Header-->
     <header class="masthead d-flex align-items-center">
-        <div class="container px-4 px-lg-5 text-center">
+        <div class="container-menu px-4 px-lg-5 text-center">
         <!-- <div class="view-container"> -->
             <h1 class="mb-1">Bienvenido</h1>
             <h2> Fuiste reconocido como Admin </h2>
             <h3 class="mb-5"><em>En esta interfaz prodrás realizar las siguientes acciones</em></h3>
-            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Ver Empresas</a>
-            <a class="btn btn-primary btn-xl" href="#">Ver Propuestas</a>
-            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Ver Alumnos</a>
+            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Lista de Empresas</a>
+            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Company/RedirectAddForm">Agregar Empresa</a>
+            <a class="btn btn-primary btn-xl" href="#">Lista de Propuestas</a>
+            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Lista de Alumnos</a>
         </div>
     </header>
 

@@ -54,11 +54,11 @@
         }
 
         public function GetAllActive(){
-            $this->RetrieveData();
+            /* $this->RetrieveData();
             return array_filter(
                 $this->careerList,
                 fn($activeCareer) => $activeCareer->getActive() === true
-             );
+             ); */
 
         }
 

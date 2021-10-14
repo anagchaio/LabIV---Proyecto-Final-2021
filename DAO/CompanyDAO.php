@@ -122,9 +122,12 @@ class CompanyDAO implements ICompanyDAO
 
         foreach ($this->listOfCompanies as $company) {
             if ($company->getIdCompany() == $modifiedCompany->getIdCompany()){
-                $company = $modifiedCompany;
+                $key = array_search($company, $this->listOfCompanies);
+                $this->listOfCompanies[$key] = $modifiedCompany;
+
             }
         }
+        
         $this->saveData();
     }
 }
