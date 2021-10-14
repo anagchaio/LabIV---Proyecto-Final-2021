@@ -12,6 +12,5 @@
           <li class="nav-item"> 
           <a class="nav-link" href="<?php echo FRONT_ROOT ?>Home/Logout">Logout</a>
           </li>
-
      </ul>
 </nav>
