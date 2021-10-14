@@ -66,8 +66,10 @@ require_once('nav.php');
                          <div class="row">
                               <div class="col-lg-4">
                                    <span>&nbsp;</span>
+
                                    <button type="submit" name="modify-company-button" class="btn btn-primary ml-auto d-block">Guardar</button>
                                    <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT . "Company/DeleteCompany" . $company->getIdCompany(); ?>">Eliminar Empresa</a>
+                                   <button type="submit" class="btn btn-primary ml-auto d-block">Guardar</button>
 
                               </div>
 

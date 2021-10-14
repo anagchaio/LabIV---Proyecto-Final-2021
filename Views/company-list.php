@@ -8,8 +8,8 @@ require_once('nav.php');
             <div class="container">
             <form action="<?php echo FRONT_ROOT ?>Company/FilterList" method="POST" enctype="multipart/form-data">
                     <input type="text" name="searchedWord" class="form-control form-control-ml" required value="">
-                    <span>&nbsp;</span>
-                    <button type="submit" name="search" class="btn btn-dark ml-auto d-block">Buscar</button>
+                   
+                    <button type="submit"  class="btn btn-dark ml-auto d-block">Buscar</button>
             </form>
             </div>
             <span>&nbsp;</span>
