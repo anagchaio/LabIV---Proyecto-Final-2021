@@ -22,11 +22,11 @@
         "description": "test2",
         "city": "cityTest",
         "logo": {
-            "name": "Test image2.png",
-            "type": "image\/png",
-            "tmp_name": "C:\\wamp64\\tmp\\phpBA21.tmp",
+            "name": "Test image4.jpg",
+            "type": "image\/jpeg",
+            "tmp_name": "C:\\wamp64\\tmp\\php5228.tmp",
             "error": 0,
-            "size": 7431
+            "size": 29129
         },
         "email": "test2@gmail.com",
         "phoneNumber": "22233344"
@@ -49,16 +49,16 @@
     },
     {
         "idCompany": 4,
-        "name": "test4",
+        "name": "testing4",
         "yearFoundantion": "2015",
         "description": "test4",
         "city": "cityTest",
         "logo": {
-            "name": "Test image2.png",
+            "name": "Test image6.png",
             "type": "image\/png",
-            "tmp_name": "C:\\wamp64\\tmp\\phpBA21.tmp",
+            "tmp_name": "C:\\wamp64\\tmp\\php6B64.tmp",
             "error": 0,
-            "size": 7431
+            "size": 7432
         },
         "email": "test4@gmail.com",
         "phoneNumber": "22233344"

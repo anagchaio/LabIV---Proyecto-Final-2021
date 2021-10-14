@@ -104,7 +104,7 @@ class CompanyController
         return $uploadSuccess;
     }
 
-    public function ModifyCompany($logo, $companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber)
+    public function ModifyCompany($companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logoName, $logo)
     {
         var_dump($companyId);
         var_dump($companyName);
