@@ -72,7 +72,7 @@
 
     <!-- Header-->
     <header class="masthead d-flex align-items-center">
-        <div class="container px-4 px-lg-5 text-center">
+        <div class="container-menu px-4 px-lg-5 text-center">
         <!-- <div class="view-container"> -->
             <h1 class="mb-1">Bienvenido</h1>
             <h2> Fuiste reconocido como Admin </h2>

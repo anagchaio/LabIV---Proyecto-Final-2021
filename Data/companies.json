@@ -1,37 +1,5 @@
 [
     {
-        "idCompany": 1,
-        "name": "company1",
-        "yearFoundantion": "2016",
-        "description": "Test1",
-        "city": "cityTest",
-        "logo": {
-            "name": "Test image.png",
-            "type": "image\/png",
-            "tmp_name": "C:\\wamp64\\tmp\\php6327.tmp",
-            "error": 0,
-            "size": 7432
-        },
-        "email": "test1@gmail.com",
-        "phoneNumber": "22334455"
-    },
-    {
-        "idCompany": 2,
-        "name": "Company2",
-        "yearFoundantion": "2015",
-        "description": "test2",
-        "city": "cityTest",
-        "logo": {
-            "name": "Test image2.png",
-            "type": "image\/png",
-            "tmp_name": "C:\\wamp64\\tmp\\phpBA21.tmp",
-            "error": 0,
-            "size": 7431
-        },
-        "email": "test2@gmail.com",
-        "phoneNumber": "22233344"
-    },
-    {
         "idCompany": 3,
         "name": "Random3",
         "yearFoundantion": "2015",

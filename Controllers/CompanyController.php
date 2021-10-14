@@ -48,9 +48,10 @@ class CompanyController
     public function DeleteCompany($idCompany)
     {
         Utils::checkAdminSession();
-        if (isset($adminLogged)) {
+        if (isset($_SESSION['admin'])) {
             $company = $this->companyDAO->GetByCompanyId($idCompany);
             $this->companyDAO->delete($company);
+            $this->ShowListView();
         }
     }
 
