@@ -7,7 +7,7 @@
                <h2 class="mb-4">Mostrando Alumno</h2>
 
                <?php
-                    if(isset($student) & isset($career))
+                    if(isset($student))
                     {
                          echo  "<h4> Nombre: " . $student->getFirstName() . "</h4>";
                          echo  "<h4> Apellido: " . $student->getLastName() . "</h4>";
