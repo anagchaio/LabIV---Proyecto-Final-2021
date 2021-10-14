@@ -21,7 +21,7 @@ require_once('nav.php');
                     </h4>
                     <div>
                          <label for="">Logo</label>
-                         <img src="<?php echo FRONT_ROOT . UPLOADS_PATH . $company->getLogoFileName(); ?>" alt="Company-Logo" width="100" height="100">   
+                         <img src="<?php echo FRONT_ROOT . UPLOADS_PATH . $company->getLogoFileName(); ?>" alt="Company-Logo" width="100" height="100">
                          <input type="file" name="logo" class="form-control-file">
                     </div>
                     <span>&nbsp;</span>
@@ -62,6 +62,8 @@ require_once('nav.php');
                               <div class="col-lg-4">
                                    <span>&nbsp;</span>
                                    <button type="submit" name="modify-company-button" class="btn btn-primary ml-auto d-block">Guardar</button>
+                                   <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT . "Company/DeleteCompany" . $company->getIdCompany(); ?>">Eliminar Empresa</a>
+
                               </div>
 
                          </div>

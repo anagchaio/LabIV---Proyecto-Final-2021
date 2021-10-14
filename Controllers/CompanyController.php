@@ -33,6 +33,26 @@ class CompanyController
         }
     }
 
+    public function RedirectAddForm()
+    {
+        Utils::checkAdminSession();
+        require_once(VIEWS_PATH . "company-add.php");
+    }
+    public function RedirectShowForm()
+    {
+        Utils::checkAdminSession();
+        require_once(VIEWS_PATH . "admin-company-show.php");
+    }
+
+    public function DeleteCompany($idCompany)
+    {
+        Utils::checkSession();
+        if (isset($adminLogged)) {
+            $company = $this->companyDAO->GetByCompanyId($idCompany);
+            $this->companyDAO->delete($company);
+        }
+    }
+
     public function AddCompany($companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logo)
     {
         Utils::checkAdminSession();
@@ -84,8 +104,12 @@ class CompanyController
         return $uploadSuccess;
     }
 
-    public function ModifyCompany($companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logo)
+    public function ModifyCompany($logo, $companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber)
     {
+        var_dump($companyId);
+        var_dump($companyName);
+        var_dump($yearFoundantion);
+        var_dump($logo);
         Utils::checkAdminSession();
         $company = $this->companyDAO->GetByCompanyId($companyId);
 
@@ -105,9 +129,9 @@ class CompanyController
         $company->setPhoneNumber($phoneNumber);
         if (isset($logo['name'])) {
             $uploadSuccess = $this->UploadLogo($logo, "modify");
+            var_dump($logo);
             $company->setLogo($logo);
         }
-        var_dump($company);
         $this->companyDAO->modifyCompany($company);
 
         $this->ShowListView();
