@@ -19,11 +19,7 @@ require_once('nav.php');
                          }
                          ?>
                     </h4>
-                    <div>
-                         <label for="">Logo</label>
-                         <img src="<?php echo FRONT_ROOT . UPLOADS_PATH . $company->getLogoFileName(); ?>" alt="Company-Logo" width="100" height="100">
-                         <input type="file" name="logo" class="form-control-file">
-                    </div>
+
                     <span>&nbsp;</span>
                     <div>
                          <input type="number" name="companyId" class="form-control form-control-ml" hidden value="<?php echo $company->getIdCompany(); ?>">
@@ -57,11 +53,22 @@ require_once('nav.php');
                                    <label for="">Telefono</label>
                                    <input type="number" name="phoneNumber" class="form-control form-control-ml" value="<?php echo $company->getPhoneNumber(); ?>">
                               </div>
+
+
+                              <div class="form-group">
+                                   <label for="">Logo:</label>
+                                   <img src="<?php echo FRONT_ROOT . UPLOADS_PATH . $company->getLogoFileName(); ?>" alt="Company-Logo" width="100" height="100">
+                                   <input type="file" name="logo" required class="form-control-file">
+
+                              </div>
+
                          </div>
                          <div class="row">
                               <div class="button-conteiner">
                                    <button type="submit" name="modify-company-button" class="btn btn-primary ml-auto d-block">Guardar</button>
+
                                    <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT . "Company/DeleteCompany/" . $company->getIdCompany(); ?>">Eliminar Empresa</a>
+
                               </div>
 
                          </div>

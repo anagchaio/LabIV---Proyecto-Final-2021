@@ -106,7 +106,7 @@ class CompanyController
         return $uploadSuccess;
     }
 
-    public function ModifyCompany($companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logo)
+    public function ModifyCompany($companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logoName, $logo)
     {
         Utils::checkAdminSession();
         $company = $this->companyDAO->GetByCompanyId($companyId);
