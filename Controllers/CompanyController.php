@@ -127,7 +127,6 @@ class CompanyController
             $uploadSuccess = $this->UploadLogo($logo, "modify");
             $company->setLogo($logo);
         }
-        var_dump($company);
         $this->companyDAO->modifyCompany($company);
 
         $this->ShowListView();
