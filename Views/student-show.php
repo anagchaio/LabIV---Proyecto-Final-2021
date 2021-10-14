@@ -15,7 +15,7 @@
                          echo  "<h4> Genero: " . $student->getGender() . "</h4>";
                          echo  "<h4> Fecha Nacimiento: " . $student->getBirthDate() . "</h4>";
                          echo  "<h4> Legajo: " . $student->getFileNumber() . "</h4>";
-                         echo  "<h4> Carrera: " . $student->getCareerId() . "</h4>";
+                         echo  "<h4> Carrera: " . $careerName . "</h4>";
                          echo  "<h4> Email: " . $student->getEmail() . "</h4>";
                          echo  "<h4> Telefono: " . $student->getPhoneNumber() . "</h4>";
                     }
