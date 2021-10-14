@@ -38,15 +38,16 @@ class CompanyController
         Utils::checkAdminSession();
         require_once(VIEWS_PATH . "company-add.php");
     }
+
     public function RedirectShowForm()
     {
-        Utils::checkAdminSession();
+        //Utils::checkAdminSession();
         require_once(VIEWS_PATH . "admin-company-show.php");
     }
 
     public function DeleteCompany($idCompany)
     {
-        Utils::checkSession();
+        Utils::checkAdminSession();
         if (isset($adminLogged)) {
             $company = $this->companyDAO->GetByCompanyId($idCompany);
             $this->companyDAO->delete($company);
@@ -127,7 +128,7 @@ class CompanyController
             $uploadSuccess = $this->UploadLogo($logo, "modify");
             $company->setLogo($logo);
         }
-        var_dump($company);
+        // var_dump($company);
         $this->companyDAO->modifyCompany($company);
 
         $this->ShowListView();
