@@ -1,21 +1,5 @@
 [
     {
-        "idCompany": 3,
-        "name": "Random3",
-        "yearFoundantion": "2015",
-        "description": "test3",
-        "city": "cityTest",
-        "logo": {
-            "name": "Test image2.png",
-            "type": "image\/png",
-            "tmp_name": "C:\\wamp64\\tmp\\phpBA21.tmp",
-            "error": 0,
-            "size": 7431
-        },
-        "email": "testing3@gmail.com",
-        "phoneNumber": "22233344"
-    },
-    {
         "idCompany": 4,
         "name": "test4",
         "yearFoundantion": "2015",

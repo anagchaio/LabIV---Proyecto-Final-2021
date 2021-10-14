@@ -345,3 +345,12 @@ nav.main-menu li.active > a,
     max-width: 1320px;
   }
 }
+.button-conteiner{
+  margin-top: 10vh;
+  margin-left: 2vh;
+  display: inline-flex;
+}
+
+.btn {
+  margin-right: 3vh;
+}
