@@ -1,6 +1,5 @@
 [
     {
-
         "idCompany": 4,
         "name": "testing4",
         "yearFoundantion": "2015",
@@ -31,5 +30,21 @@
         },
         "email": "test5@gmail.com",
         "phoneNumber": "57277872"
+    },
+    {
+        "idCompany": 6,
+        "name": "Company5",
+        "yearFoundantion": "1989",
+        "description": "Test",
+        "city": "Test",
+        "logo": {
+            "name": "Test image4.jpg",
+            "type": "image\/jpeg",
+            "tmp_name": "C:\\wamp64\\tmp\\phpC65E.tmp",
+            "error": 0,
+            "size": 29129
+        },
+        "email": "company5@gmail.com",
+        "phoneNumber": "444333111"
     }
 ]
