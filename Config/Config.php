@@ -1,9 +1,17 @@
 <?php namespace Config;
 
 define("ROOT", dirname(__DIR__) . "/");
+<<<<<<< HEAD
 define("FRONT_ROOT", "http://localhost/TPFINAL/LabIV---Proyecto-Final-2021/");//David
 //define("FRONT_ROOT", "http://localhost:8080/Lab4/LabIV---Proyecto-Final-2021/");
 //define("FRONT_ROOT", "http://localhost/ProjectoFinal/");
+=======
+
+define("FRONT_ROOT", "http://localhost/TPFINAL/LabIV---Proyecto-Final-2021/");//David
+//define("FRONT_ROOT", "/Lab4/practicaTPfinal/");
+//define("FRONT_ROOT", "http://localhost/Projecto%20Final/");
+
+>>>>>>> e39ca40c365f90ae161f750d7c78b1bed5390f63
 define("VIEWS_PATH", "Views/");
 define("UPLOADS_PATH", "Uploads/");
 define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "css/");
