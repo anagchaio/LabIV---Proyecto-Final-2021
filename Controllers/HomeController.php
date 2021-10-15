@@ -38,14 +38,19 @@ class HomeController
         }
     }
 
-    // public function RedirectAdm()
-    // {
-    //     Utils::checkAdminSession();
-    //     require_once(VIEWS_PATH . "admin-firstpage.php");
-    // }
-    public function RedirectAdm()
+    public function SelectNav()
     {
         Utils::checkAdminSession();
+        if (isset($_SESSION['admin'])) {
+            require_once(VIEWS_PATH . "navAlum.php");
+        } else {
+            require_once(VIEWS_PATH . "navAlum.php");
+        }
+    }
+    
+    public function RedirectAdm()
+    {
+        Utils::checkSession();
         if (isset($_SESSION['admin'])) {
             require_once(VIEWS_PATH . "admin-firstpage.php");
         } else {
