@@ -6,6 +6,7 @@ use Models\User as User;
 use Controllers\StudentController as StudentController;
 use Utils\Utils as Utils;
 use Models\Student as Student;
+use DAO\CareerDAO as CareerDAO;
 
 class HomeController
 {
