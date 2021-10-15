@@ -1,6 +1,7 @@
 <!-- Navigation-->
 <?php
-    require_once(VIEWS_PATH . "navAlum.php");
+               require_once(VIEWS_PATH . "nav-student.php");
+           
 ?>
 
 <body>
