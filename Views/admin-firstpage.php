@@ -1,13 +1,6 @@
 <!-- Navigation-->
 <?php
-use Utils\Utils as Utils;
-Utils::checkAdminSession();
-        if (isset($_SESSION['admin'])) {
-            require_once(VIEWS_PATH . "nav.php");
-        } else {
-            require_once(VIEWS_PATH . "navAlum.php");
-        }
-// require_once('navAlum.php');
+ require_once('nav.php');
 ?>
 <body>
 

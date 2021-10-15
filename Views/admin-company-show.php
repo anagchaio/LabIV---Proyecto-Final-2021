@@ -68,10 +68,6 @@ require_once('nav.php');
                                    <button type="submit" name="modify-company-button" class="btn btn-primary ml-auto d-block">Guardar</button>
 
                                    <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT . "Company/DeleteCompany/" . $company->getIdCompany(); ?>">Eliminar Empresa</a>
-<<<<<<< HEAD
-=======
-
->>>>>>> e39ca40c365f90ae161f750d7c78b1bed5390f63
                               </div>
 
                          </div>
