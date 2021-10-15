@@ -17,7 +17,7 @@
     },
     {
         "idCompany": 5,
-        "name": "Company5",
+        "name": "Company2",
         "yearFoundantion": "2015",
         "description": "test5",
         "city": "Mar del Plata",
@@ -46,5 +46,21 @@
         },
         "email": "company5@gmail.com",
         "phoneNumber": "444333111"
+    },
+    {
+        "idCompany": 8,
+        "name": "Test2",
+        "yearFoundantion": "2000",
+        "description": "Test",
+        "city": "Test",
+        "logo": {
+            "name": "Test image.png",
+            "type": "image\/png",
+            "tmp_name": "C:\\wamp64\\tmp\\php25E4.tmp",
+            "error": 0,
+            "size": 7432
+        },
+        "email": "testing2@gmail.com",
+        "phoneNumber": "7776666"
     }
 ]

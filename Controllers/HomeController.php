@@ -41,20 +41,22 @@ class HomeController
 
     public function SelectNav()
     {
-        Utils::checkAdminSession();
+        Utils::checkSession();
         if (isset($_SESSION['admin'])) {
-            require_once(VIEWS_PATH . "navAlum.php");
+            require_once(VIEWS_PATH . "nav.php");
         } else {
+            $student = $_SESSION['student'];
             require_once(VIEWS_PATH . "navAlum.php");
         }
     }
     
-    public function RedirectAdm()
+    public function RedirectHome()
     {
         Utils::checkSession();
         if (isset($_SESSION['admin'])) {
             require_once(VIEWS_PATH . "admin-firstpage.php");
         } else {
+            $student = $_SESSION['student'];
             require_once(VIEWS_PATH . "student-firstpage.php");
         }
        

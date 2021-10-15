@@ -4,7 +4,7 @@
      </span>
      <ul class="navbar-nav ml-auto">
           <li class="nav-item">               
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Home/RedirectAdm">Home</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Home/RedirectHome">Home</a>
           </li>
           <li class="nav-item">               
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Listado alumnos</a>
@@ -22,7 +22,7 @@
 
 
 <div class="menu-title">
-    <a href="<?php echo FRONT_ROOT ?>Home/RedirectAdm">
+    <a href="<?php echo FRONT_ROOT ?>Home/RedirectHome">
         <i class="fa fa-home fa-2x"></i>
         <h3 class="title">HOME</h3>
     </a>
