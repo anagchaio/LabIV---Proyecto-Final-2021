@@ -70,7 +70,7 @@
 body {
   background: url(../img/bg.jpg) no-repeat center center fixed;
   margin: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
@@ -197,13 +197,13 @@ p {
 .main-menu:hover,
 nav.main-menu.expanded {
   width: 250px;
-  overflow: visible;
+  /* overflow: visible; */
 }
 
 .main-menu {
   background:var(--bs-primary);
   border-right: 1px solid #e5e5e5;
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   height: 100%;
