@@ -18,7 +18,7 @@ class StudentController
 
         public function ShowListView()
         {
-            Utils::checkSession();
+            Utils::checkAdminSession();
             $students = $this->studentDAO->GetAll();
             $careers = $this->careerDAO->GetAll();
             require_once(VIEWS_PATH."student-list.php");
@@ -27,10 +27,15 @@ class StudentController
         public function ShowStudent($studentId)
         {
             Utils::checkSession();
-            $student = $this->studentDAO->GetByStudentId($studentId);
-            $career = $this->careerDAO->getCareerStudent($student);
-
-            require_once(VIEWS_PATH."student-show.php");
+            if($_SESSION['student']->getStudentId() == $studentId || isset($_SESSION['admin']) ) {
+                $student = $this->studentDAO->GetByStudentId($studentId);
+                $career = $this->careerDAO->getCareerStudent($student);
+    
+                require_once(VIEWS_PATH."student-show.php");
+            }  else {
+                Utils::checkAdminSession();
+            }
+            
         }
 
 
