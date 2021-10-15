@@ -1,5 +1,5 @@
 <?php
-require_once('nav-shared.php');
+require_once('nav.php');
 
 ?>
 <main class="py-5">

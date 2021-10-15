@@ -42,7 +42,7 @@ class HomeController
     {
         Utils::checkAdminSession();
         if (isset($_SESSION['admin'])) {
-            require_once(VIEWS_PATH . "nav.php");
+            require_once(VIEWS_PATH . "navAlum.php");
         } else {
             require_once(VIEWS_PATH . "navAlum.php");
         }
@@ -50,7 +50,7 @@ class HomeController
     
     public function RedirectAdm()
     {
-        Utils::checkAdminSession();
+        Utils::checkSession();
         if (isset($_SESSION['admin'])) {
             require_once(VIEWS_PATH . "admin-firstpage.php");
         } else {
