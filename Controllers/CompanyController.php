@@ -67,7 +67,7 @@ class CompanyController
             $newCompany->setDescription($description);
             $newCompany->setEmail($email);
             $newCompany->setPhoneNumber($phoneNumber);
-            $uploadSuccess = $this->UploadLogo($logo, "add");
+            $uploadSuccess = $this->UploadLogo($logo, "company-add.php");
             $newCompany->setLogo($logo);
             if ($uploadSuccess) {
                 $this->companyDAO->add($newCompany);
@@ -82,7 +82,7 @@ class CompanyController
     }
 
 
-    public function UploadLogo($logo, $method)
+    public function UploadLogo($logo, $fileView)
     {
         Utils::checkAdminSession();
         $uploadSuccess = false;
@@ -97,11 +97,11 @@ class CompanyController
                 $uploadSuccess = true;
             } else {
                 $uploadError = true;
-                require_once(VIEWS_PATH . "company-" . $method . ".php");
+                require_once(VIEWS_PATH . $fileView); 
             }
         } else {
             $notImageError = true;
-            require_once(VIEWS_PATH . "company-" . $method . ".php");
+            require_once(VIEWS_PATH . $fileView); 
         }
         return $uploadSuccess;
     }
@@ -114,7 +114,7 @@ class CompanyController
         if ($company->getEmail() != $email) {
             if ($this->companyDAO->GetByCompanyEmail($email) != null) {
                 $usedCompanyEmail = true;
-                require_once(VIEWS_PATH . "company-modify.php");
+                require_once(VIEWS_PATH . "admin-company-show.php");
             } else {
                 $company->setEmail($email);
             }
@@ -125,9 +125,11 @@ class CompanyController
         $company->setDescription($description);
         $company->setEmail($email);
         $company->setPhoneNumber($phoneNumber);
-        if (isset($logo['name'])) {
-            $uploadSuccess = $this->UploadLogo($logo, "modify");
-            $company->setLogo($logo);
+        if ($logo['error'] == 0) {
+            $uploadSuccess = $this->UploadLogo($logo, "admin-company-show.php");
+            if($uploadSuccess){
+                $company->setLogo($logo);
+            }
         }
         $this->companyDAO->modifyCompany($company);
 
