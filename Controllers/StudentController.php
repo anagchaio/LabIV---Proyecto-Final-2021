@@ -27,7 +27,8 @@ class StudentController
         public function ShowStudent($studentId)
         {
             Utils::checkSession();
-            if($_SESSION['student']->getStudentId() == $studentId || isset($_SESSION['admin']) ) {
+            
+            if(isset($_SESSION['admin']) || ($_SESSION['student']->getStudentId() == $studentId)) {
                 $student = $this->studentDAO->GetByStudentId($studentId);
                 $career = $this->careerDAO->getCareerStudent($student);
     
