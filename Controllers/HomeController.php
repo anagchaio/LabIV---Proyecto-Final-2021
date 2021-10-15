@@ -27,16 +27,11 @@ class HomeController
             $studentController = new StudentController();
             $student = new Student();
             $student = $studentController->getByEmail($email);
-            $careerDAO = new CareerDAO();
-            $career = $careerDAO->getCareerStudent($student);
-
 
             if ($student != null) {
                 $_SESSION['student'] = $student;
-                require_once(VIEWS_PATH . "student-firstpage.php");
-                require_once(VIEWS_PATH . "student-show.php");
-                
 
+                require_once(VIEWS_PATH . "student-firstpage.php");
             } else {
                 $invalidEmail = true;
                 require_once(VIEWS_PATH . "index.php");
