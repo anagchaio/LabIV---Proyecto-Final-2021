@@ -54,6 +54,7 @@
                 {
                     array_push($this->parameters, $file);
                 }
+                die(var_dump($this->parameters));
             }
         }
 
