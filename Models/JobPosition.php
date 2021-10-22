@@ -1,6 +1,6 @@
 <?php namespace Models;
 
-class JobPotion {
+class JobPosition {
 
     private $jobPositionId;
     private $careerId;
