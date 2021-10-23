@@ -22,6 +22,16 @@ CREATE TABLE companies(
 	constraint pk_company primary key (id_company)
 );
 
+
+CREATE TABLE users(
+	id_user int NOT NULL AUTO_INCREMENT,
+	email varchar(50) unique NOT NULL,
+	password varchar(50) NOT NULL,
+	name varchar(50) NOT NULL,
+	id_student int,
+	id_userType int NOT NULL
+);
+
 CREATE TABLE students(
 	id_student int NOT NULL AUTO_INCREMENT,
 	name varchar(50) NOT NULL,
