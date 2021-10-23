@@ -2,12 +2,38 @@
 namespace Models;
 
 class User {
+    private $userId;
     private $email;
+    private $password;
+    private $name;
+    private $studentId;
+    private $userTypeId;
 
 
-    function __construct($email)
+    function __construct()
     {
-        $this->email = $email;
+        
+    }
+
+
+    /**
+     * Get the value of userId
+     */ 
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set the value of userId
+     *
+     * @return  self
+     */ 
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
     }
 
     /**
@@ -26,6 +52,86 @@ class User {
     public function setEmail($email)
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of password
+     */ 
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set the value of password
+     *
+     * @return  self
+     */ 
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of name
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of studentId
+     */ 
+    public function getStudentId()
+    {
+        return $this->studentId;
+    }
+
+    /**
+     * Set the value of studentId
+     *
+     * @return  self
+     */ 
+    public function setStudentId($studentId)
+    {
+        $this->studentId = $studentId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of userTypeId
+     */ 
+    public function getUserTypeId()
+    {
+        return $this->userTypeId;
+    }
+
+    /**
+     * Set the value of userTypeId
+     *
+     * @return  self
+     */ 
+    public function setUserTypeId($userTypeId)
+    {
+        $this->userTypeId = $userTypeId;
 
         return $this;
     }

@@ -2,7 +2,7 @@ CREATE database BolsaDeEmpleo;
 
 use BolsaDeEmpleo;
 
-CREATE TABLE career(
+CREATE TABLE careers(
 	id_career int NOT NULL AUTO_INCREMENT,
 	description varchar(100) NOT NULL,
 	active boolean NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE career(
 );
 
 
-CREATE TABLE company(
+CREATE TABLE companies(
 	id_company int NOT NULL AUTO_INCREMENT,
 	name varchar(50) NOT NULL,
 	yearFoundantion DATE NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE company(
 	constraint pk_company primary key (id_company)
 );
 
-CREATE TABLE student(
+CREATE TABLE students(
 	id_student int NOT NULL AUTO_INCREMENT,
 	name varchar(50) NOT NULL,
 	lastName varchar(50) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE student(
 	constraint fk_idcareer foreign key (idcareer) references career(id_career)
 );
 
-CREATE TABLE jobPosition(
+CREATE TABLE jobPositions(
 	id_jobPosition int NOT NULL AUTO_INCREMENT,
 	description varchar(100) NOT NULL,
 	career_id int not null,
@@ -48,7 +48,7 @@ CREATE TABLE jobPosition(
 
 
 
-CREATE TABLE jobOffer(
+CREATE TABLE jobOffers(
 	id_jobOffer int NOT NULL AUTO_INCREMENT,
 	description varchar(300) NOT NULL,
 	limit_date DATE NOT NULL,
