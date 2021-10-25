@@ -9,7 +9,10 @@
             <h4 style="color: rgb(145, 39, 177)">
             <?php
                 if (isset($invalidEmail)) {
-                    echo "Error: el usuario no se encuentra en el sistema.";
+                    echo "Error: el email no se encuentra en el sistema. Debe registrarse.";
+                }
+                if (isset($succesfulRegistration)) {
+                    echo "El usuario fue registrado correctamente en el sistema.";
                 }
                 if (isset($userNotLogged)) {
                     echo "Error: Debe estar loggeado para acceder.";

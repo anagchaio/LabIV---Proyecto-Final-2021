@@ -9,7 +9,10 @@
             <h4 style="color: rgb(145, 39, 177)">
             <?php
                 if (isset($invalidEmail)) {
-                    echo "Error: el usuario no se encuentra en el sistema.";
+                    echo "Error: el email no corresponde a un estudiante activo.";
+                }
+                if (isset($registedEmail)) {
+                    echo "Error: el email ya se encuentra en el sistema.";
                 }
             ?>
             </h4>

@@ -3,10 +3,8 @@
 namespace Controllers;
 
 use Controllers\StudentController as StudentController;
-use Utils\Utils as Utils;
 use Models\Student as Student;
 use Models\User as User;
-use DAO\CareerDAO as CareerDAO;
 use DAO\UserDAO;
 
 class UserController{
@@ -29,10 +27,10 @@ class UserController{
                 $newUser = new User();
                 $newUser->setEmail($email);
                 $newUser->setPassword($password);
-                $newUser->setName($student->getName());
+                $newUser->setName($student->getFirstName());
                 $newUser->setStudentId($student->getStudentId());
                 $newUser->setUserTypeId(2);
-
+        
                 $this->UserDAO->Add($newUser);
 
                 $succesfulRegistration = true;

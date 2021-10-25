@@ -13,36 +13,30 @@
 
         public function Add(User $user)
         {
-            $response = NULL;
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (userId, email, password, name, studentId, userTypeId) 
-                VALUES (:userId, :email, :password, :name, :studentId, :userTypeId);";
+                $query = "INSERT INTO ".$this->tableName." (email, password, name, id_student, id_userType) 
+                VALUES (:email, :password, :name, :id_student, :id_userType);";
                 
-                $parameters["userId"] = $user->getUserId();
+
                 $parameters["email"] = $user->getEmail();
                 $parameters["password"] = $user->getPassword();
                 $parameters["name"] = $user->getName();
-                $parameters["studentId"] = $user->getStudentId();
-                $parameters["userTypeId"] = $user->getUserTypeId();
+                $parameters["id_student"] = $user->getStudentId();
+                $parameters["id_userType"] = $user->getUserTypeId();
 
                 $this->connection = Connection::GetInstance();
 
-                $response = $this->connection->ExecuteNonQuery($query, $parameters);
+                return $this->connection->ExecuteNonQuery($query, $parameters);
             }
             catch(Exception $exception)
             {
                 $response = $exception->getMessage();
             }
-            finally
-            {
-                return $response;
-            }
         }
 
         public function GetAll()
         {
-            $response = NULL;
             try
             {
                 $userList = array();
@@ -62,19 +56,14 @@
                     $user->setName($row["name"]);
                     $user->setStudentId($row["id_student"]);
                     $user->setUserTypeId($row["id_userType"]);
-
+                    
                     array_push($userList, $user);
                 }
-
                 return $userList;
             }
             catch(Exception $exception)
             {
                 $response = $exception->getMessage();
-            }
-            finally
-            {
-                return $response;
             }
             
         }
@@ -82,6 +71,7 @@
         public function getUserByEmail($email){
             $userExist = NULL;
             $users = $this->GetAll();
+
             foreach($users as $user){
                 if($user->getEmail() == $email){
                     $userExist = $user;

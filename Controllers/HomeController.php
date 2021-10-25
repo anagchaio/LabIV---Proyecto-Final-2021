@@ -22,29 +22,38 @@ class HomeController
         $user = $userController->getUserByEmail($email);
 
         if($user != NULL) {
+            if($password == $user->getPassword()) {
 
-            if ($email == ADMIN_EMAIL && $password == ADMIN_PASSWORD) {
+                if ($user->getUserTypeId() == 1) {
             
-                $_SESSION['admin'] = $user;
-                require_once(VIEWS_PATH . "admin-firstpage.php");
+                    $_SESSION['admin'] = $user;
+                    require_once(VIEWS_PATH . "admin-firstpage.php");
+        
+                } else {
+                    $studentController = new StudentController();
+                    $student = new Student();
+                    $student = $studentController->getByEmail($email);
+        
+                    if ($student != null) {
+                        
+                        $_SESSION['student'] = $user;
+                        require_once(VIEWS_PATH . "student-firstpage.php");
     
+                    } else {
+                        $invalidEmail = true;
+                        require_once(VIEWS_PATH . "index.php");
+                    }
+                }
+
             } else {
-                $studentController = new StudentController();
-                $student = new Student();
-                $student = $studentController->getByEmail($email);
-    
-                if ($student != null) {
-
-                    $_SESSION['student'] = $user;
-                    require_once(VIEWS_PATH . "student-firstpage.php");
-                } 
+                $invalidPassword = true;
+                require_once(VIEWS_PATH . "index.php");
             }
-
-        }else {
-            $emailNotRegisted = true;
+            
+        } else {
+            $invalidEmail = true;
             require_once(VIEWS_PATH . "index.php");
         }
-        
     }
 
     public function SelectNav()

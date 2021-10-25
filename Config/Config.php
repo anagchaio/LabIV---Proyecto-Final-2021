@@ -4,16 +4,16 @@ define("ROOT", dirname(__DIR__) . "/");
 
 //define("FRONT_ROOT", "http://localhost/TPFINAL/LabIV---Proyecto-Final-2021/");//David
 //define("FRONT_ROOT", "/Lab4/practicaTPfinal/");
-define("FRONT_ROOT", "http://localhost:8080/Lab4/LabIV---Proyecto-Final-2021/");
-//define("FRONT_ROOT", "http://localhost/Projecto%20Final/");
+//define("FRONT_ROOT", "http://localhost:8080/Lab4/LabIV---Proyecto-Final-2021/");
+define("FRONT_ROOT", "http://localhost/Projecto%20Final/");
 
 define("VIEWS_PATH", "Views/");
 define("UPLOADS_PATH", "Uploads/");
 define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "css/");
 define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "js/");
 
-define("DB_HOST", "localhost");
-define("DB_NAME", "file_upload_example");
+define("DB_HOST", "localhost"); //Ana
+define("DB_NAME", "employmentExchange");
 define("DB_USER", "root");
 define("DB_PASS", "");
 

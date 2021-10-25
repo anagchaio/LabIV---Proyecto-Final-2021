@@ -2,7 +2,7 @@
     namespace DAO;
 
     use \Exception as Exception;
-    use DAO\IJobPositionDAO as IJobPositionDAO;
+    use DAO\IJobOfferDAO as IJobOfferDAO;
     use Models\JobOffer as JobOffer;    
     use DAO\Connection as Connection;
 
