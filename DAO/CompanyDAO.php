@@ -11,7 +11,7 @@ class CompanyDAO implements ICompanyDAO
     private $fileName;
 
     private $connection;
-    private $tableName = "companies";
+    private $tableName = "company";
 
     public function __construct()
     {
@@ -104,8 +104,42 @@ class CompanyDAO implements ICompanyDAO
 
     public function getAll()
     {
-        $this->retrieveData();
-        return $this->listOfCompanies;
+        $response = NULL;
+        try
+        {
+            $companyList = array();
+
+            $companyQuery = "SELECT * FROM ".$this->tableName;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($companyQuery);
+
+            foreach ($resultSet as $row)
+            {                
+                $company = new Company();
+                $company->setIdCompany($row["id_company"]);
+                $company->setName($row["name"]);
+                $company->setYearFoundantion($row["yearFoundation"]);
+                $company->setCity($row["city"]);
+                $company->setDescription($row["description"]);
+                $company->setLogo($row["logo"]);
+                $company->setEmail($row["email"]);
+                $company->setPhoneNumber($row["phonenumber"]);
+
+                array_push($companyList, $company);
+            }
+
+            return $companyList;
+        }
+        catch(Exception $exception)
+        {
+            $response = $exception->getMessage();
+        }
+        finally
+        {
+            return $response;
+        }
     }
 
     public function GetByCompanyEmail($companyEmail)
