@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Models\User as User;
 use Controllers\StudentController as StudentController;
+use Controllers\UserController as UserController;
 use Utils\Utils as Utils;
 use Models\Student as Student;
 use DAO\CareerDAO as CareerDAO;
@@ -15,28 +16,35 @@ class HomeController
         require_once(VIEWS_PATH . "index.php");
     }
 
-    public function login($email)
+    public function login($email, $password)
     {
+        $userController = new UserController();
+        $user = $userController->getUserByEmail($email);
 
-        if ($email == ADMIN_ACCESS) {
-            $user = new User($email);
-            $_SESSION['admin'] = $user;
+        if($user != NULL) {
 
-            require_once(VIEWS_PATH . "admin-firstpage.php");
-        } else {
-            $studentController = new StudentController();
-            $student = new Student();
-            $student = $studentController->getByEmail($email);
-
-            if ($student != null) {
-                $_SESSION['student'] = $student;
-
-                require_once(VIEWS_PATH . "student-firstpage.php");
+            if ($email == ADMIN_EMAIL && $password == ADMIN_PASSWORD) {
+            
+                $_SESSION['admin'] = $user;
+                require_once(VIEWS_PATH . "admin-firstpage.php");
+    
             } else {
-                $invalidEmail = true;
-                require_once(VIEWS_PATH . "index.php");
+                $studentController = new StudentController();
+                $student = new Student();
+                $student = $studentController->getByEmail($email);
+    
+                if ($student != null) {
+
+                    $_SESSION['student'] = $user;
+                    require_once(VIEWS_PATH . "student-firstpage.php");
+                } 
             }
+
+        }else {
+            $emailNotRegisted = true;
+            require_once(VIEWS_PATH . "index.php");
         }
+        
     }
 
     public function SelectNav()
@@ -60,6 +68,11 @@ class HomeController
             require_once(VIEWS_PATH . "student-firstpage.php");
         }
        
+    }
+
+    public function ShowRegister()
+    {
+        require_once(VIEWS_PATH . "user-registration.php");
     }
 
     public function Logout()
