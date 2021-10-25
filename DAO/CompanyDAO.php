@@ -10,6 +10,9 @@ class CompanyDAO implements ICompanyDAO
     private $listOfCompanies = array();
     private $fileName;
 
+    private $connection;
+    private $tableName = "companies";
+
     public function __construct()
     {
         $this->fileName = ROOT . "Data/companies.json";
@@ -58,9 +61,33 @@ class CompanyDAO implements ICompanyDAO
 
     public function add(Company $company)
     {
-        $this->retrieveData();
-        array_push($this->listOfCompanies, $company);
-        $this->saveData();
+        $response = NULL;
+        try
+        {
+            $companyInsertquery = "INSERT INTO ".$this->tableName." (idCompany, name, yearFoundation, city, description, logo, email,phoneNumber) 
+            VALUES (:idCompany, :name, :yearFoundation, :city, :description, :logo, :email, :phoneNumber);";
+            
+            $parameters["idCompany"] = $company->getIdCompany();
+            $parameters["name"] = $company->getName();
+            $parameters["yearFoundation"] = $company->getYearFoundantion();
+            $parameters["city"] = $company->getCity();
+            $parameters["description"] = $company->getDescription();
+            $parameters["logo"] = $company->getLogo();
+            $parameters["email"] = $company->getEmail();
+            $parameters["phoneNumber"] = $company->getPhoneNumber();
+
+            $this->connection = Connection::GetInstance();
+
+            $response = $this->connection->ExecuteNonQuery($companyInsertquery, $parameters);
+        }
+        catch(Exception $exception)
+        {
+            $response = $exception->getMessage();
+        }
+        finally
+        {
+            return $response;
+        }
     }
 
     public function delete(Company $companyToDelete)
