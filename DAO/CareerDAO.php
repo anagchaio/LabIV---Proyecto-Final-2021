@@ -1,90 +1,74 @@
 <?php
-
     namespace DAO;
 
-    use Models\Career as Career;
+    use \Exception as Exception;
     use DAO\ICareerDAO as ICareerDAO;
+    use Models\Career as Career;    
+    use DAO\Connection as Connection;
 
-    class CareerDAO implements ICareerDAO{
+    class CareerDAO implements ICareerDAO
+    {
+        private $connection;
+        private $tableName = "careers";
 
-        private $careerList = array();
+        public function Add(Career $career)
+        {
+            try
+            {
+                $query = "INSERT INTO ".$this->tableName." (id_career, description, active) 
+                VALUES (:id_career, :description, :active);";
+                
 
-        public function __construct(){
+                $parameters["id_career"] = $career->getCareerId();
+                $parameters["description"] = $career->getDescription();
+                $parameters["active"] = $career->getActive();
+
+                $this->connection = Connection::GetInstance();
+
+                return $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $exception)
+            {
+                $response = $exception->getMessage();
+            }
+        }
+
+        public function GetAll()
+        {
+            try
+            {
+                $userList = array();
+
+                $query = "SELECT * FROM ".$this->tableName;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $career = new Career();
+                    $career->setCareerId($row["id_career"]);
+                    $career->setDescription($row["description"]);
+                    $career->setActive($row["active"]);
+                    
+                    array_push($careerList, $career);
+                }
+                return $careerList;
+            }
+            catch(Exception $exception)
+            {
+                $response = $exception->getMessage();
+            }
             
         }
 
-
-        public function GetAll(){
-
-            $this->RetrieveData();
-            return $this->careerList;
-
+        public function GetAllActive()
+        {
+            
         }
 
-        public function Delete(Career $careerToDelete){
-
+        public function getCareerById($idCareer){
+            
         }
-
-        private function RetrieveData(){
-         
-            $this->careerList = array();
-
-            $options = array(
-                'http' => array(
-                'method'=>"GET",
-                'header'=>"x-api-key: " . API_KEY)
-            );
-
-            $context = stream_context_create($options);
-
-            $response = file_get_contents(API_URL .'Career', false, $context);
-
-            $arrayToDecode = json_decode($response, true);
-          
-          foreach($arrayToDecode as $valuesArray){
-            $career = new Career();
-            $career->setCareerId($valuesArray['careerId']);
-            $career->setDescription($valuesArray['description']);
-            $career->setActive($valuesArray['active']);
-
-            array_push($this->careerList, $career);
-
-          }
-
-        }
-
-        public function GetAllActive(){
-            /* $this->RetrieveData();
-            return array_filter(
-                $this->careerList,
-                fn($activeCareer) => $activeCareer->getActive() === true
-             ); */
-
-        }
-
-        public function GetCareerById($careerId){
-            $this->RetrieveData();
-
-            foreach ($this->careerList as $career) {
-                if ($career->getCareerId() == $careerId){
-                    return $career;
-                }
-            }
-            return null;
     }
-
-    public function getCareerStudent($student){
-        $this->RetrieveData();
-            foreach($this->careerList as $career){
-                if($student->getCareerId() == $career->getCareerId())
-                return $career;
-            }
-        
-    }
-
-    }
-
-
-
-
-?> 

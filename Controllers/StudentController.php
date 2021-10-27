@@ -2,25 +2,25 @@
     namespace Controllers;
 
     use DAO\StudentDAO as StudentDAO;
-    use DAO\CareerDAO as CareerDAO;
+    use DAO\API_CareerDAO as API_CareerDAO;
     use Utils\Utils as Utils;
 
 class StudentController
     {
         private $studentDAO;
-        private $careerDAO;
+        private $APIcareerDAO;
 
         public function __construct()
         {
             $this->studentDAO = new StudentDAO();
-            $this->careerDAO = new CareerDAO();
+            $this->APIcareerDAO = new API_CareerDAO();
         }
 
         public function ShowListView()
         {
             Utils::checkAdminSession();
             $students = $this->studentDAO->GetAll();
-            $careers = $this->careerDAO->GetAll();
+            $careers = $this->APIcareerDAO->GetAll();
             require_once(VIEWS_PATH."student-list.php");
         }
 
@@ -30,7 +30,7 @@ class StudentController
             
             if(isset($_SESSION['admin']) || ($_SESSION['student']->getStudentId() == $studentId)) {
                 $student = $this->studentDAO->GetByStudentId($studentId);
-                $career = $this->careerDAO->getCareerStudent($student);
+                $career = $this->APIcareerDAO->getCareerStudent($student);
     
                 require_once(VIEWS_PATH."student-show.php");
             }  else {
