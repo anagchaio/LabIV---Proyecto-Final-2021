@@ -37,7 +37,7 @@ class UserController{
                 require_once(VIEWS_PATH . "index.php");
             } else {
                 $registedEmail = true;
-                require_once(VIEWS_PATH . "index.php");
+                require_once(VIEWS_PATH . "user-registration.php");
             }
             
         } else {
