@@ -62,5 +62,37 @@
         },
         "email": "testing2@gmail.com",
         "phoneNumber": "7776666"
+    },
+    {
+        "idCompany": 9,
+        "name": "Test1",
+        "yearFoundantion": "2021",
+        "description": "test",
+        "city": "Mar del Plata",
+        "logo": {
+            "name": "Test image4.jpg",
+            "type": "image\/jpeg",
+            "tmp_name": "C:\\wamp64\\tmp\\phpE5D1.tmp",
+            "error": 0,
+            "size": 29129
+        },
+        "email": "test1@gmail.com",
+        "phoneNumber": "6626261"
+    },
+    {
+        "idCompany": 10,
+        "name": "Test1",
+        "yearFoundantion": "2021",
+        "description": "test",
+        "city": "Mar del Plata",
+        "logo": {
+            "name": "Test image4.jpg",
+            "type": "image\/jpeg",
+            "tmp_name": "C:\\wamp64\\tmp\\php6AE2.tmp",
+            "error": 0,
+            "size": 29129
+        },
+        "email": "companyTest@gmail.com",
+        "phoneNumber": "1"
     }
 ]
