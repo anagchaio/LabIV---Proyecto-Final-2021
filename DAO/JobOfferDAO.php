@@ -5,8 +5,9 @@
     use DAO\IJobOfferDAO as IJobOfferDAO;
     use Models\JobOffer as JobOffer;    
     use DAO\Connection as Connection;
+use Models\JobOfferForView;
 
-    class JobOfferDAO implements IJobOfferDAO
+class JobOfferDAO implements IJobOfferDAO
     {
         private $connection;
         private $tableName = "jobOffers";
@@ -43,7 +44,6 @@
 
         public function GetAll()
         {
-            $response = NULL;
             try
             {
                 $jobOfferList = array();
@@ -74,10 +74,47 @@
             {
                 $response = $exception->getMessage();
             }
-            finally
+
+        }
+
+        public function GetList()
+        {
+            try
             {
-                return $response;
+                $jobOfferList = array();
+
+                $query = "SELECT j.id_jobOffer, cp.company_name, j.jobOffer_description, p.jobPosition_description, 
+                cr.career_description, j.limit_date, j.state, u.id_student
+                FROM jobOffers j
+                INNER JOIN companies cp on j.company_id = cp.id_company
+                INNER JOIN users u on j.student_id = u.id_student
+                INNER JOIN jobPositions p on j.jobPosition_id = p.id_jobPosition
+                INNER JOIN careers cr on p.career_id = cr.id_career;";
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $jobOffer = new JobOffer();
+                    $jobOffer->setJobOfferId($row["id_jobOffer"]);
+                    $jobOffer->setCompany_name($row["company_name"]);
+                    $jobOffer->setJobOffer_description($row["jobOffer_description"]);
+                    $jobOffer->setJobPosition_description($row["jobPosition_description"]);
+                    $jobOffer->setCareer_description($row["career_description"]);
+                    $jobOffer->setLimitDate($row["limit_date"]);
+                    $jobOffer->setState($row["state"]);
+
+                    array_push($jobOfferList, $jobOffer);
+                }
+
+                return $jobOfferList;
             }
-            
+            catch(Exception $exception)
+            {
+                $response = $exception->getMessage();
+            }
+
         }
     }
