@@ -97,16 +97,16 @@ class JobOfferDAO implements IJobOfferDAO
                 
                 foreach ($resultSet as $row)
                 {                
-                    $jobOfferforView = new JobOfferForView();
-                    $jobOfferforView->setJobOfferId($row["id_jobOffer"]);
-                    $jobOfferforView->setCompanyName($row["company_name"]);
-                    $jobOfferforView->setJobOffer_description($row["jobOffer_description"]);
-                    $jobOfferforView->setJobPosition_description($row["jobPosition_description"]);
-                    $jobOfferforView->setCareer_description($row["career_description"]);
-                    $jobOfferforView->setLimitDate($row["limit_date"]);
-                    $jobOfferforView->setState($row["state"]);
+                    $jobOffer = new JobOffer();
+                    $jobOffer->setJobOfferId($row["id_jobOffer"]);
+                    $jobOffer->setCompany_name($row["company_name"]);
+                    $jobOffer->setJobOffer_description($row["jobOffer_description"]);
+                    $jobOffer->setJobPosition_description($row["jobPosition_description"]);
+                    $jobOffer->setCareer_description($row["career_description"]);
+                    $jobOffer->setLimitDate($row["limit_date"]);
+                    $jobOffer->setState($row["state"]);
 
-                    array_push($jobOfferList, $jobOfferforView);
+                    array_push($jobOfferList, $jobOffer);
                 }
 
                 return $jobOfferList;

@@ -15,14 +15,17 @@ class JobOfferController {
         $this->jobOfferDAO = new JobOfferDAO();
     }
 
+    //method, view
     public function add() {
 
     }
 
+    //method, DAO, view
     public function update() {
 
     }
 
+    //method, DAO, view
     public function delete() {
 
     }
@@ -31,10 +34,6 @@ class JobOfferController {
         Utils::checkSession();
         $jobOffers = $this->jobOfferDAO->GetList();
         require_once(VIEWS_PATH . "jobOffer-list.php");
-
     }
-
-
-
 
 }

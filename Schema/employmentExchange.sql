@@ -4,7 +4,7 @@ use BolsaDeEmpleo;
 
 CREATE TABLE careers(
 	id_career int NOT NULL AUTO_INCREMENT,
-	description varchar(100) NOT NULL,
+	career_description varchar(100) NOT NULL,
 	active boolean NOT NULL,
 	constraint pk_career primary key (id_career)
 );
@@ -12,7 +12,7 @@ CREATE TABLE careers(
 
 CREATE TABLE companies(
 	id_company int NOT NULL AUTO_INCREMENT,
-	name varchar(50) NOT NULL,
+	company_name varchar(50) NOT NULL,
 	yearFoundantion DATE NOT NULL,
 	city varchar(50) NOT NULL,
 	description varchar(100) NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE companies(
 
 CREATE TABLE jobPositions(
 	id_jobPosition int NOT NULL AUTO_INCREMENT,
-	description varchar(100) NOT NULL,
+	jobPosition_description varchar(100) NOT NULL,
 	career_id int not null,
 	constraint pk_jobPosition primary key (id_jobPosition),
 	constraint fk_career_id foreign key(career_id) references career(id_career)
@@ -32,7 +32,7 @@ CREATE TABLE jobPositions(
 
 CREATE TABLE jobOffers(
 	id_jobOffer int NOT NULL AUTO_INCREMENT,
-	description varchar(300) NOT NULL,
+	jobOffer_description varchar(300) NOT NULL,
 	limit_date DATE NOT NULL,
 	state boolean NOT NULL,
 	company_id int NOT NULL,
