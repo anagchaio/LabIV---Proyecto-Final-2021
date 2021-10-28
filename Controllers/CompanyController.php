@@ -59,22 +59,30 @@ class CompanyController
     {
         Utils::checkAdminSession();
         if ($this->companyDAO->GetByCompanyEmail($email) == null) {
-            $newCompany = new Company();
-            $newCompany->setIdCompany($this->companyDAO->getCompanyLastId());
-            $newCompany->setName($companyName);
-            $newCompany->setYearFoundantion($yearFoundantion);
-            $newCompany->setCity($city);
-            $newCompany->setDescription($description);
-            $newCompany->setEmail($email);
-            $newCompany->setPhoneNumber($phoneNumber);
-            $uploadSuccess = $this->UploadLogo($logo, "company-add.php");
-            $newCompany->setLogo($logo);
-            if ($uploadSuccess) {
-                $this->companyDAO->add($newCompany);
-                $company = $newCompany;
-                $companyId = $newCompany->getIdCompany();
-                $this->ShowListView();
+            if($yearFoundantion <= date("Y")){
+
+                $newCompany = new Company();
+                $newCompany->setIdCompany($this->companyDAO->getCompanyLastId());
+                $newCompany->setName($companyName);
+                $newCompany->setYearFoundantion($yearFoundantion);
+                $newCompany->setCity($city);
+                $newCompany->setDescription($description);
+                $newCompany->setEmail($email);
+                $newCompany->setPhoneNumber($phoneNumber);
+                $uploadSuccess = $this->UploadLogo($logo, "company-add.php");
+                $newCompany->setLogo($logo);
+                if ($uploadSuccess) {
+                    $this->companyDAO->add($newCompany);
+                    $company = $newCompany;
+                    $companyId = $newCompany->getIdCompany();
+                    $this->ShowListView();
+                }
+
+            }else {
+                $yearNotValid = true;
+                require_once(VIEWS_PATH . "company-add.php");
             }
+            
         } else {
             $usedCompanyEmail = true;
             require_once(VIEWS_PATH . "company-add.php");
