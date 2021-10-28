@@ -15,37 +15,22 @@ require_once('nav-shared.php');
                     <th>Carrera</th>
                     <th>Fecha limite</th>
                     <th>Estado</th>
-
-                   
-
+                    <th>Ver</th>
                 </thead>
                 <tbody>
                     <?php
                     if (isset($jobOffers)) {
                         foreach ($jobOffers as $jobOffer) {
                             echo  "<tr>";
-                            if(isset($careers)){
-                                foreach($careers as $career){
-                                     if($career->getCareerId() == $student->getCareerId()){
-                                          echo  "<td>" . $career->getDescription()  . "</td>";
-                                          $careerName = $career->getDescription();
-                                     }
-                                }
-                           } 
-                            echo  "<td>" . $jobOffer->getName() . "</td>";
-                            echo  "<td>" . $jobOffer->getCity() . "</td>";
-                            echo  "<td>" . $jobOffer->getDescription() . "</td>";
-                            if(isset($careers)){
-                                foreach($careers as $career){
-                                     if($career->getCareerId() == $jobOffer->getCareerId()){
-                                          echo  "<td>" . $career->getDescription()  . "</td>";
-                                          $careerName = $career->getDescription();
-                                     }
-                                }
-                           } 
+                            echo  "<td>" . $jobOffer->getCompanyName() . "</td>";
+                            echo  "<td>" . $jobOffer->getJobOffer_description() . "</td>";
+                            echo  "<td>" . $jobOffer->getJobPosition_description() . "</td>";
+                            echo  "<td>" . $jobOffer->getCareer_description() . "</td>";
+                            echo  "<td>" . $jobOffer->getLimitDate() . "</td>";
+                            echo  "<td>" . $jobOffer->getState() . "</td>";
 
-                            $companyId = $company->getIdCompany();
-                            echo "<td><a href=" . FRONT_ROOT . "Company/ShowCompany/" . $companyId . ">Ver</a></td>";
+                            $jobOfferId = $jobOffer->getJobOfferId();
+                            echo "<td><a href=" . FRONT_ROOT . "JobOffer/ShowOffer/" . $jobOfferId . ">+ info</a></td>";
                         }
                     }
                     ?>

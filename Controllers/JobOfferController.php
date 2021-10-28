@@ -29,7 +29,7 @@ class JobOfferController {
 
     public function ShowListView() {
         Utils::checkSession();
-        $jobOffers = $this->jobOfferDAO->GetAll();
+        $jobOffers = $this->jobOfferDAO->GetList();
         require_once(VIEWS_PATH . "jobOffer-list.php");
 
     }

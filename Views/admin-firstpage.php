@@ -13,7 +13,7 @@
             <h5 class="mb-5"><em>En esta interfaz prodrás realizar las siguientes acciones</em></h5>
             <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Lista de Empresas</a>
             <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Company/RedirectAddForm">Agregar Empresa</a>
-            <a class="btn btn-primary btn-xl" href="#">Lista de Propuestas</a>
+            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">Lista de Propuestas</a>
             <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Lista de Alumnos</a>
         </div>
     </header>
