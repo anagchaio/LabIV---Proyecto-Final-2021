@@ -4,6 +4,7 @@ namespace DAO;
 
 use \Exception as Exception;
 use DAO\ICareerDAO as ICareerDAO;
+use DAO\API_CareerDAO as API_CareerDAO;
 use Models\Career as Career;
 use DAO\Connection as Connection;
 
@@ -15,17 +16,17 @@ class CareerDAO implements ICareerDAO
     public function Add(Career $career)
     {
         try {
-            $query = "INSERT INTO " . $this->tableName . " (id_career, description, active) 
-                VALUES (:id_career, :description, :active);";
+            $query = "INSERT INTO " . $this->tableName . " (id_career, career_description, active) 
+                VALUES (:id_career, :career_description, :active);";
 
 
             $parameters["id_career"] = $career->getCareerId();
-            $parameters["description"] = $career->getDescription();
+            $parameters["career_description"] = $career->getDescription();
             $parameters["active"] = $career->getActive();
 
             $this->connection = Connection::GetInstance();
-
             return $this->connection->ExecuteNonQuery($query, $parameters);
+
         } catch (Exception $exception) {
             $response = $exception->getMessage();
         }
@@ -34,7 +35,7 @@ class CareerDAO implements ICareerDAO
     public function GetAll()
     {
         try {
-            $userList = array();
+            $careerList = array();
 
             $query = "SELECT * FROM " . $this->tableName;
 
@@ -45,12 +46,13 @@ class CareerDAO implements ICareerDAO
             foreach ($resultSet as $row) {
                 $career = new Career();
                 $career->setCareerId($row["id_career"]);
-                $career->setDescription($row["description"]);
+                $career->setDescription($row["career_description"]);
                 $career->setActive($row["active"]);
 
                 array_push($careerList, $career);
             }
             return $careerList;
+
         } catch (Exception $exception) {
             $response = $exception->getMessage();
         }
@@ -62,12 +64,51 @@ class CareerDAO implements ICareerDAO
 
     public function getCareerById($idCareer)
     {
+        $foundCareer = NULL;
         $careers = $this->GetAll();
         foreach ($careers as $career) {
             if ($career->getCareerId() == $idCareer) {
 
-                return $career->getDescription();
+                $foundCareer = $career;
             }
+        }
+        return $foundCareer;
+    }
+
+    public function Update(Career $career)
+    {
+        try {
+
+            $query = "UPDATE ". $this->tableName ." SET career_description=:career_description, active=:active
+            WHERE id_career = :id_career;";
+
+            $parameters["id_career"] = $career->getCareerId();
+            $parameters["career_description"] = $career->getDescription();
+            $parameters["active"] = $career->getActive();
+
+            $this->connection = Connection::GetInstance();
+
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+            
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
+        }
+    }
+    
+
+
+    public function updateCareersFromAPI(){
+
+        $API_CareerDAO = new API_CareerDAO();
+        $careersFromAPI = $API_CareerDAO->GetAll();
+
+        foreach($careersFromAPI as $APICareer){
+            if($this->getCareerById($APICareer->getCareerId())!=null){
+                $this->Update($APICareer);
+            } else {
+                $this->Add($APICareer);
+            }
+
         }
     }
 }

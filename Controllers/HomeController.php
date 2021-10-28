@@ -18,8 +18,8 @@ class HomeController
 
     public function login($email, $password)
     {
-        $userController = new UserController();
-        $user = $userController->getUserByEmail($email);
+        $adminController = new AdminController();
+        $user = $adminController->getUserByEmail($email);
 
         if($user != NULL) {
             if($password == $user->getPassword()) {
