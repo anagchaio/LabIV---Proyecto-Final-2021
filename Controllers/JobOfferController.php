@@ -16,9 +16,37 @@ class JobOfferController {
     }
 
     //method, view
-    public function add() {
+    public function add($jobOfferId="", $jobOffer_description="", $limitDate="", $state="", $companyId="", 
+    $jobPositionId="", $userId="", $company_name="", $jobPosition_description="",$career_description="",$studentId){
+        Utils::checkAdminSession();
+
+            $jobOffer = new JobOffer();
+            $jobOffer->setJobOfferId($jobOfferId);
+            $jobOffer->setJobOffer_description($jobOffer_description);
+            $jobOffer->setLimitDate($limitDate);
+            $jobOffer->setState($state);
+            $jobOffer->setCompanyId($companyId);
+            $jobOffer->setJobPositionId($jobPositionId);
+            $jobOffer->setUserId($userId);
+            $jobOffer->setCompany_name($company_name);
+            $jobOffer->setJobPosition_description($jobPosition_description);
+            $jobOffer->setCareer_description($career_description);
+            $jobOffer->setStudentId($studentId);
+
+            $this->jobOfferDAO->add($jobOffer);
+  
+
+            $this->showListView();
 
     }
+
+    public function RedirectAddFormJobOffer()
+    {
+        Utils::checkAdminSession();
+        require_once(VIEWS_PATH . "jobOffer-add.php");
+    }
+
+
 
     //method, DAO, view
     public function update() {
