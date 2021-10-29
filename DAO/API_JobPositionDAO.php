@@ -5,7 +5,7 @@ namespace DAO;
 use Models\JobPosition as JobPosition;
 use DAO\IJobPositionDAO as IJobPositionDAO;
 
-class APIJobPositionDAO implements IJobPositionDAO
+class API_JobPositionDAO implements IJobPositionDAO
 {
     private $ListOfJobPosition = array();
 

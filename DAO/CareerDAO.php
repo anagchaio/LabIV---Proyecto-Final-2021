@@ -108,7 +108,6 @@ class CareerDAO implements ICareerDAO
             } else {
                 $this->Add($APICareer);
             }
-
         }
     }
 }

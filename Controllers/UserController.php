@@ -3,7 +3,7 @@
 namespace Controllers;
 use DAO\UserDAO;
 
-class AdminController{
+class UserController{
 
     private $UserDAO;
 
