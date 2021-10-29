@@ -7,8 +7,7 @@
     interface ICareerDAO 
     {
         function GetAll();  
-        function GetAllActive(); 
-        function Delete(Career $career);
+        function GetAllActive();
     }
 
 ?> 

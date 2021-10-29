@@ -2,25 +2,60 @@
     namespace Controllers;
 
     use DAO\StudentDAO as StudentDAO;
-    use DAO\CareerDAO as CareerDAO;
+    use DAO\API_CareerDAO as API_CareerDAO;
+    use Models\Student as Student;
+    use Models\User as User;
+    use DAO\UserDAO;
     use Utils\Utils as Utils;
 
 class StudentController
     {
         private $studentDAO;
-        private $careerDAO;
+        private $APIcareerDAO;
+        private $UserDAO;
 
         public function __construct()
         {
             $this->studentDAO = new StudentDAO();
-            $this->careerDAO = new CareerDAO();
+            $this->UserDAO = new UserDAO();
+            $this->APIcareerDAO = new API_CareerDAO();
+        }
+
+        public function Register($email, $password){
+            $studentController = new StudentController();
+            $student = new Student();
+            $student = $studentController->getByEmail($email);
+    
+            if ($student != null) {
+                
+                if($this->UserDAO->getUserByEmail($email) == null){
+                    $newUser = new User();
+                    $newUser->setEmail($email);
+                    $newUser->setPassword($password);
+                    $newUser->setName($student->getFirstName());
+                    $newUser->setStudentId($student->getStudentId());
+                    $newUser->setUserTypeId(2);
+            
+                    $this->UserDAO->Add($newUser);
+    
+                    $succesfulRegistration = true;
+                    require_once(VIEWS_PATH . "index.php");
+                } else {
+                    $registedEmail = true;
+                    require_once(VIEWS_PATH . "user-registration.php");
+                }
+                
+            } else {
+                $invalidEmail = true;
+                require_once(VIEWS_PATH . "index.php");
+            }
         }
 
         public function ShowListView()
         {
             Utils::checkAdminSession();
             $students = $this->studentDAO->GetAll();
-            $careers = $this->careerDAO->GetAll();
+            $careers = $this->APIcareerDAO->GetAll();
             require_once(VIEWS_PATH."student-list.php");
         }
 
@@ -30,7 +65,7 @@ class StudentController
             
             if(isset($_SESSION['admin']) || ($_SESSION['student']->getStudentId() == $studentId)) {
                 $student = $this->studentDAO->GetByStudentId($studentId);
-                $career = $this->careerDAO->getCareerStudent($student);
+                $career = $this->APIcareerDAO->getCareerStudent($student);
     
                 require_once(VIEWS_PATH."student-show.php");
             }  else {
@@ -45,5 +80,4 @@ class StudentController
             return $student;
         }
 
-    }    
-?>
+    }

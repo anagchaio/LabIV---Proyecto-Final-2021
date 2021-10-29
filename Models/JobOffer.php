@@ -2,13 +2,18 @@
 namespace Models;
 
 class JobOffer {
+
     private $jobOfferId;
-    private $description;
+    private $jobOffer_description;
     private $limitDate;
     private $state;
     private $companyId;
     private $jobPositionId;
     private $userId;
+    private $company_name;
+    private $jobPosition_description;
+    private $career_description;
+    private $studentId;
 
     public function __construct(){
        
@@ -152,6 +157,106 @@ class JobOffer {
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of jobOffer_description
+     */ 
+    public function getJobOffer_description()
+    {
+        return $this->jobOffer_description;
+    }
+
+    /**
+     * Set the value of jobOffer_description
+     *
+     * @return  self
+     */ 
+    public function setJobOffer_description($jobOffer_description)
+    {
+        $this->jobOffer_description = $jobOffer_description;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of jobPosition_description
+     */ 
+    public function getJobPosition_description()
+    {
+        return $this->jobPosition_description;
+    }
+
+    /**
+     * Set the value of jobPosition_description
+     *
+     * @return  self
+     */ 
+    public function setJobPosition_description($jobPosition_description)
+    {
+        $this->jobPosition_description = $jobPosition_description;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of career_description
+     */ 
+    public function getCareer_description()
+    {
+        return $this->career_description;
+    }
+
+    /**
+     * Set the value of career_description
+     *
+     * @return  self
+     */ 
+    public function setCareer_description($career_description)
+    {
+        $this->career_description = $career_description;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of studentId
+     */ 
+    public function getStudentId()
+    {
+        return $this->studentId;
+    }
+
+    /**
+     * Set the value of studentId
+     *
+     * @return  self
+     */ 
+    public function setStudentId($studentId)
+    {
+        $this->studentId = $studentId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of company_name
+     */ 
+    public function getCompany_name()
+    {
+        return $this->company_name;
+    }
+
+    /**
+     * Set the value of company_name
+     *
+     * @return  self
+     */ 
+    public function setCompany_name($company_name)
+    {
+        $this->company_name = $company_name;
 
         return $this;
     }

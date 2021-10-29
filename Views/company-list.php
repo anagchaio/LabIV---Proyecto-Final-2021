@@ -5,21 +5,19 @@ require_once('nav-shared.php');
     <section id="listado" class="mb-5">
         <div class="container">
             <h2 class="mb-4">Lista de Empresas</h2>
-            <div class="container">
-            <form action="<?php echo FRONT_ROOT ?>Company/FilterList" method="POST" enctype="multipart/form-data">
-                    <input type="text" name="searchedWord" class="form-control form-control-ml" required value="">
-                   
-                    <button type="submit"  class="btn btn-dark ml-auto d-block">Buscar</button>
-            </form>
-            </div>
-            <span>&nbsp;</span>
-            <div class="container">
-            <form action="<?php echo FRONT_ROOT ?>Company/ShowListView" method="GET" enctype="multipart/form-data">
-                <button type="submit" name="clean-Search" class="btn btn-dark ml-auto d-block">Limpiar</button>
-            </form>
-            </div>
 
-            <table class="table bg-light-alpha">
+            <form action="<?php echo FRONT_ROOT ?>Company/FilterList" method="POST" enctype="multipart/form-data">
+                <input type="text" name="searchedWord" class="form-control form-control-ml" required value="">
+                <div class="container">
+                    <div class="row">
+                        <button type="submit" class="btn btn-primary ml-auto d-block">Buscar</button>
+                        <a class="btn btn-primary" href="<?php echo FRONT_ROOT ?>Company/ShowListView/">Limpiar</a>
+                    </div>
+                </div>
+            </form>
+
+
+            <table class="table bg-dark-alpha">
                 <thead>
                     <th>Nombre</th>
                     <th>Ciudad</th>
