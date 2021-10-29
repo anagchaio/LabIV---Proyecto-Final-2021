@@ -18,7 +18,7 @@
             </h4>
         </header>
 
-        <form action="<?php echo FRONT_ROOT ?>User/Register" method="POST" class="login-form bg-dark-alpha p-5 bg-light">
+        <form action="<?php echo FRONT_ROOT ?>Student/Register" method="POST" class="login-form bg-dark-alpha p-5 bg-light">
             <div class="form-group">
                 <label for="">Email</label>
                 <input type="email" name="email" class="form-control form-control-lg" placeholder="Ingresar email" required>

@@ -15,6 +15,10 @@
             <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Company/RedirectAddForm">Agregar Empresa</a>
             <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">Lista de Propuestas</a>
             <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Lista de Alumnos</a>
+            <br><br><br>
+            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Career/Update">Actualizar Carreras</a>
+            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>JobPosition/Update">Actualizar Posiciones</a>
+            
         </div>
     </header>
 

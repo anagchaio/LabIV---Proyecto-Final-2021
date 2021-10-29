@@ -3,7 +3,7 @@
 
     use \Exception as Exception;
     use DAO\IJobOfferDAO as IJobOfferDAO;
-    use Models\JobOffer as JobOffer;    
+    use Models\JobOffer as JobOffer; 
     use DAO\Connection as Connection;
 use Models\JobOfferForView;
 
@@ -58,7 +58,7 @@ class JobOfferDAO implements IJobOfferDAO
                 {                
                     $jobOffer = new JobOffer();
                     $jobOffer->setJobOfferId($row["id_jobOffer"]);
-                    $jobOffer->setDescription($row["description"]);
+                    $jobOffer->setDescription($row["jobOffer_description"]);
                     $jobOffer->setLimitDate($row["limit_date"]);
                     $jobOffer->setState($row["state"]);
                     $jobOffer->setCompanyId($row["company_id"]);
@@ -94,6 +94,8 @@ class JobOfferDAO implements IJobOfferDAO
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
+
+                var_dump($resultSet);
                 
                 foreach ($resultSet as $row)
                 {                
