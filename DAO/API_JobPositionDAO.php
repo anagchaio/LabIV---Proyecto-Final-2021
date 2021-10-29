@@ -32,7 +32,7 @@ class API_JobPositionDAO implements IJobPositionDAO
         
         foreach ($arrayToDecode as $values) {
             $jobPosition = new JobPosition();
-            $jobPosition->getJobPositionId($values['jobPositionId']);
+            $jobPosition->setJobPositionId($values['jobPositionId']);
             $jobPosition->setCareerId($values['careerId']);
             $jobPosition->setDescription($values['description']);
           

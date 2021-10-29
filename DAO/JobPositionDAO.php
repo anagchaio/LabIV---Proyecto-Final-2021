@@ -6,7 +6,7 @@ use \Exception as Exception;
 use DAO\IJobPositionDAO as IJobPositionDAO;
 use Models\JobPosition as JobPosition;
 use DAO\Connection as Connection;
-use Models\JobOffer;
+use DAO\API_JobPositionDAO as API_JobPositionDAO;
 
 class JobPositionDAO implements IJobPositionDAO
 {
@@ -59,7 +59,8 @@ class JobPositionDAO implements IJobPositionDAO
     {
         try {
 
-            $query = "UPDATE " . $this->tableName . " SET jobPosition_description=:jobPosition_description, career_id=:career_id
+            $query = "UPDATE " . $this->tableName . " 
+            SET jobPosition_description=:jobPosition_description, career_id=:career_id
             WHERE career_id = :id_jobPosition;";
 
             $parameters["id_jobPosition"] = $jobPosition->getJobPositionId();
@@ -77,6 +78,7 @@ class JobPositionDAO implements IJobPositionDAO
     {
         $foundPosition = NULL;
         $jobPositions = $this->GetAll();
+
         foreach ($jobPositions as $jobPosition) {
             if ($jobPosition->getJobPositionId() == $idJobPosition) {
 
