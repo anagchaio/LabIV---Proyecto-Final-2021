@@ -2,17 +2,17 @@ CREATE database BolsaDeEmpleo;
 
 use BolsaDeEmpleo;
 
-CREATE TABLE career(
-	id_career int NOT NULL AUTO_INCREMENT,
-	description varchar(100) NOT NULL,
+CREATE TABLE careers(
+	id_career int NOT NULL,
+	career_description varchar(100) NOT NULL,
 	active boolean NOT NULL,
 	constraint pk_career primary key (id_career)
 );
 
 
-CREATE TABLE company(
+CREATE TABLE companies(
 	id_company int NOT NULL AUTO_INCREMENT,
-	name varchar(50) NOT NULL,
+	company_name varchar(50) NOT NULL,
 	yearFoundantion DATE NOT NULL,
 	city varchar(50) NOT NULL,
 	description varchar(100) NOT NULL,
@@ -22,35 +22,17 @@ CREATE TABLE company(
 	constraint pk_company primary key (id_company)
 );
 
-CREATE TABLE student(
-	id_student int NOT NULL AUTO_INCREMENT,
-	name varchar(50) NOT NULL,
-	lastName varchar(50) NOT NULL,
-	dni int(10),
-	fileNumber mediumint unique,
-	gender varchar(20),
-	birthday DATE,
-	email varchar(50) unique NOT NULL,
-	phoneNumber int(11),
-	active boolean NOT NULL,
-	idcareer int NOT NULL,
-	constraint pk_student primary key(id_student),
-	constraint fk_idcareer foreign key (idcareer) references career(id_career)
-);
-
-CREATE TABLE jobPosition(
-	id_jobPosition int NOT NULL AUTO_INCREMENT,
-	description varchar(100) NOT NULL,
+CREATE TABLE jobPositions(
+	id_jobPosition int NOT NULL,
+	jobPosition_description varchar(100) NOT NULL,
 	career_id int not null,
 	constraint pk_jobPosition primary key (id_jobPosition),
 	constraint fk_career_id foreign key(career_id) references career(id_career)
 );
 
-
-
-CREATE TABLE jobOffer(
+CREATE TABLE jobOffers(
 	id_jobOffer int NOT NULL AUTO_INCREMENT,
-	description varchar(300) NOT NULL,
+	jobOffer_description varchar(300) NOT NULL,
 	limit_date DATE NOT NULL,
 	state boolean NOT NULL,
 	company_id int NOT NULL,
@@ -61,4 +43,32 @@ CREATE TABLE jobOffer(
 	constraint fk_jobPosition_id foreign key (jobPosition_id) references jobPosition(id_jobPosition),
 	constraint fk_student_id foreign key(student_id) references student(id_student)
 );
+
+-- Parte Usuarios
+CREATE TABLE userTypes(
+	id_userType int NOT NULL AUTO_INCREMENT,
+	name varchar(50) NOT NULL,
+    constraint pk_userType primary key (id_userType)
+);
+
+CREATE TABLE users(
+	id_user int NOT NULL AUTO_INCREMENT,
+	email varchar(50) unique NOT NULL,
+	password varchar(50) NOT NULL,
+	name varchar(50) NOT NULL,
+	id_student int,
+	id_userType int NOT NULL,
+    constraint pk_user primary key (id_user),
+    constraint fk_userType foreign key (id_userType) references userTypes(id_userType)
+);
+
+INSERT INTO userTypes (name)
+VALUES ('ADMIN');
+INSERT INTO userTypes (name)
+VALUES ('STUDENT');
+
+INSERT INTO users (email, password, name, id_student, id_userType)
+VALUES ('admin@admin.com', 'admin', 'ADMIN', NULL, 1);
+
+
 

@@ -12,6 +12,9 @@ require_once('nav.php');
                          if (isset($usedCompanyEmail)) {
                               echo "Ya existe una empresa con ese email";
                          }
+                         if (isset($yearNotValid)) {
+                              echo "El año debe ser menor o igual al actual";
+                         }
                          if (isset($uploadError)) {
                               echo "Hubo un error y la imagen no se subio";
                          }
@@ -30,7 +33,7 @@ require_once('nav.php');
 
                               <div class="col-lg-4">
                                    <label for="">Año de Fundacion</label>
-                                   <input type="number" min="1900" max="2021" step="1" name="yearFoundantion" class="form-control form-control-ml" required value="">
+                                   <input type="number" min="1900" step="1" name="yearFoundantion" class="form-control form-control-ml" required value="">
                               </div>
 
                               <div class="col-lg-4">
@@ -40,7 +43,7 @@ require_once('nav.php');
 
                               <div class="col-lg-4">
                                    <label for="">Descripcion</label>
-                                   <textarea type="text" name="description" class="form-control form-control-ml" required value=""></textarea>
+                                   <textarea type="text" name="description" maxlength ="200" class="form-control form-control-ml" required value=""></textarea>
                               </div>
 
                               <div class="col-lg-4">
@@ -50,7 +53,7 @@ require_once('nav.php');
 
                               <div class="col-lg-4">
                                    <label for="">Telefono</label>
-                                   <input type="number" name="phoneNumber" class="form-control form-control-ml" required value="">
+                                   <input type="tel" name="phoneNumber" class="form-control form-control-ml" required value="">
                               </div>
 
                               <div class="container">

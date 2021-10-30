@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Models\User as User;
 use Controllers\StudentController as StudentController;
+use Controllers\UserController as UserController;
 use Utils\Utils as Utils;
 use Models\Student as Student;
 use DAO\CareerDAO as CareerDAO;
@@ -15,27 +16,43 @@ class HomeController
         require_once(VIEWS_PATH . "index.php");
     }
 
-    public function login($email)
+    public function login($email, $password)
     {
+        $userController = new UserController();
+        $user = $userController->getUserByEmail($email);
 
-        if ($email == ADMIN_ACCESS) {
-            $user = new User($email);
-            $_SESSION['admin'] = $user;
+        if($user != NULL) {
+            if($password == $user->getPassword()) {
 
-            require_once(VIEWS_PATH . "admin-firstpage.php");
-        } else {
-            $studentController = new StudentController();
-            $student = new Student();
-            $student = $studentController->getByEmail($email);
+                if ($user->getUserTypeId() == 1) {
+            
+                    $_SESSION['admin'] = $user;
+                    require_once(VIEWS_PATH . "admin-firstpage.php");
+        
+                } else {
+                    $studentController = new StudentController();
+                    $student = new Student();
+                    $student = $studentController->getByEmail($email);
+        
+                    if ($student != null) {
+                        
+                        $_SESSION['student'] = $user;
+                        require_once(VIEWS_PATH . "student-firstpage.php");
+    
+                    } else {
+                        $invalidEmail = true;
+                        require_once(VIEWS_PATH . "index.php");
+                    }
+                }
 
-            if ($student != null) {
-                $_SESSION['student'] = $student;
-
-                require_once(VIEWS_PATH . "student-firstpage.php");
             } else {
-                $invalidEmail = true;
+                $invalidPassword = true;
                 require_once(VIEWS_PATH . "index.php");
             }
+            
+        } else {
+            $invalidEmail = true;
+            require_once(VIEWS_PATH . "index.php");
         }
     }
 
@@ -60,6 +77,11 @@ class HomeController
             require_once(VIEWS_PATH . "student-firstpage.php");
         }
        
+    }
+
+    public function ShowRegister()
+    {
+        require_once(VIEWS_PATH . "user-registration.php");
     }
 
     public function Logout()
