@@ -5,11 +5,12 @@ namespace DAO;
 use Models\Company as Company;
 use DAO\ICompanyDAO as ICompanyDAO;
 use DAO\Connection as Connection;
-    use \Exception as Exception;
+use \Exception as Exception;
 
 //class CompanyDAO implements ICompanyDAO {
-class CompanyDAO {
-    // private $listOfCompanies = array();
+class CompanyDAO
+{
+
     // private $fileName;
 
     // public function __construct()
@@ -83,31 +84,9 @@ class CompanyDAO {
     //     return $this->listOfCompanies;
     // }
 
-    // public function GetByCompanyEmail($companyEmail)
-    // {
-    //     $this->RetrieveData();
 
-    //     foreach ($this->listOfCompanies as $company) {
-    //         if ($company->getEmail() == $companyEmail){
-    //             return $company;
-    //         }
-    //     }
 
-    //     return null;
-    // }
 
-    // public function GetByCompanyId($idCompany)
-    // {
-    //     $this->RetrieveData();
-
-    //     foreach ($this->listOfCompanies as $company) {
-    //         if ($company->getIdCompany() == $idCompany){
-    //             return $company;
-    //         }
-    //     }
-
-    //     return null;
-    // }
 
     // public function getCompanyLastId(){
     //     $id = 1;
@@ -129,91 +108,120 @@ class CompanyDAO {
 
     //         }
     //     }
-        
+
     //     $this->saveData();
     // }
 
 
+    private $connection;
+    private $tableName = "companies";
+    private $listOfCompanies = array();
 
+    public function Add(Company $company)
+    {
+        $response = NULL;
+        try {
 
+            $query = "INSERT INTO " . $this->tableName . " (company_name, yearFoundantion, city, description, logo, email, phonenumber) 
+                VALUES (:company_name, :yearFoundantion, :city, :description, :logo, :email, :phonenumber);";
 
-        private $connection;
-        private $tableName = "company";
-
-        public function Add(Company $company)
-        {
-            $response = NULL;
-            try
-            {
-
-                $query = "INSERT INTO ".$this->tableName." (idCompany, name, yearFoundantion, city, description, logo, email, phoneNumber) 
-                VALUES (:idCompany, :name, :yearFoundantion, :city, :description, :logo, :email, :phoneNumber);";
-                
-                $parameters["idCompany"] = $company->getIdCompany();
-                $parameters["name"] = $company->getName();
-                $parameters["yearFoundantion"] = $company->getYearFoundantion();
-                $parameters["description"] = $company->getDescription();
-                $parameters["city"] = $company->getCity();
-                $parameters["logo"] = $company->getLogo();
-                $parameters["email"] = $company->getEmail();
-                $parameters["phoneNumber"] = $company->getPhoneNumber();
-
-                $this->connection = Connection::GetInstance();
-
-                $response = $this->connection->ExecuteNonQuery($query, $parameters);
-            }
-            catch(Exception $exception)
-            {
-                $response = $exception->getMessage();
-            }
-            finally
-            {
-                return $response;
-            }
-        }
-
-        public function GetAll()
-        {
-            $response = NULL;
-            try
-            {
-                $companyList = array();
-
-                $query = "SELECT * FROM ".$this->tableName;
-
-                $this->connection = Connection::GetInstance();
-
-                $resultSet = $this->connection->Execute($query);
-                
-                foreach ($resultSet as $row)
-                {                
-                    
-                    
-                    $company = new Company();
-                    $company->setIdCompany($row["idCompany"]);
-                    $company->setName($row["name"]);
-                    $company->setYearFoundantion($row["yearFoundantion"]);
-                    $company->setDescription($row["description"]);
-                    $company->setCity($row["city"]);
-                    $company->setLogo($row["logo"]);
-                    $company->setEmail($row["email"]);
-                    $company->setPhoneNumber($row["phoneNumber"]);
-
-                    array_push($companyList, $company);
-                }
-
-                return $companyList;
-            }
-            catch(Exception $exception)
-            {
-                $response = $exception->getMessage();
-            }
-            finally
-            {
-                return $response;
-            }
+            $parameters["company_name"] = $company->getName();
+            $parameters["yearFoundantion"] = $company->getYearFoundantion();
+            $parameters["city"] = $company->getCity();
+            $parameters["description"] = $company->getDescription();
+            $parameters["logo"] = $company->getLogo();
+            $parameters["email"] = $company->getEmail();
+            $parameters["phonenumber"] = $company->getPhoneNumber();
             
+            $this->connection = Connection::GetInstance();
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
+            var_dump($response);
         }
-    
- 
+    }
+
+    public function GetAll()
+    {
+        $response = NULL;
+        try {
+            $companyList = array();
+
+            $query = "SELECT * FROM " . $this->tableName;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+
+                $company = new Company();
+                $company->setIdCompany($row["id_company"]);
+                $company->setName($row["company_name"]);
+                $company->setYearFoundantion($row["yearFoundantion"]);
+                $company->setDescription($row["description"]);
+                $company->setCity($row["city"]);
+                $company->setLogo($row["logo"]);
+                $company->setEmail($row["email"]);
+                $company->setPhoneNumber($row["phonenumber"]);
+
+                array_push($companyList, $company);
+            }
+
+            return $companyList;
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
+        }
+    }
+
+    public function GetByCompanyId($idCompany)
+    {
+        $foundCompany = null;
+        $this->listOfCompanies = $this->GetAll();
+        if ($this->listOfCompanies != null) {
+            foreach ($this->listOfCompanies as $company) {
+                if ($company->getIdCompany() == $idCompany) {
+                    $foundCompany = $company;
+                }
+            }
+        }
+        return $foundCompany;
+    }
+
+    public function GetByCompanyEmail($companyEmail)
+    {
+        $foundCompany = null;
+        $this->listOfCompanies = $this->GetAll();
+        if ($this->listOfCompanies != null) {
+            foreach ($this->listOfCompanies as $company) {
+                if ($company->getEmail() == $companyEmail) {
+                    $foundCompany = $company;
+                }
+            }
+        }
+        return $foundCompany;
+    }
+
+
+    public function UploadLogo($logo)
+    {
+        $uploadSuccess = false;
+        $fileName = $logo["name"];
+        $tempFileName = $logo["tmp_name"];
+        $type = $logo["type"];
+
+        $filePath = UPLOADS_PATH . basename($fileName);
+
+        if (in_array($type, IMAGES_TYPE)) {
+            if (move_uploaded_file($tempFileName, $filePath)) {
+                $uploadSuccess = true;
+            } else {
+                $uploadError = true;
+            }
+        } else {
+            $notImageError = true;
+        }
+        return $uploadSuccess;
+    }
 }

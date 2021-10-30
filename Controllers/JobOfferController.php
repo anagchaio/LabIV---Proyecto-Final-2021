@@ -6,13 +6,19 @@ use Models\JobOffer as JobOffer;
 use Controllers\UserController as UserController;
 use Utils\Utils as Utils;
 use DAO\JobOfferDAO as JobOfferDAO;
+use DAO\JobPositionDAO as JobPositionDAO;
+use DAO\CompanyDAO as CompanyDAO;
 
 class JobOfferController {
     private $jobOfferDAO;
+    private $JobPositionDAO;
+    private $CompanyDAO;
 
     public function __construct()
     {
         $this->jobOfferDAO = new JobOfferDAO();
+        $this->JobPositionDAO = new JobPositionDAO();
+        $this->CompanyDAO = new CompanyDAO();
     }
 
     //method, view
@@ -43,6 +49,9 @@ class JobOfferController {
     public function RedirectAddFormJobOffer()
     {
         Utils::checkAdminSession();
+        $jobPositions = $this->JobPositionDAO->GetAll();
+        $companies = $this->CompanyDAO->GetAll();
+
         require_once(VIEWS_PATH . "jobOffer-add.php");
     }
 
