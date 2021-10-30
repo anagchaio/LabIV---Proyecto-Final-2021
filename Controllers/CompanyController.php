@@ -48,11 +48,11 @@ class CompanyController
     public function DeleteCompany($idCompany)
     {
         Utils::checkAdminSession();
-        if (isset($_SESSION['admin'])) {
-            $company = $this->companyDAO->GetByCompanyId($idCompany);
-            $this->companyDAO->delete($company);
+        if(isset($_SESSION['admin'])){
+            $this->companyDAO->delete($idCompany);
             $this->ShowListView();
         }
+        
     }
 
     public function AddCompany($companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logo)
