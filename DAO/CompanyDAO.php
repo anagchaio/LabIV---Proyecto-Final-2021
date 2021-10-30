@@ -18,46 +18,6 @@ class CompanyDAO implements ICompanyDAO
         $this->fileName = ROOT . "Data/companies.json";
     }
 
-    private function retrieveData()
-    {
-        $this->listOfCompanies = array();
-        if (file_exists($this->fileName)) {
-            $jsonContent = file_get_contents($this->fileName);
-            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-            foreach ($arrayToDecode as $values) {
-                $company = new Company();
-                $company->setIdCompany($values['idCompany']);
-                $company->setName($values['name']);
-                $company->setYearFoundantion($values['yearFoundantion']);
-                $company->setDescription(($values['description']));
-                $company->setCity($values['city']);
-                $company->setLogo($values['logo']);
-                $company->setEmail($values['email']);
-                $company->setPhoneNumber($values['phoneNumber']);
-                array_push($this->listOfCompanies, $company);
-            }
-        }
-    }
-
-    private function saveData()
-    {
-        $arrayToEncode = array();
-
-        foreach ($this->listOfCompanies as $company) {
-            $values['idCompany'] = $company->getIdCompany();
-            $values['name'] = $company->getName();
-            $values['yearFoundantion'] = $company->getYearFoundantion();
-            $values['description'] = $company->getDescription();
-            $values['city'] = $company->getCity();
-            $values['logo'] = $company->getLogo();
-            $values['email'] = $company->getEmail();
-            $values['phoneNumber'] = $company->getPhoneNumber();
-            array_push($arrayToEncode, $values);
-        }
-        $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-        file_put_contents($this->fileName, $jsonContent);
-    }
 
     public function add(Company $company)
     {
@@ -90,16 +50,18 @@ class CompanyDAO implements ICompanyDAO
         }
     }
 
-    public function delete(Company $companyToDelete)
+    public function delete($companyId)
     {
-        $this->retrieveData();
-        foreach ($this->listOfCompanies as $company) {
-            if ($companyToDelete->getIdCompany() == $company->getIdCompany()) {
-                $key = array_search($company, $this->listOfCompanies);
-                unset($this->listOfCompanies[$key]);
-            }
+        try
+        {
+            $comapanyToRemove = "DELETE FROM $this->tableName WHERE companyId = '$companyId'"; 
+            $this->connection = Connection::GetInstance();
+            $response= $this->connection->ExecuteNonQuery($comapanyToRemove);
         }
-        $this->saveData();
+        catch(Exception $exception)
+        {
+            $response = $exception->getMessage();
+        }
     }
 
     public function getAll()
@@ -144,28 +106,70 @@ class CompanyDAO implements ICompanyDAO
 
     public function GetByCompanyEmail($companyEmail)
     {
-        $this->RetrieveData();
+        try
+            {
 
-        foreach ($this->listOfCompanies as $company) {
-            if ($company->getEmail() == $companyEmail){
+                $companyByEmail = "SELECT * FROM $this->tableName WHERE email = '$companyEmail'";
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($companyByEmail);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $company = new Company();
+                    $company->setIdCompany($row["id_company"]);
+                    $company->setName($row["name"]);
+                    $company->setYearFoundantion($row["yearFoundation"]);
+                    $company->setCity($row["city"]);
+                    $company->setDescription($row["description"]);
+                    $company->setLogo($row["logo"]);
+                    $company->setEmail($row["email"]);
+                    $company->setPhoneNumber($row["phonenumber"]);
+                }
+
                 return $company;
             }
-        }
-
-        return null;
+            catch(Exception $exception)
+            {
+                $response = $exception->getMessage();
+            }
+            finally
+            {
+                return $response;
+            }
     }
 
     public function GetByCompanyId($idCompany)
     {
-        $this->RetrieveData();
+        try
+            {
 
-        foreach ($this->listOfCompanies as $company) {
-            if ($company->getIdCompany() == $idCompany){
+                $companyById = "SELECT * FROM $this->tableName WHERE idCompany = '$idCompany'";
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($companyById);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $company = new Company();
+                    $company->setIdCompany($row["id_company"]);
+                    $company->setName($row["name"]);
+                    $company->setYearFoundantion($row["yearFoundation"]);
+                    $company->setCity($row["city"]);
+                    $company->setDescription($row["description"]);
+                    $company->setLogo($row["logo"]);
+                    $company->setEmail($row["email"]);
+                    $company->setPhoneNumber($row["phonenumber"]);
+                }
+
                 return $company;
             }
-        }
-
-        return null;
+            catch(Exception $exception)
+            {
+                $response = $exception->getMessage();
+            }
+            finally
+            {
+                return $response;
+            }
     }
 
     public function getCompanyLastId(){
@@ -179,16 +183,26 @@ class CompanyDAO implements ICompanyDAO
 
     public function modifyCompany(Company $modifiedCompany)
     {
-        $this->RetrieveData();
+        try {
 
-        foreach ($this->listOfCompanies as $company) {
-            if ($company->getIdCompany() == $modifiedCompany->getIdCompany()){
-                $key = array_search($company, $this->listOfCompanies);
-                $this->listOfCompanies[$key] = $modifiedCompany;
+            $companyModifyquery = "UPDATE "  $this->tableName . "
+            SET company_name=:company_name, yearFoundantion=:yearFoundantion, city=:city,description=:description,email=:email,logo=:logo, phonenumber=:phonenumber
+            WHERE companyId = :companyId;";
 
-            }
+            $parameters["id_company"]=$modifiedCompany->getIdCompany();
+            $parameters["company_name"]=$modifiedCompany->getName();
+            $parameters["yearFoundantion"]=$modifiedCompany->getYearFoundantion();
+            $parameters["city"]=$modifiedCompany->getCity();
+            $parameters["description"]=$modifiedCompany->getDescription();
+            $parameters["logo"]=$modifiedCompany->getLogo();
+            $parameters["email"]=$modifiedCompany->getEmail();
+            $parameters["phonenumber"]=$modifiedCompany->getPhoneNumber();
+
+            $this->connection = Connection::GetInstance();
+
+            return $this->connection->ExecuteNonQuery($companyModifyquery, $parameters);
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
         }
-        
-        $this->saveData();
     }
 }
