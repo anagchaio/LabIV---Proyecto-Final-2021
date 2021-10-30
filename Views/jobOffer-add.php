@@ -14,18 +14,24 @@ require_once('nav.php');
                                    <label for="">Empresa</label>
                                    <select name="companyId" required class="form-control form-control-ml">
                                         <?php
-                                        foreach ($companies as $company) {
-                                             echo "<option value=" . $company->getCompanyId() . ">" . $company->getName() . "</option>";
-                                        } ?>
+                                        if (isset($companies)) {
+                                             foreach ($companies as $company) {
+                                                  echo "<option value=" . $company->getCompanyId() . ">" . $company->getName() . "</option>";
+                                             }
+                                        }
+                                        ?>
                                    </select>
                               </div>
                               <div class="col-lg-4">
                                    <label for="">Puesto</label>
                                    <select name="jobPositionId" class="form-control form-control-ml">
-                                   <?php
-                                   foreach ($jobPositions as $jobPosition) {
-                                        echo "<option value=" . $jobPosition->getJobPositionId() . ">" . $jobPosition->getDescription() . "</option>";
-                                   } ?>
+                                        <?php
+                                        if (isset($jobPositions)) {
+                                             foreach ($jobPositions as $jobPosition) {
+                                                  echo "<option value=" . $jobPosition->getJobPositionId() . ">" . $jobPosition->getDescription() . "</option>";
+                                             }
+                                        }
+                                        ?>
                                    </select>
                               </div>
                               <div class="col-lg-4">

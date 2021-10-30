@@ -23,7 +23,7 @@ CREATE TABLE companies(
 );
 
 CREATE TABLE jobPositions(
-	id_jobPosition int NOT NULL,
+	id_jobPosition int NOT NULL AUTO_INCREMENT,
 	jobPosition_description varchar(100) NOT NULL,
 	career_id int not null,
 	constraint pk_jobPosition primary key (id_jobPosition),
@@ -41,7 +41,7 @@ CREATE TABLE jobOffers(
 	constraint pk_jobOffer primary key (id_jobOffer),
 	constraint fk_company_id foreign key (company_id) references company(id_company),
 	constraint fk_jobPosition_id foreign key (jobPosition_id) references jobPosition(id_jobPosition),
-	constraint fk_student_id foreign key(student_id) references student(id_student)
+	constraint fk_student_id foreign key(student_id) references users(id_student)
 );
 
 -- Parte Usuarios

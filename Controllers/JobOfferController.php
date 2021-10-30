@@ -9,7 +9,8 @@ use DAO\JobOfferDAO as JobOfferDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
 use DAO\CompanyDAO as CompanyDAO;
 
-class JobOfferController {
+class JobOfferController
+{
     private $jobOfferDAO;
     private $JobPositionDAO;
     private $CompanyDAO;
@@ -22,35 +23,50 @@ class JobOfferController {
     }
 
     //method, view
-    public function add($jobOfferId="", $jobOffer_description="", $limitDate="", $state="", $companyId="", 
-    $jobPositionId="", $userId="", $company_name="", $jobPosition_description="",$career_description="",$studentId){
+    public function add(
+        $jobOfferId = "",
+        $jobOffer_description = "",
+        $limitDate = "",
+        $state = "",
+        $companyId = "",
+        $jobPositionId = "",
+        $userId = "",
+        $company_name = "",
+        $jobPosition_description = "",
+        $career_description = "",
+        $studentId
+    ) {
         Utils::checkAdminSession();
 
-            $jobOffer = new JobOffer();
-            $jobOffer->setJobOfferId($jobOfferId);
-            $jobOffer->setJobOffer_description($jobOffer_description);
-            $jobOffer->setLimitDate($limitDate);
-            $jobOffer->setState($state);
-            $jobOffer->setCompanyId($companyId);
-            $jobOffer->setJobPositionId($jobPositionId);
-            $jobOffer->setUserId($userId);
-            $jobOffer->setCompany_name($company_name);
-            $jobOffer->setJobPosition_description($jobPosition_description);
-            $jobOffer->setCareer_description($career_description);
-            $jobOffer->setStudentId($studentId);
+        $jobOffer = new JobOffer();
+        $jobOffer->setJobOfferId($jobOfferId);
+        $jobOffer->setJobOffer_description($jobOffer_description);
+        $jobOffer->setLimitDate($limitDate);
+        $jobOffer->setState($state);
+        $jobOffer->setCompanyId($companyId);
+        $jobOffer->setJobPositionId($jobPositionId);
+        $jobOffer->setUserId($userId);
+        $jobOffer->setCompany_name($company_name);
+        $jobOffer->setJobPosition_description($jobPosition_description);
+        $jobOffer->setCareer_description($career_description);
+        $jobOffer->setStudentId($studentId);
 
-            $this->jobOfferDAO->add($jobOffer);
-  
+        $this->jobOfferDAO->add($jobOffer);
 
-            $this->showListView();
 
+        $this->showListView();
     }
 
     public function RedirectAddFormJobOffer()
     {
         Utils::checkAdminSession();
-        $jobPositions = $this->JobPositionDAO->GetAll();
+        
+        
         $companies = $this->CompanyDAO->GetAll();
+        if(isset($response)){
+            var_dump($response);
+        }
+        $jobPositions = $this->JobPositionDAO->GetAll();
 
         require_once(VIEWS_PATH . "jobOffer-add.php");
     }
@@ -58,19 +74,19 @@ class JobOfferController {
 
 
     //method, DAO, view
-    public function update() {
-
+    public function update()
+    {
     }
 
     //method, DAO, view
-    public function delete() {
-
+    public function delete()
+    {
     }
 
-    public function ShowListView() {
+    public function ShowListView()
+    {
         Utils::checkSession();
         $jobOffers = $this->jobOfferDAO->GetList();
         require_once(VIEWS_PATH . "jobOffer-list.php");
     }
-
 }
