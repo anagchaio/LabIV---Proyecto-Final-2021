@@ -11,7 +11,7 @@ class CompanyDAO implements ICompanyDAO
     private $fileName;
 
     private $connection;
-    private $tableName = "company";
+    private $tableName = "companies";
 
     public function __construct()
     {
@@ -185,22 +185,22 @@ class CompanyDAO implements ICompanyDAO
     {
         try {
 
-            $companyModifyquery = "UPDATE "  $this->tableName . "
-            SET company_name=:company_name, yearFoundantion=:yearFoundantion, city=:city,description=:description,email=:email,logo=:logo, phonenumber=:phonenumber
-            WHERE companyId = :companyId;";
+                $companyModifyquery = "UPDATE" . $this->tableName . "
+                SET company_name=:company_name, yearFoundantion=:yearFoundantion, city=:city,description=:description,email=:email,logo=:logo, phonenumber=:phonenumber
+                WHERE companyId = :companyId;";
 
-            $parameters["id_company"]=$modifiedCompany->getIdCompany();
-            $parameters["company_name"]=$modifiedCompany->getName();
-            $parameters["yearFoundantion"]=$modifiedCompany->getYearFoundantion();
-            $parameters["city"]=$modifiedCompany->getCity();
-            $parameters["description"]=$modifiedCompany->getDescription();
-            $parameters["logo"]=$modifiedCompany->getLogo();
-            $parameters["email"]=$modifiedCompany->getEmail();
-            $parameters["phonenumber"]=$modifiedCompany->getPhoneNumber();
+                $parameters["id_company"]=$modifiedCompany->getIdCompany();
+                $parameters["company_name"]=$modifiedCompany->getName();
+                $parameters["yearFoundantion"]=$modifiedCompany->getYearFoundantion();
+                $parameters["city"]=$modifiedCompany->getCity();
+                $parameters["description"]=$modifiedCompany->getDescription();
+                $parameters["logo"]=$modifiedCompany->getLogo();
+                $parameters["email"]=$modifiedCompany->getEmail();
+                $parameters["phonenumber"]=$modifiedCompany->getPhoneNumber();
 
-            $this->connection = Connection::GetInstance();
+                $this->connection = Connection::GetInstance();
 
-            return $this->connection->ExecuteNonQuery($companyModifyquery, $parameters);
+                return $this->connection->ExecuteNonQuery($companyModifyquery, $parameters);
         } catch (Exception $exception) {
             $response = $exception->getMessage();
         }

@@ -27,7 +27,7 @@ CREATE TABLE jobPositions(
 	jobPosition_description varchar(100) NOT NULL,
 	career_id int not null,
 	constraint pk_jobPosition primary key (id_jobPosition),
-	constraint fk_career_id foreign key(career_id) references career(id_career)
+	constraint fk_career_id foreign key(career_id) references careers(id_career)
 );
 
 CREATE TABLE jobOffers(
@@ -39,8 +39,8 @@ CREATE TABLE jobOffers(
 	jobPosition_id int NOT NULL,
 	student_id int NOT NULL,
 	constraint pk_jobOffer primary key (id_jobOffer),
-	constraint fk_company_id foreign key (company_id) references company(id_company),
-	constraint fk_jobPosition_id foreign key (jobPosition_id) references jobPosition(id_jobPosition),
+	constraint fk_company_id foreign key (company_id) references companies(id_company),
+	constraint fk_jobPosition_id foreign key (jobPosition_id) references jobPositions(id_jobPosition),
 	constraint fk_student_id foreign key(student_id) references student(id_student)
 );
 
