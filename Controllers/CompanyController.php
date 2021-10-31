@@ -41,7 +41,7 @@ class CompanyController
 
     public function RedirectShowForm()
     {
-        //Utils::checkAdminSession();
+        Utils::checkAdminSession();
         require_once(VIEWS_PATH . "admin-company-show.php");
     }
 
@@ -59,30 +59,28 @@ class CompanyController
     {
         Utils::checkAdminSession();
         if ($this->companyDAO->GetByCompanyEmail($email) == null) {
-            if($yearFoundantion <= date("Y")){
+            if ($yearFoundantion <= date("Y")) {
+                $uploadedSuccess = $this->companyDAO->UploadLogo($logo);
+                if ($uploadedSuccess) {
+                    $newCompany = new Company();
+                    $newCompany->setName($companyName);
+                    $newCompany->setYearFoundantion($yearFoundantion);
+                    $newCompany->setCity($city);
+                    $newCompany->setDescription($description);
+                    $newCompany->setEmail($email);
+                    $newCompany->setPhoneNumber($phoneNumber);
+                    $newCompany->setLogo($logo['name']);
 
-                $newCompany = new Company();
-                $newCompany->setName($companyName);
-                $newCompany->setYearFoundantion($yearFoundantion);
-                $newCompany->setCity($city);
-                $newCompany->setDescription($description);
-                $newCompany->setEmail($email);
-                $newCompany->setPhoneNumber($phoneNumber);
-                $this->companyDAO->UploadLogo($logo);
-                $newCompany->setLogo($logo['name']);
-                var_dump($newCompany);
-                $this->companyDAO->add($newCompany);
-
-                if(isset($response)){
-                    echo $response;
+                    $this->companyDAO->add($newCompany);
+                    $this->ShowListView();
+                } else {
+                    $notImageError = true;
+                    require_once(VIEWS_PATH . "company-add.php");
                 }
-                //$this->ShowListView();
-            
-            }else {
+            } else {
                 $yearNotValid = true;
                 require_once(VIEWS_PATH . "company-add.php");
             }
-            
         } else {
             $usedCompanyEmail = true;
             require_once(VIEWS_PATH . "company-add.php");
@@ -94,30 +92,47 @@ class CompanyController
     {
         Utils::checkAdminSession();
         $company = $this->companyDAO->GetByCompanyId($companyId);
+        $updateSuccess = true;
 
         if ($company->getEmail() != $email) {
             if ($this->companyDAO->GetByCompanyEmail($email) != null) {
+                $updateSuccess = false;
                 $usedCompanyEmail = true;
                 require_once(VIEWS_PATH . "admin-company-show.php");
             } else {
                 $company->setEmail($email);
             }
         }
-        $company->setName($companyName);
-        $company->setYearFoundantion($yearFoundantion);
-        $company->setCity($city);
-        $company->setDescription($description);
-        $company->setEmail($email);
-        $company->setPhoneNumber($phoneNumber);
+
+        if ($yearFoundantion <= date("Y")) {
+            $company->setYearFoundantion($yearFoundantion);
+        } else {
+            $updateSuccess = false;
+            $yearNotValid = true;
+            require_once(VIEWS_PATH . "admin-company-show.php");
+        }
+
         if ($logo['error'] == 0) {
-            //$uploadSuccess = $this->UploadLogo($logo, "admin-company-show.php");
-            if($uploadSuccess){
-                $company->setLogo($logo);
+            $uploadSuccess = $this->companyDAO->UploadLogo($logo);
+            if ($uploadSuccess) {
+                $company->setLogo($logo['name']);
+            } else {
+                $updateSuccess = false;
+                $notImageError = true;
+                require_once(VIEWS_PATH . "admin-company-show.php");
             }
         }
-        //$this->companyDAO->modifyCompany($company);
 
-        $this->ShowListView();
+        $company->setName($companyName);
+        $company->setCity($city);
+        $company->setDescription($description);
+        $company->setPhoneNumber($phoneNumber);
+
+        if($updateSuccess){
+            $this->companyDAO->modify($company);
+            require_once(VIEWS_PATH . "admin-company-show.php");
+        }
+        
     }
 
     public function FilterList($searchedWord)
@@ -135,5 +150,4 @@ class CompanyController
         $companies = $filteredCompanies;
         require_once(VIEWS_PATH . "company-list.php");
     }
- 
 }
