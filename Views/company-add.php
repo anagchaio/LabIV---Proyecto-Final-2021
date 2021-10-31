@@ -15,11 +15,8 @@ require_once('nav.php');
                          if (isset($yearNotValid)) {
                               echo "El año debe ser menor o igual al actual";
                          }
-                         if (isset($uploadError)) {
-                              echo "Hubo un error y la imagen no se subio";
-                         }
                          if (isset($notImageError)) {
-                              echo "El archivo seleccionado no es una imagen";
+                              echo "Hubo un error o el archivo seleccionado no es una imagen";
                          }
                          ?>
                     </h4>
@@ -28,7 +25,7 @@ require_once('nav.php');
                          <div class="row">
                               <div class="col-lg-4">
                                    <label for="">Nombre</label>
-                                   <input type="text" name="name" class="form-control form-control-ml" required value="">
+                                   <input type="text" name="companyName" class="form-control form-control-ml" required value="">
                               </div>
 
                               <div class="col-lg-4">

@@ -224,4 +224,30 @@ class CompanyDAO
         }
         return $uploadSuccess;
     }
+
+
+    public function modify(Company $company){
+        try {
+
+            $query = "UPDATE ". $this->tableName ." SET company_name=:company_name, yearFoundantion=:yearFoundantion,
+            city=:city, description=:description, logo=:logo, email=:email, phonenumber=:phonenumber
+            WHERE id_company = :id_company;";
+
+            $parameters["id_company"] = $company->getIdCompany();
+            $parameters["company_name"] = $company->getName();
+            $parameters["yearFoundantion"] = $company->getYearFoundantion();
+            $parameters["city"] = $company->getCity();
+            $parameters["description"] = $company->getDescription();
+            $parameters["logo"] = $company->getLogo();
+            $parameters["email"] = $company->getEmail();
+            $parameters["phonenumber"] = $company->getPhoneNumber();
+
+            $this->connection = Connection::GetInstance();
+
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+            
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
+        }
+    }
 }
