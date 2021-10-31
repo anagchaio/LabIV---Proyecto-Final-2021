@@ -12,11 +12,11 @@ require_once('nav.php');
                          <div class="row">
                               <div class="col-lg-4">
                                    <label for="">Empresa</label>
-                                   <select name="companyId" required class="form-control form-control-ml">
+                                   <select name="companyId" required  class="form-control form-control-ml">
                                         <?php
                                         if (isset($companies)) {
                                              foreach ($companies as $company) {
-                                                  echo "<option value=" . $company->getCompanyId() . ">" . $company->getName() . "</option>";
+                                                  echo "<option value=" . $company->getIdCompany() . ">" . $company->getName() . "</option>";
                                              }
                                         }
                                         ?>
