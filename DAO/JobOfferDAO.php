@@ -17,28 +17,24 @@ class JobOfferDAO implements IJobOfferDAO
             $response = NULL;
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (jobOfferId, description, limitDate, state, companyId, jobPositionId, userId) 
-                VALUES (:jobOfferId, :description, :limitDate, :state, :companyId, :jobPositionId, :userId);";
+                $query = "INSERT INTO ".$this->tableName." (jobOffer_description, limit_date, state, company_id, jobPosition_id, student_id) 
+                VALUES (:jobOffer_description, :limit_date, :state, :company_id, :jobPosition_id, :student_id);";
                 
-                $parameters["jobOfferId"] = $jobOffer->getJobOfferId();
-                $parameters["description"] = $jobOffer->getDescription();
-                $parameters["limitDate"] = $jobOffer->getLimitDate();
+                $parameters["jobOffer_description"] = $jobOffer->getJobOffer_description();
+                $parameters["limit_date"] = $jobOffer->getLimitDate();
                 $parameters["state"] = $jobOffer->getState();
-                $parameters["companyId"] = $jobOffer->getCompanyId();
-                $parameters["jobPositionId"] = $jobOffer->getJobPositionId();
-                $parameters["userId"] = $jobOffer->getUserId();
+                $parameters["company_id"] = $jobOffer->getCompanyId();
+                $parameters["jobPosition_id"] = $jobOffer->getJobPositionId();
+                $parameters["student_id"] = $jobOffer->getUserId();
 
                 $this->connection = Connection::GetInstance();
 
-                $response = $this->connection->ExecuteNonQuery($query, $parameters);
+                return $this->connection->ExecuteNonQuery($query, $parameters);
             }
             catch(Exception $exception)
             {
                 $response = $exception->getMessage();
-            }
-            finally
-            {
-                return $response;
+                echo $response;
             }
         }
 
@@ -84,18 +80,15 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOfferList = array();
 
                 $query = "SELECT j.id_jobOffer, cp.company_name, j.jobOffer_description, p.jobPosition_description, 
-                cr.career_description, j.limit_date, j.state, u.id_student
-                FROM jobOffers j
+                cr.career_description, j.limit_date, j.state, j.student_id
+                FROM joboffers j
                 INNER JOIN companies cp on j.company_id = cp.id_company
-                INNER JOIN users u on j.student_id = u.id_student
-                INNER JOIN jobPositions p on j.jobPosition_id = p.id_jobPosition
+                INNER JOIN jobpositions p on j.jobPosition_id = p.id_jobPosition
                 INNER JOIN careers cr on p.career_id = cr.id_career;";
 
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
-
-                var_dump($resultSet);
                 
                 foreach ($resultSet as $row)
                 {                
@@ -107,6 +100,7 @@ class JobOfferDAO implements IJobOfferDAO
                     $jobOffer->setCareer_description($row["career_description"]);
                     $jobOffer->setLimitDate($row["limit_date"]);
                     $jobOffer->setState($row["state"]);
+                    $jobOffer->getStudentId($row["student_id"]);
 
                     array_push($jobOfferList, $jobOffer);
                 }
@@ -116,6 +110,7 @@ class JobOfferDAO implements IJobOfferDAO
             catch(Exception $exception)
             {
                 $response = $exception->getMessage();
+                echo $response;
             }
 
         }
