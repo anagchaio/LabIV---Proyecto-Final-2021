@@ -50,7 +50,7 @@ class CompanyController
         Utils::checkAdminSession();
         if (isset($_SESSION['admin'])) {
             $company = $this->companyDAO->GetByCompanyId($idCompany);
-            $this->companyDAO->delete($company);
+            //$this->companyDAO->delete($company);
             $this->ShowListView();
         }
     }
@@ -62,22 +62,22 @@ class CompanyController
             if($yearFoundantion <= date("Y")){
 
                 $newCompany = new Company();
-                $newCompany->setIdCompany($this->companyDAO->getCompanyLastId());
                 $newCompany->setName($companyName);
                 $newCompany->setYearFoundantion($yearFoundantion);
                 $newCompany->setCity($city);
                 $newCompany->setDescription($description);
                 $newCompany->setEmail($email);
                 $newCompany->setPhoneNumber($phoneNumber);
-                $uploadSuccess = $this->UploadLogo($logo, "company-add.php");
-                $newCompany->setLogo($logo);
-                if ($uploadSuccess) {
-                    $this->companyDAO->add($newCompany);
-                    $company = $newCompany;
-                    $companyId = $newCompany->getIdCompany();
-                    $this->ShowListView();
-                }
+                $this->companyDAO->UploadLogo($logo);
+                $newCompany->setLogo($logo['name']);
+                var_dump($newCompany);
+                $this->companyDAO->add($newCompany);
 
+                if(isset($response)){
+                    echo $response;
+                }
+                //$this->ShowListView();
+            
             }else {
                 $yearNotValid = true;
                 require_once(VIEWS_PATH . "company-add.php");
@@ -89,30 +89,6 @@ class CompanyController
         }
     }
 
-
-    public function UploadLogo($logo, $fileView)
-    {
-        Utils::checkAdminSession();
-        $uploadSuccess = false;
-        $fileName = $logo["name"];
-        $tempFileName = $logo["tmp_name"];
-        $type = $logo["type"];
-
-        $filePath = UPLOADS_PATH . basename($fileName);
-
-        if (in_array($type, IMAGES_TYPE)) {
-            if (move_uploaded_file($tempFileName, $filePath)) {
-                $uploadSuccess = true;
-            } else {
-                $uploadError = true;
-                require_once(VIEWS_PATH . $fileView); 
-            }
-        } else {
-            $notImageError = true;
-            require_once(VIEWS_PATH . $fileView); 
-        }
-        return $uploadSuccess;
-    }
 
     public function ModifyCompany($companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logoName, $logo)
     {
@@ -134,12 +110,12 @@ class CompanyController
         $company->setEmail($email);
         $company->setPhoneNumber($phoneNumber);
         if ($logo['error'] == 0) {
-            $uploadSuccess = $this->UploadLogo($logo, "admin-company-show.php");
+            //$uploadSuccess = $this->UploadLogo($logo, "admin-company-show.php");
             if($uploadSuccess){
                 $company->setLogo($logo);
             }
         }
-        $this->companyDAO->modifyCompany($company);
+        //$this->companyDAO->modifyCompany($company);
 
         $this->ShowListView();
     }

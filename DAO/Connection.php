@@ -55,11 +55,11 @@
             try
             {
                 $this->Prepare($query);
-                
+
                 $this->BindParameters($parameters, $queryType);
 
                 $this->pdoStatement->execute();
-
+                
                 return $this->pdoStatement->rowCount();
             }
             catch(Exception $ex)
@@ -93,6 +93,7 @@
                 else
                     $this->pdoStatement->bindParam($i, $parameters[$parameterName]);
             }
+
         }
     }
 ?>

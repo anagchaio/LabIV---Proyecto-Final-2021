@@ -1,5 +1,5 @@
 <?php
-require_once('nav-shared.php');
+/* require_once('nav-shared.php'); */
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">

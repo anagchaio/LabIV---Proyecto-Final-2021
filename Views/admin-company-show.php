@@ -57,7 +57,7 @@ require_once('nav.php');
 
                               <div class="form-group">
                                    <label for="">Logo:</label>
-                                   <img src="<?php if(isset($company)){echo FRONT_ROOT . UPLOADS_PATH . $company->getLogoFileName();}; ?>" alt="Company-Logo" width="100" height="100">
+                                   <img src="<?php if(isset($company)){echo FRONT_ROOT . UPLOADS_PATH . $company->getLogo();}; ?>" alt="Company-Logo" width="100" height="100">
                                    <input type="file" name="logo" class="form-control-file">
 
                               </div>
