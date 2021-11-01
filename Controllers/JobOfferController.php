@@ -25,25 +25,26 @@ class JobOfferController
         $this->studentDAO = new StudentDAO();
     }
 
-    //method, view
     public function add($companyId, $jobPositionId, $jobOffer_description, $limitDate)
     {
         Utils::checkAdminSession();
 
-        $jobOffer = new JobOffer();
-        $jobOffer->setJobOffer_description($jobOffer_description);
-        $jobOffer->setLimitDate($limitDate);
-        $jobOffer->setState("Opened");
-        $jobOffer->setCompanyId($companyId);
-        $jobOffer->setJobPositionId($jobPositionId);
-        $jobOffer->setStudentId(null);
+        if ($limitDate >= date("Y-m-d")) {
+            $jobOffer = new JobOffer();
+            $jobOffer->setJobOffer_description($jobOffer_description);
+            $jobOffer->setLimitDate($limitDate);
+            $jobOffer->setState("Opened");
+            $jobOffer->setCompanyId($companyId);
+            $jobOffer->setJobPositionId($jobPositionId);
+            $jobOffer->setStudentId(null);
 
-        $this->jobOfferDAO->add($jobOffer);
-        if (isset($response)) {
-            die(var_dump($response));
+            $this->jobOfferDAO->add($jobOffer);
+            $this->showListView();
+
+        } else {
+            $invalidDate = true;
+            require_once(VIEWS_PATH . "jobOffer-add.php");
         }
-
-        $this->showListView();
     }
 
     public function RedirectAddFormJobOffer()
@@ -58,9 +59,27 @@ class JobOfferController
 
 
 
-    //method, DAO, view
-    public function update()
+    public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state)
     {
+        Utils::checkAdminSession();
+        
+        if ($limitDate >= date("Y-m-d")) {
+            $jobOffer = new JobOffer();
+            $jobOffer->setJobOfferId($jobOfferId);
+            $jobOffer->setJobOffer_description($jobOffer_description);
+            $jobOffer->setLimitDate($limitDate);
+            $jobOffer->setState($state);
+            $jobOffer->setCompanyId($companyId);
+            $jobOffer->setJobPositionId($jobPositionId);
+
+           $this->jobOfferDAO->modify($jobOffer);
+           $updateSuccess = true;
+           $this->ShowOffer($jobOfferId);
+
+        } else {
+            $invalidDate = true;
+            $this->ShowOffer($jobOfferId);
+        }
     }
 
     //method, DAO, view

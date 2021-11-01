@@ -8,7 +8,17 @@ require_once('nav.php');
         <form action="<?php echo FRONT_ROOT ?>JobOffer/Update" method="POST" enctype="multipart/form-data">
             <div class="container">
                 <h3 class="mb-3">Oferta</h3>
-
+                <h4 style="color: rgb(145, 39, 177)">
+                    <?php
+                    if (isset($updateSuccess)) {
+                        echo "Los datos se guardaron correctamente";
+                    }
+                    if (isset($invalidDate)) {
+                        echo "La fecha limite no puede ser menor a la actual";
+                    }
+                    ?>
+                </h4>
+                <input type="number" name="jobOfferId" class="form-control form-control-ml" hidden value="<?php echo $jobOffer->getJobOfferId();?>">
                 <div>
                     <div class="row">
                         <div class="col-lg-4">
@@ -55,13 +65,13 @@ require_once('nav.php');
                         <div class="col-lg-4">
                             <label for="">Estado</label>
                             <select name="state" class="form-control form-control-ml">
-                                <?php if($jobOffer->getState() == "Opened"){
-                                    echo "<option selected=". "selected". " value="."Opened". ">Abierta</option>";
-                                    echo "<option value="."Closed". ">Cerrada</option>";
+                                <?php if ($jobOffer->getState() == "Opened") {
+                                    echo "<option selected=" . "selected" . " value=" . "Opened" . ">Abierta</option>";
+                                    echo "<option value=" . "Closed" . ">Cerrada</option>";
                                 } else {
-                                    echo "<option value="."Opened". ">Abierta</option>";
-                                    echo "<option selected=". "selected". " value="."Closed". ">Cerrada</option>";
-                                }                              
+                                    echo "<option value=" . "Opened" . ">Abierta</option>";
+                                    echo "<option selected=" . "selected" . " value=" . "Closed" . ">Cerrada</option>";
+                                }
                                 ?>
                             </select>
                         </div>
@@ -74,10 +84,24 @@ require_once('nav.php');
                                 echo $student->getFirstName() . " " . $student->getLastName();
                             } else {
                                 echo "Sin alumno";
-                            };?>">
+                            }; ?>">
+                        </div>
+                        <div class="row">
+                            <div class="button-conteiner">
+
+                                <button type="submit" name="update-button" class="btn btn-dark ml-auto d-block">Guardar</button>
+
+                                <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Volver</a>
+
+                                <a class="btn btn-primary btn-xl" href="
+                                <?php if (isset($jobOffer)) {
+                                    echo FRONT_ROOT . "JobOffer/Delete/" . $jobOffer->getJobOfferId();
+                                }; ?>">Eliminar Oferta</a>
+
+                            </div>
+
                         </div>
 
-                        <button type="submit" name="update-button" class="btn btn-dark ml-auto d-block">Guardar</button>
                     </div>
 
                 </div>

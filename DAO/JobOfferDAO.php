@@ -159,4 +159,27 @@ class JobOfferDAO implements IJobOfferDAO
             }
 
         }
+
+        public function modify(JobOffer $jobOffer){
+            try {
+    
+                $query = "UPDATE ". $this->tableName ." SET jobOffer_description=:jobOffer_description, limit_date=:limit_date,
+                state=:state, company_id=:company_id, jobPosition_id=:jobPosition_id
+                WHERE id_jobOffer = :id_jobOffer;";
+    
+                $parameters["id_jobOffer"] = $jobOffer->getJobOfferId();
+                $parameters["jobOffer_description"] = $jobOffer->getJobOffer_description();
+                $parameters["limit_date"] = $jobOffer->getLimitDate();
+                $parameters["state"] = $jobOffer->getState();
+                $parameters["company_id"] = $jobOffer->getCompanyId();
+                $parameters["jobPosition_id"] = $jobOffer->getJobPositionId();
+    
+                $this->connection = Connection::GetInstance();
+    
+                return $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch (Exception $exception) {
+                $response = $exception->getMessage();
+            }
+        }
     }
