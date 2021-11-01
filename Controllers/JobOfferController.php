@@ -8,18 +8,21 @@ use Utils\Utils as Utils;
 use DAO\JobOfferDAO as JobOfferDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
 use DAO\CompanyDAO as CompanyDAO;
+use DAO\StudentDAO as StudentDAO;
 
 class JobOfferController
 {
     private $jobOfferDAO;
     private $JobPositionDAO;
     private $CompanyDAO;
+    private $studentDAO;
 
     public function __construct()
     {
         $this->jobOfferDAO = new JobOfferDAO();
         $this->JobPositionDAO = new JobPositionDAO();
         $this->CompanyDAO = new CompanyDAO();
+        $this->studentDAO = new StudentDAO();
     }
 
     //method, view
@@ -47,11 +50,7 @@ class JobOfferController
     {
         Utils::checkAdminSession();
 
-
         $companies = $this->CompanyDAO->GetAll();
-        if (isset($response)) {
-            var_dump($response);
-        }
         $jobPositions = $this->JobPositionDAO->GetAll();
 
         require_once(VIEWS_PATH . "jobOffer-add.php");
@@ -71,8 +70,20 @@ class JobOfferController
 
     public function ShowListView()
     {
-        Utils::checkSession();
+        Utils::checkAdminSession();
         $jobOffers = $this->jobOfferDAO->GetList();
-        require_once(VIEWS_PATH . "jobOffer-list.php");
+        require_once(VIEWS_PATH . "admin-jobOffer-list.php");
+    }
+
+    public function ShowOffer($jobOfferId)
+    {
+        Utils::checkAdminSession();
+
+        $companies = $this->CompanyDAO->GetAll();
+        $jobPositions = $this->JobPositionDAO->GetAll();
+        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+        $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
+
+        require_once(VIEWS_PATH . "admin-jobOffer-show.php");
     }
 }
