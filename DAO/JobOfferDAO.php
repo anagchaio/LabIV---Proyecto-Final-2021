@@ -114,4 +114,72 @@ class JobOfferDAO implements IJobOfferDAO
             }
 
         }
+
+        public function GetJobOffer($jobOfferId)
+        {
+            try
+            {
+
+                $query = "SELECT j.id_jobOffer, j.company_id,  cp.company_name, j.jobOffer_description, j.limit_date, 
+                j.state, j.student_id, j.jobPosition_id, p.jobPosition_description, cr.career_description
+                FROM joboffers j
+                INNER JOIN companies cp on j.company_id = cp.id_company
+                INNER JOIN jobpositions p on j.jobPosition_id = p.id_jobPosition
+                INNER JOIN careers cr on p.career_id = cr.id_career
+                WHERE j.id_jobOffer = ". $jobOfferId .";";
+
+
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $jobOffer = new JobOffer();
+                    $jobOffer->setJobOfferId($row["id_jobOffer"]);
+                    $jobOffer->setCompanyId($row["company_id"]);
+                    $jobOffer->setCompany_name($row["company_name"]);
+                    $jobOffer->setJobOffer_description($row["jobOffer_description"]);
+                    $jobOffer->setJobPositionId($row["jobPosition_id"]);
+                    $jobOffer->setJobPosition_description($row["jobPosition_description"]);
+                    $jobOffer->setCareer_description($row["career_description"]);
+                    $jobOffer->setLimitDate($row["limit_date"]);
+                    $jobOffer->setState($row["state"]);
+                    $jobOffer->getStudentId($row["student_id"]);
+
+                }
+
+                return $jobOffer;
+            }
+            catch(Exception $exception)
+            {
+                $response = $exception->getMessage();
+                echo $response;
+            }
+
+        }
+
+        public function modify(JobOffer $jobOffer){
+            try {
+    
+                $query = "UPDATE ". $this->tableName ." SET jobOffer_description=:jobOffer_description, limit_date=:limit_date,
+                state=:state, company_id=:company_id, jobPosition_id=:jobPosition_id
+                WHERE id_jobOffer = :id_jobOffer;";
+    
+                $parameters["id_jobOffer"] = $jobOffer->getJobOfferId();
+                $parameters["jobOffer_description"] = $jobOffer->getJobOffer_description();
+                $parameters["limit_date"] = $jobOffer->getLimitDate();
+                $parameters["state"] = $jobOffer->getState();
+                $parameters["company_id"] = $jobOffer->getCompanyId();
+                $parameters["jobPosition_id"] = $jobOffer->getJobPositionId();
+    
+                $this->connection = Connection::GetInstance();
+    
+                return $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch (Exception $exception) {
+                $response = $exception->getMessage();
+            }
+        }
     }
