@@ -40,7 +40,6 @@ class JobOfferController
 
             $this->jobOfferDAO->add($jobOffer);
             $this->showListView();
-
         } else {
             $invalidDate = true;
             require_once(VIEWS_PATH . "jobOffer-add.php");
@@ -72,10 +71,9 @@ class JobOfferController
             $jobOffer->setCompanyId($companyId);
             $jobOffer->setJobPositionId($jobPositionId);
 
-           $this->jobOfferDAO->modify($jobOffer);
-           $updateSuccess = true;
-           $this->ShowOffer($jobOfferId);
-
+            $this->jobOfferDAO->modify($jobOffer);
+            $updateSuccess = true;
+            $this->ShowOffer($jobOfferId);
         } else {
             $invalidDate = true;
             $this->ShowOffer($jobOfferId);
@@ -90,7 +88,7 @@ class JobOfferController
     public function ShowListView()
     {
         Utils::checkSession();
-        if(isset($_SESSION['admin'])){
+        if (isset($_SESSION['admin'])) {
             $jobOffers = $this->jobOfferDAO->GetList();
         } else {
             $user = $_SESSION['student'];
@@ -98,20 +96,37 @@ class JobOfferController
             $careerId = $student->getCareerId();
             $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
         }
-        
+
         require_once(VIEWS_PATH . "jobOffer-list.php");
     }
 
 
     public function ShowOffer($jobOfferId)
     {
-        Utils::checkAdminSession();
+        Utils::checkSession();
 
         $companies = $this->CompanyDAO->GetAll();
         $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
         $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-        $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
+        
+        if (isset($_SESSION['admin'])) {
+            $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
+            require_once(VIEWS_PATH . "admin-jobOffer-show.php");
+        } else {
+            $user = $_SESSION['student'];
+            $student = $this->studentDAO->GetByStudentId($user->getStudentId);
+            require_once(VIEWS_PATH . "student-jobOffer-show.php");
+        }
+    }
 
-        require_once(VIEWS_PATH . "admin-jobOffer-show.php");
+    public function subscribeToOffer($jobOfferId){
+
+        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+        $user = $_SESSION['student'];
+        $studentId = $user->getStudentId();
+
+        $this->jobOfferDAO->AddStudent($jobOffer, $studentId);
+
+
     }
 }

@@ -225,4 +225,23 @@ class JobOfferDAO implements IJobOfferDAO
                 echo $response;
             }
         }
+
+        public function AddStudent(JobOffer $jobOffer, $studentId){
+            try {
+    
+                $query = "UPDATE ". $this->tableName ." SET student_id=:student_id, state=:state
+                WHERE id_jobOffer = :id_jobOffer;";
+    
+                $parameters["id_jobOffer"] = $jobOffer->getJobOfferId();
+                $parameters["state"] = "Closed";
+                $parameters["student_id"] = $studentId;
+    
+                $this->connection = Connection::GetInstance();
+    
+                return $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch (Exception $exception) {
+                $response = $exception->getMessage();
+            }
+        }
     }
