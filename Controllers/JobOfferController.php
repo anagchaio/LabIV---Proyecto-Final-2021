@@ -53,6 +53,17 @@ class JobOfferController
         }
     }
 
+    public function deleteByBD($jobOfferId)
+    {
+        Utils::checkAdminSession();
+        if (isset($_SESSION['admin'])) {
+            $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
+            if ($value == 1) {
+                require_once(VIEWS_PATH . "jobOffer-list.php");
+            }
+        }
+    }
+
     public function RedirectAddFormJobOffer()
     {
         Utils::checkAdminSession();
@@ -87,10 +98,6 @@ class JobOfferController
         }
     }
 
-    //method, DAO, view
-    public function delete()
-    {
-    }
 
     public function ShowListView()
     {

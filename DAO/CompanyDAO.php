@@ -142,6 +142,22 @@ class CompanyDAO
         }
     }
 
+    public function deleteBD($idCompany)
+    {
+        try {
+            $query = "DELETE FROM " . $this->tableName . " WHERE idCompany = :idCompany;";
+
+            $parameters["idCompany"] = $idCompany;
+
+            $this->connection = Connection::GetInstance();
+
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+
     public function GetAll()
     {
         $response = NULL;
