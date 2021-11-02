@@ -2,7 +2,7 @@
 
 define("ROOT", dirname(__DIR__) . "/");
 
-define("FRONT_ROOT", "http://localhost/TPFINAL/LabIV---Proyecto-Final-2021/");//David
+define("FRONT_ROOT", "http://localhost/LabIV---Proyecto-Final-2021/");//David
 //define("FRONT_ROOT", "/Lab4/practicaTPfinal/");
 //define("FRONT_ROOT", "http://localhost:8080/Lab4/LabIV---Proyecto-Final-2021/");
 //define("FRONT_ROOT", "http://localhost/Projecto%20Final/");
