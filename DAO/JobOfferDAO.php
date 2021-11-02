@@ -192,7 +192,7 @@ class JobOfferDAO implements IJobOfferDAO
                 INNER JOIN companies cp on j.company_id = cp.id_company
                 INNER JOIN jobpositions p on j.jobPosition_id = p.id_jobPosition
                 INNER JOIN careers cr on p.career_id = cr.id_career
-                WHERE p.career_id = ". $CareerId.";";
+                WHERE p.career_id = ". $CareerId." AND j.state ='Opened';";
 
                 $this->connection = Connection::GetInstance();
 

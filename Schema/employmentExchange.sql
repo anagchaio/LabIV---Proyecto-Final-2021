@@ -58,8 +58,10 @@ CREATE TABLE users(
 	name varchar(50) NOT NULL,
 	id_student int,
 	id_userType int NOT NULL,
+	id_jobOffer int,
     constraint pk_user primary key (id_user),
-    constraint fk_userType foreign key (id_userType) references userTypes(id_userType)
+    constraint fk_userType foreign key (id_userType) references userTypes(id_userType),
+	constraint fk_jobOffer foreign key (id_jobOffer) references jobOffers(id_jobOffer)
 );
 
 INSERT INTO userTypes (name)
@@ -67,8 +69,8 @@ VALUES ('ADMIN');
 INSERT INTO userTypes (name)
 VALUES ('STUDENT');
 
-INSERT INTO users (email, password, name, id_student, id_userType)
-VALUES ('admin@admin.com', 'admin', 'ADMIN', NULL, 1);
+INSERT INTO users (email, password, name, id_student, id_userType,id_jobOffer)
+VALUES ('admin@admin.com', 'admin', 'ADMIN', NULL, 1,NULL);
 
 
 
