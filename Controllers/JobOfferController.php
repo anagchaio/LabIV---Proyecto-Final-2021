@@ -92,7 +92,7 @@ class JobOfferController
             $jobOffers = $this->jobOfferDAO->GetList();
         } else {
             $user = $_SESSION['student'];
-            $student = $this->studentDAO->GetByStudentId($user->getStudentId);
+            $student = $this->studentDAO->GetByStudentId($user->getStudentId());
             $careerId = $student->getCareerId();
             $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
         }
@@ -104,7 +104,6 @@ class JobOfferController
     public function ShowOffer($jobOfferId)
     {
         Utils::checkSession();
-
         $companies = $this->CompanyDAO->GetAll();
         $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
         $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
@@ -112,14 +111,16 @@ class JobOfferController
         if (isset($_SESSION['admin'])) {
             $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
             require_once(VIEWS_PATH . "admin-jobOffer-show.php");
+
         } else {
             $user = $_SESSION['student'];
-            $student = $this->studentDAO->GetByStudentId($user->getStudentId);
+            $student = $this->studentDAO->GetByStudentId($user->getStudentId());
+            
             require_once(VIEWS_PATH . "student-jobOffer-show.php");
         }
     }
 
-    public function subscribeToOffer($jobOfferId){
+    public function Subscribe($jobOfferId){
 
         $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
         $user = $_SESSION['student'];

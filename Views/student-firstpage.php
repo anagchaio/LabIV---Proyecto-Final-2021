@@ -18,7 +18,7 @@
             <h5 class="mb-5"><em>En esta interfaz prodrás realizar las siguientes acciones</em></h5>
             <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Ver Empresas</a>
             <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">Lista de Propuestas</a>
-            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT .  "Student/ShowStudent/" . $student->getStudentId()  ?>">Perfil</a>
+            <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT .  "Student/ShowStudent/" . $_SESSION['student']->getStudentId()  ?>">Perfil</a>
 
         </div>
     </header>

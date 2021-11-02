@@ -12,13 +12,13 @@ require_once('nav.php');
                 <div>
                     <div class="row">
                         <div class="col-lg-4">
-                            <label for="">Empresa</label>
-                            <input readonly name="companyName" class="form-control form-control-ml" value=" <?php $jobOffer->getCompany_name();?>">                                                    
+                            <label for="">Empresa</label>                            
+                            <input readonly name="companyName" class="form-control form-control-ml" value=" <?php echo $jobOffer->getCompany_name();?>">                                                    
                         </div>
 
                         <div class="col-lg-4">
                             <label for="">Puesto</label>
-                            <input readonly name="jobPositionDescription" class="form-control form-control-ml" value=" <?php $jobOffer->getJobPosition_description();?>">        
+                            <input readonly name="jobPositionDescription" class="form-control form-control-ml" value=" <?php echo $jobOffer->getJobPosition_description();?>">        
                         </div>
 
                         <div class="col-lg-4">
