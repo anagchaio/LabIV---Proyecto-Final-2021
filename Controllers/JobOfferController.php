@@ -91,11 +91,6 @@ class JobOfferController
         }
     }
 
-    //method, DAO, view
-    public function delete()
-    {
-        Utils::checkAdminSession();
-    }
 
     public function ShowListView()
     {
