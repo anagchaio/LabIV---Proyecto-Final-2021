@@ -58,9 +58,31 @@ class CareerDAO implements ICareerDAO
         }
     }
 
-    public function GetAllActive()
+   /*  public function GetAllActive()
     {
-    }
+        try {
+            $careerList = array();
+
+            $query = "SELECT * FROM " . $this->tableName;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+                $career = new Career();
+                $career->setCareerId($row["id_career"]);
+                $career->setDescription($row["career_description"]);
+                $career->setActive($row["active"]);
+
+                array_push($careerList, $career);
+            }
+            return $careerList;
+
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
+        }
+    } */
 
     public function getCareerById($idCareer)
     {
@@ -109,5 +131,18 @@ class CareerDAO implements ICareerDAO
                 $this->Add($APICareer);
             }
         }
+    }
+
+    public function GetAllActive()
+    {
+        $careers = $this->GetAll();
+        $activeCareers = array();
+
+        foreach($careers as $career){
+            if($career->getActive() == 1){
+                array_push($activeCareers, $career);
+            }
+        }
+        return $activeCareers;
     }
 }

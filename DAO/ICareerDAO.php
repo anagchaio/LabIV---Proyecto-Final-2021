@@ -7,7 +7,7 @@
     interface ICareerDAO 
     {
         function GetAll();  
-        function GetAllActive();
+        
     }
 
 ?> 

@@ -192,9 +192,7 @@ class JobOfferDAO implements IJobOfferDAO
                 INNER JOIN companies cp on j.company_id = cp.id_company
                 INNER JOIN jobpositions p on j.jobPosition_id = p.id_jobPosition
                 INNER JOIN careers cr on p.career_id = cr.id_career
-                WHERE p.career_id = ". $CareerId ." AND j.state =". "Opened".";";
-
-
+                WHERE p.career_id = ". $CareerId." AND j.state ='Opened';";
 
                 $this->connection = Connection::GetInstance();
 
@@ -223,6 +221,25 @@ class JobOfferDAO implements IJobOfferDAO
             {
                 $response = $exception->getMessage();
                 echo $response;
+            }
+        }
+
+        public function AddStudent(JobOffer $jobOffer, $studentId){
+            try {
+    
+                $query = "UPDATE ". $this->tableName ." SET student_id=:student_id, state=:state
+                WHERE id_jobOffer = :id_jobOffer;";
+    
+                $parameters["id_jobOffer"] = $jobOffer->getJobOfferId();
+                $parameters["state"] = "Closed";
+                $parameters["student_id"] = $studentId;
+    
+                $this->connection = Connection::GetInstance();
+    
+                return $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch (Exception $exception) {
+                $response = $exception->getMessage();
             }
         }
     }
