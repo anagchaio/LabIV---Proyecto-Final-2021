@@ -139,7 +139,7 @@ class JobOfferController
     public function Subscribe($jobOfferId){
         
         $user = $_SESSION['student'];
-        var_dump($user);
+        
         if($user->getJobOfferId() == null){
             
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
