@@ -240,6 +240,7 @@ class JobOfferDAO implements IJobOfferDAO
             $response = $exception->getMessage();
             echo $response;
         }
+    }
 
         public function AddStudent(JobOffer $jobOffer, $studentId){
             try {
