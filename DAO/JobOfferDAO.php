@@ -117,6 +117,8 @@ class JobOfferDAO implements IJobOfferDAO
         }
     }
 
+
+
     public function GetJobOffer($jobOfferId)
     {
         try {
@@ -154,6 +156,28 @@ class JobOfferDAO implements IJobOfferDAO
             $response = $exception->getMessage();
             echo $response;
         }
+    }
+
+    protected function mapJobOffer($value){
+        $value=is_array($value) ? $value: array();
+        
+        $result= array_map(function ($row){
+         $jobOffer = new JobOffer();
+                $jobOffer->setJobOfferId($row["id_jobOffer"]);
+                $jobOffer->setCompanyId($row["company_id"]);
+                $jobOffer->setCompany_name($row["company_name"]);
+                $jobOffer->setJobOffer_description($row["jobOffer_description"]);
+                $jobOffer->setJobPositionId($row["jobPosition_id"]);
+                $jobOffer->setJobPosition_description($row["jobPosition_description"]);
+                $jobOffer->setCareer_description($row["career_description"]);
+                $jobOffer->setLimitDate($row["limit_date"]);
+                $jobOffer->setState($row["state"]);
+                $jobOffer->getStudentId($row["student_id"]);
+
+            return $jobOffer;
+        },$value);
+
+        return count($result)>1 ? $result: $result["0"];
     }
 
     public function modify(JobOffer $jobOffer)
