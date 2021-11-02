@@ -55,9 +55,9 @@ require_once('nav.php');
 
                         <div class="row">
                             <div class="button-conteiner">
-
-                                <button type="submit" name="subscribe-button" class="btn btn-dark ml-auto d-block">Inscribirse</button>
-
+                            <?php if ($jobOffer->getState() == "Opened") {
+                                echo "<button type="."submit" ." name=" ."subscribe-button" ." class="."btn btn-dark ml-auto d-block"."".">Inscribirse</button>";
+                            }; ?>
                                 <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Volver</a>                        
 
                             </div>

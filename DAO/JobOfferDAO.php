@@ -186,7 +186,6 @@ class JobOfferDAO implements IJobOfferDAO
             try
             {
                 $jobOfferList = array();
-                
                 $query = "SELECT j.id_jobOffer, j.company_id,  cp.company_name, j.jobOffer_description, j.limit_date, 
                 j.state, j.student_id, j.jobPosition_id, p.jobPosition_description, cr.career_description
                 FROM joboffers j

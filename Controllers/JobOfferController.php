@@ -9,6 +9,8 @@ use DAO\JobOfferDAO as JobOfferDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
 use DAO\CompanyDAO as CompanyDAO;
 use DAO\StudentDAO as StudentDAO;
+use DAO\CareerDAO as CareerDAO;
+use Models\Career;
 
 class JobOfferController
 {
@@ -16,6 +18,7 @@ class JobOfferController
     private $JobPositionDAO;
     private $CompanyDAO;
     private $studentDAO;
+    private $careerDAO;
 
     public function __construct()
     {
@@ -23,6 +26,7 @@ class JobOfferController
         $this->JobPositionDAO = new JobPositionDAO();
         $this->CompanyDAO = new CompanyDAO();
         $this->studentDAO = new StudentDAO();
+        $this->careerDAO = new CareerDAO();
     }
 
     public function add($companyId, $jobPositionId, $jobOffer_description, $limitDate)
@@ -88,6 +92,8 @@ class JobOfferController
     public function ShowListView()
     {
         Utils::checkSession();
+        $careers = $this->careerDAO->GetAllActive();
+        
         if (isset($_SESSION['admin'])) {
             $jobOffers = $this->jobOfferDAO->GetList();
         } else {
@@ -127,7 +133,16 @@ class JobOfferController
         $studentId = $user->getStudentId();
 
         $this->jobOfferDAO->AddStudent($jobOffer, $studentId);
+    }
 
-
+    public function FilterByCareer($CareerId){
+        if($CareerId == 0){
+            $jobOffers = $this->jobOfferDAO->GetList();
+        } else {
+            $jobOffers = $this->jobOfferDAO->GetListByCareer($CareerId);
+        }
+        $careers = $this->careerDAO->GetAllActive();
+        
+        require_once(VIEWS_PATH . "jobOffer-list.php");
     }
 }
