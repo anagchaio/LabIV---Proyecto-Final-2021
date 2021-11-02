@@ -8,17 +8,27 @@ require_once('nav.php');
         <form action="<?php echo FRONT_ROOT ?>JobOffer/Subscribe" method="POST" enctype="multipart/form-data">
             <div class="container">
                 <h3 class="mb-3">Oferta</h3>
-                <input type="number" name="jobOfferId" class="form-control form-control-ml" hidden value="<?php echo $jobOffer->getJobOfferId();?>">
+                <h4 style="color: rgb(145, 39, 177)">
+                    <?php
+                    if (isset($SubscribeSuccess)) {
+                        echo "Usted esta inscripto en la Oferta";
+                    }
+                    if (isset($SubscribeError)) {
+                        echo "Error: Ya se encuentra inscripto en otra oferta.";
+                    }
+                    ?>
+                </h4>
+                <input type="number" name="jobOfferId" class="form-control form-control-ml" hidden value="<?php echo $jobOffer->getJobOfferId(); ?>">
                 <div>
                     <div class="row">
                         <div class="col-lg-4">
-                            <label for="">Empresa</label>                            
-                            <input readonly name="companyName" class="form-control form-control-ml" value=" <?php echo $jobOffer->getCompany_name();?>">                                                    
+                            <label for="">Empresa</label>
+                            <input readonly name="companyName" class="form-control form-control-ml" value=" <?php echo $jobOffer->getCompany_name(); ?>">
                         </div>
 
                         <div class="col-lg-4">
                             <label for="">Puesto</label>
-                            <input readonly name="jobPositionDescription" class="form-control form-control-ml" value=" <?php echo $jobOffer->getJobPosition_description();?>">        
+                            <input readonly name="jobPositionDescription" class="form-control form-control-ml" value=" <?php echo $jobOffer->getJobPosition_description(); ?>">
                         </div>
 
                         <div class="col-lg-4">
@@ -55,10 +65,8 @@ require_once('nav.php');
 
                         <div class="row">
                             <div class="button-conteiner">
-                            <?php if ($jobOffer->getState() == "Opened") {
-                                echo "<button type="."submit" ." name=" ."subscribe-button" ." class="."btn btn-dark ml-auto d-block"."".">Inscribirse</button>";
-                            }; ?>
-                                <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Volver</a>                        
+                                <button type="submit" name="subscribe-button" class="btn btn-dark ml-auto d-block">Inscribirse</button>                                
+                                <a class="btn btn-primary btn-xl" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Volver</a>
 
                             </div>
 
