@@ -52,7 +52,7 @@ class JobOfferController
         Utils::checkAdminSession();
 
         $companies = $this->CompanyDAO->GetAll();
-        $jobPositions = $this->JobPositionDAO->GetAll();
+        $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
 
         require_once(VIEWS_PATH . "jobOffer-add.php");
     }
@@ -62,7 +62,7 @@ class JobOfferController
     public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state)
     {
         Utils::checkAdminSession();
-        
+
         if ($limitDate >= date("Y-m-d")) {
             $jobOffer = new JobOffer();
             $jobOffer->setJobOfferId($jobOfferId);
@@ -89,17 +89,26 @@ class JobOfferController
 
     public function ShowListView()
     {
-        Utils::checkAdminSession();
-        $jobOffers = $this->jobOfferDAO->GetList();
-        require_once(VIEWS_PATH . "admin-jobOffer-list.php");
+        Utils::checkSession();
+        if(isset($_SESSION['admin'])){
+            $jobOffers = $this->jobOfferDAO->GetList();
+        } else {
+            $user = $_SESSION['student'];
+            $student = $this->studentDAO->GetByStudentId($user->getStudentId);
+            $careerId = $student->getCareerId();
+            $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
+        }
+        
+        require_once(VIEWS_PATH . "jobOffer-list.php");
     }
+
 
     public function ShowOffer($jobOfferId)
     {
         Utils::checkAdminSession();
 
         $companies = $this->CompanyDAO->GetAll();
-        $jobPositions = $this->JobPositionDAO->GetAll();
+        $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
         $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
         $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
 
