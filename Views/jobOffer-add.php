@@ -12,7 +12,7 @@ require_once('nav.php');
                          <div class="row">
                               <div class="col-lg-4">
                                    <label for="">Empresa</label>
-                                   <select name="companyId" required  class="form-control form-control-ml">
+                                   <select name="companyId" required class="form-control form-control-ml">
                                         <?php
                                         if (isset($companies)) {
                                              foreach ($companies as $company) {
@@ -44,6 +44,10 @@ require_once('nav.php');
                               </div>
                          </div>
                          <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
+                         <a class="btn btn-dark ml-auto d-block" href="<?php if (isset($jobOffer)) {
+                                                                                echo FRONT_ROOT . "JobOffer/deleteByBD/" . $jobOffer->getJobOfferId();
+                                                                           }; ?>">Eliminar</a>
+
                     </div>
                </div>
           </form>

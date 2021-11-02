@@ -49,9 +49,14 @@ class CompanyController
     {
         Utils::checkAdminSession();
         if (isset($_SESSION['admin'])) {
-            $company = $this->companyDAO->GetByCompanyId($idCompany);
-            //$this->companyDAO->delete($company);
-            $this->ShowListView();
+            // $company = $this->companyDAO->GetByCompanyId($idCompany);
+            // //$this->companyDAO->delete($company);
+
+            $value = $this->companyDAO->deleteBD($idCompany);
+            if ($value == 1) {
+                $this->ShowListView();
+            }
+            
         }
     }
 
