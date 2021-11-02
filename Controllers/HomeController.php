@@ -35,10 +35,13 @@ class HomeController
                     $student = $studentController->getByEmail($email);
         
                     if ($student != null) {
-                        
-                        $_SESSION['student'] = $user;
-                        require_once(VIEWS_PATH . "student-firstpage.php");
-    
+                        if($student->getActive()){
+                            $_SESSION['student'] = $user;
+                            require_once(VIEWS_PATH . "student-firstpage.php");
+                        } else {
+                            $notActiveStudent = true;
+                        require_once(VIEWS_PATH . "index.php");
+                        }
                     } else {
                         $invalidEmail = true;
                         require_once(VIEWS_PATH . "index.php");
