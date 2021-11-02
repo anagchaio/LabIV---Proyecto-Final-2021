@@ -41,7 +41,7 @@ class CompanyController
 
     public function RedirectShowForm()
     {
-        //Utils::checkAdminSession();
+        Utils::checkAdminSession();
         require_once(VIEWS_PATH . "admin-company-show.php");
     }
 
@@ -49,9 +49,14 @@ class CompanyController
     {
         Utils::checkAdminSession();
         if (isset($_SESSION['admin'])) {
-            $company = $this->companyDAO->GetByCompanyId($idCompany);
-            $this->companyDAO->delete($company);
-            $this->ShowListView();
+            // $company = $this->companyDAO->GetByCompanyId($idCompany);
+            // //$this->companyDAO->delete($company);
+
+            $value = $this->companyDAO->deleteBD($idCompany);
+            if ($value == 1) {
+                $this->ShowListView();
+            }
+            
         }
     }
 
@@ -59,30 +64,28 @@ class CompanyController
     {
         Utils::checkAdminSession();
         if ($this->companyDAO->GetByCompanyEmail($email) == null) {
-            if($yearFoundantion <= date("Y")){
+            if ($yearFoundantion <= date("Y")) {
+                $uploadedSuccess = $this->companyDAO->UploadLogo($logo);
+                if ($uploadedSuccess) {
+                    $newCompany = new Company();
+                    $newCompany->setName($companyName);
+                    $newCompany->setYearFoundantion($yearFoundantion);
+                    $newCompany->setCity($city);
+                    $newCompany->setDescription($description);
+                    $newCompany->setEmail($email);
+                    $newCompany->setPhoneNumber($phoneNumber);
+                    $newCompany->setLogo($logo['name']);
 
-                $newCompany = new Company();
-                $newCompany->setIdCompany($this->companyDAO->getCompanyLastId());
-                $newCompany->setName($companyName);
-                $newCompany->setYearFoundantion($yearFoundantion);
-                $newCompany->setCity($city);
-                $newCompany->setDescription($description);
-                $newCompany->setEmail($email);
-                $newCompany->setPhoneNumber($phoneNumber);
-                $uploadSuccess = $this->UploadLogo($logo, "company-add.php");
-                $newCompany->setLogo($logo);
-                if ($uploadSuccess) {
                     $this->companyDAO->add($newCompany);
-                    $company = $newCompany;
-                    $companyId = $newCompany->getIdCompany();
                     $this->ShowListView();
+                } else {
+                    $notImageError = true;
+                    require_once(VIEWS_PATH . "company-add.php");
                 }
-
-            }else {
+            } else {
                 $yearNotValid = true;
                 require_once(VIEWS_PATH . "company-add.php");
             }
-            
         } else {
             $usedCompanyEmail = true;
             require_once(VIEWS_PATH . "company-add.php");
@@ -90,58 +93,51 @@ class CompanyController
     }
 
 
-    public function UploadLogo($logo, $fileView)
-    {
-        Utils::checkAdminSession();
-        $uploadSuccess = false;
-        $fileName = $logo["name"];
-        $tempFileName = $logo["tmp_name"];
-        $type = $logo["type"];
-
-        $filePath = UPLOADS_PATH . basename($fileName);
-
-        if (in_array($type, IMAGES_TYPE)) {
-            if (move_uploaded_file($tempFileName, $filePath)) {
-                $uploadSuccess = true;
-            } else {
-                $uploadError = true;
-                require_once(VIEWS_PATH . $fileView); 
-            }
-        } else {
-            $notImageError = true;
-            require_once(VIEWS_PATH . $fileView); 
-        }
-        return $uploadSuccess;
-    }
-
     public function ModifyCompany($companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logoName, $logo)
     {
         Utils::checkAdminSession();
         $company = $this->companyDAO->GetByCompanyId($companyId);
+        $updateSuccess = true;
 
         if ($company->getEmail() != $email) {
             if ($this->companyDAO->GetByCompanyEmail($email) != null) {
+                $updateSuccess = false;
                 $usedCompanyEmail = true;
                 require_once(VIEWS_PATH . "admin-company-show.php");
             } else {
                 $company->setEmail($email);
             }
         }
-        $company->setName($companyName);
-        $company->setYearFoundantion($yearFoundantion);
-        $company->setCity($city);
-        $company->setDescription($description);
-        $company->setEmail($email);
-        $company->setPhoneNumber($phoneNumber);
+
+        if ($yearFoundantion <= date("Y")) {
+            $company->setYearFoundantion($yearFoundantion);
+        } else {
+            $updateSuccess = false;
+            $yearNotValid = true;
+            require_once(VIEWS_PATH . "admin-company-show.php");
+        }
+
         if ($logo['error'] == 0) {
-            $uploadSuccess = $this->UploadLogo($logo, "admin-company-show.php");
-            if($uploadSuccess){
-                $company->setLogo($logo);
+            $uploadSuccess = $this->companyDAO->UploadLogo($logo);
+            if ($uploadSuccess) {
+                $company->setLogo($logo['name']);
+            } else {
+                $updateSuccess = false;
+                $notImageError = true;
+                require_once(VIEWS_PATH . "admin-company-show.php");
             }
         }
-        $this->companyDAO->modifyCompany($company);
 
-        $this->ShowListView();
+        $company->setName($companyName);
+        $company->setCity($city);
+        $company->setDescription($description);
+        $company->setPhoneNumber($phoneNumber);
+
+        if($updateSuccess){
+            $this->companyDAO->modify($company);
+            require_once(VIEWS_PATH . "admin-company-show.php");
+        }
+        
     }
 
     public function FilterList($searchedWord)
@@ -159,5 +155,4 @@ class CompanyController
         $companies = $filteredCompanies;
         require_once(VIEWS_PATH . "company-list.php");
     }
- 
 }

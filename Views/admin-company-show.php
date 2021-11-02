@@ -8,14 +8,17 @@ require_once('nav.php');
                     <h3 class="mb-3">Ver Empresa</h3>
                     <h4 style="color: rgb(145, 39, 177)">
                          <?php
+                         if (isset($updateSuccess)) {
+                              echo "Los datos fueron modificados correctamente";
+                         }
                          if (isset($usedCompanyEmail)) {
                               echo "Ya existe una empresa con ese email";
-                         }
-                         if (isset($uploadError)) {
-                              echo "Hubo un error y la imagen no se subio";
+                         }                         
+                         if (isset($yearNotValid)) {
+                              echo "El año debe ser menor o igual al actual";
                          }
                          if (isset($notImageError)) {
-                              echo "El archivo seleccionado no es una imagen";
+                              echo "Hubo un error o el archivo seleccionado no es una imagen";
                          }
                          ?>
                     </h4>
@@ -26,12 +29,12 @@ require_once('nav.php');
                          <div class="row">
                               <div class="col-lg-4">
                                    <label for="">Nombre</label>
-                                   <input type="text" name="name" class="form-control form-control-ml" value="<?php  if(isset($company)){echo $company->getName(); };  ?>">
+                                   <input type="text" name="companyName" class="form-control form-control-ml" value="<?php  if(isset($company)){echo $company->getName(); };  ?>">
                               </div>
 
                               <div class="col-lg-4">
                                    <label for="">Año de Fundacion</label>
-                                   <input type="number" min="1900" max="2021" step="1" name="yearFoundantion" class="form-control form-control-ml" value="<?php if(isset($company)){echo $company->getYearFoundantion();}; ?>">
+                                   <input type="number" min="1900" step="1" name="yearFoundantion" class="form-control form-control-ml" value="<?php if(isset($company)){echo $company->getYearFoundantion();}; ?>">
                               </div>
 
                               <div class="col-lg-4">
@@ -57,7 +60,7 @@ require_once('nav.php');
 
                               <div class="form-group">
                                    <label for="">Logo:</label>
-                                   <img src="<?php if(isset($company)){echo FRONT_ROOT . UPLOADS_PATH . $company->getLogoFileName();}; ?>" alt="Company-Logo" width="100" height="100">
+                                   <img src="<?php if(isset($company)){echo FRONT_ROOT . UPLOADS_PATH . $company->getLogo();}; ?>" alt="Company-Logo" width="100" height="100">
                                    <input type="file" name="logo" class="form-control-file">
 
                               </div>

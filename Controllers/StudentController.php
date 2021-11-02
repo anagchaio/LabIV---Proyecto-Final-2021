@@ -27,27 +27,30 @@ class StudentController
             $student = $studentController->getByEmail($email);
     
             if ($student != null) {
+                if($student->getActive()){
+                    if($this->UserDAO->getUserByEmail($email) == null){
+                        $newUser = new User();
+                        $newUser->setEmail($email);
+                        $newUser->setPassword($password);
+                        $newUser->setName($student->getFirstName());
+                        $newUser->setStudentId($student->getStudentId());
+                        $newUser->setUserTypeId(2);
                 
-                if($this->UserDAO->getUserByEmail($email) == null){
-                    $newUser = new User();
-                    $newUser->setEmail($email);
-                    $newUser->setPassword($password);
-                    $newUser->setName($student->getFirstName());
-                    $newUser->setStudentId($student->getStudentId());
-                    $newUser->setUserTypeId(2);
-            
-                    $this->UserDAO->Add($newUser);
-    
-                    $succesfulRegistration = true;
-                    require_once(VIEWS_PATH . "index.php");
-                } else {
-                    $registedEmail = true;
+                        $this->UserDAO->Add($newUser);
+        
+                        $succesfulRegistration = true;
+                        require_once(VIEWS_PATH . "index.php");
+                    } else {
+                        $registedEmail = true;
+                        require_once(VIEWS_PATH . "user-registration.php");
+                    }
+                }  else {
+                    $invalidEmail = true;
                     require_once(VIEWS_PATH . "user-registration.php");
                 }
-                
             } else {
                 $invalidEmail = true;
-                require_once(VIEWS_PATH . "index.php");
+                require_once(VIEWS_PATH . "user-registration.php");
             }
         }
 

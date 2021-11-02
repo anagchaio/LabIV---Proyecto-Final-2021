@@ -11,6 +11,9 @@
                 if (isset($invalidEmail)) {
                     echo "Error: el email no se encuentra en el sistema. Debe registrarse.";
                 }
+                if (isset($notActiveStudent)) {
+                    echo "Error: el usuario no esta activo. Comuniquese con la UTN.";
+                }                
                 if (isset($succesfulRegistration)) {
                     echo "El usuario fue registrado correctamente en el sistema.";
                 }
