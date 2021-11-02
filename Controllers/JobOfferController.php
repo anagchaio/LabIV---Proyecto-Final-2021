@@ -10,6 +10,7 @@ use DAO\JobPositionDAO as JobPositionDAO;
 use DAO\CompanyDAO as CompanyDAO;
 use DAO\StudentDAO as StudentDAO;
 use DAO\CareerDAO as CareerDAO;
+use DAO\UserDAO as UserDAO;
 use Models\Career;
 
 class JobOfferController
@@ -19,6 +20,7 @@ class JobOfferController
     private $CompanyDAO;
     private $studentDAO;
     private $careerDAO;
+    private $userDAO;
 
     public function __construct()
     {
@@ -27,6 +29,7 @@ class JobOfferController
         $this->CompanyDAO = new CompanyDAO();
         $this->studentDAO = new StudentDAO();
         $this->careerDAO = new CareerDAO();
+        $this->userDAO = new UserDAO();
     }
 
     public function add($companyId, $jobPositionId, $jobOffer_description, $limitDate)
@@ -127,12 +130,27 @@ class JobOfferController
     }
 
     public function Subscribe($jobOfferId){
-
-        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+        
         $user = $_SESSION['student'];
-        $studentId = $user->getStudentId();
+        var_dump($user);
+        if($user->getJobOfferId() == null){
+            
+            $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+            $studentId = $user->getStudentId();
+            $this->jobOfferDAO->AddStudent($jobOffer, $studentId);
+            $this->userDAO->Update($user,$jobOfferId);
+            $user->setJobOfferId($jobOfferId);
+            $_SESSION['student'] = $user;
+            $SubscribeSuccess = true;
+            
+        } else {
+            $SubscribeError = true;
+        }
+        
+        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+        $student = $this->studentDAO->GetByStudentId($user->getStudentId());
+        require_once(VIEWS_PATH . "student-jobOffer-show.php");
 
-        $this->jobOfferDAO->AddStudent($jobOffer, $studentId);
     }
 
     public function FilterByCareer($CareerId){
