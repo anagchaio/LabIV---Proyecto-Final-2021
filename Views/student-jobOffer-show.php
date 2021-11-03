@@ -16,6 +16,9 @@ require_once('nav.php');
                     if (isset($SubscribeError)) {
                         echo "Error: Ya se encuentra inscripto en otra oferta.";
                     }
+                    if (isset($closedOffer)) {
+                        echo "No puede inscribirse en una oferta que ya esta cerrada";
+                    }
                     ?>
                 </h4>
                 <input type="number" name="jobOfferId" class="form-control form-control-ml" hidden value="<?php echo $jobOffer->getJobOfferId(); ?>">
@@ -56,7 +59,7 @@ require_once('nav.php');
                             <label for="">Alumno</label>
                             <input readonly type="text" name="student" class="form-control form-control-ml" value="
                             <?php
-                            if ($student != null) {
+                            if ($jobOffer->getStudentId() != null) {
                                 echo $student->getFirstName() . " " . $student->getLastName();
                             } else {
                                 echo "Sin alumno";

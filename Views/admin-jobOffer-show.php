@@ -16,9 +16,12 @@ require_once('nav.php');
                     if (isset($invalidDate)) {
                         echo "La fecha limite no puede ser menor a la actual";
                     }
+                    if (isset($closedOffer)) {
+                        echo "La oferta no puede ser modificada/eliminada una vez que esta cerrada";
+                    }
                     ?>
                 </h4>
-                <input type="number" name="jobOfferId" class="form-control form-control-ml" hidden value="<?php echo $jobOffer->getJobOfferId();?>">
+                <input type="number" name="jobOfferId" class="form-control form-control-ml" hidden value="<?php echo $jobOffer->getJobOfferId(); ?>">
                 <div>
                     <div class="row">
                         <div class="col-lg-4">
@@ -64,23 +67,20 @@ require_once('nav.php');
                         </div>
                         <div class="col-lg-4">
                             <label for="">Estado</label>
-                            <select name="state" class="form-control form-control-ml">
+                            <input readonly name="state" class="form-control form-control-ml" value="
                                 <?php if ($jobOffer->getState() == "Opened") {
-                                    echo "<option selected=" . "selected" . " value=" . "Opened" . ">Abierta</option>";
-                                    echo "<option value=" . "Closed" . ">Cerrada</option>";
+                                    echo "Abierta";
                                 } else {
-                                    echo "<option value=" . "Opened" . ">Abierta</option>";
-                                    echo "<option selected=" . "selected" . " value=" . "Closed" . ">Cerrada</option>";
+                                    echo "Cerrada";
                                 }
-                                ?>
-                            </select>
+                                ?>">
                         </div>
 
                         <div class="col-lg-4">
                             <label for="">Alumno</label>
                             <input readonly type="text" name="student" class="form-control form-control-ml" value="
                             <?php
-                            if ($student != null) {
+                            if ($jobOffer->getStudentId() != null) {
                                 echo $student->getFirstName() . " " . $student->getLastName();
                             } else {
                                 echo "Sin alumno";
