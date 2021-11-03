@@ -53,13 +53,23 @@ class JobOfferController
         }
     }
 
-    public function deleteByBD($jobOfferId)
+    public function Delete($jobOfferId)
     {
         Utils::checkAdminSession();
+        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
         if (isset($_SESSION['admin'])) {
-            $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
-            if ($value == 1) {
-                require_once(VIEWS_PATH . "jobOffer-list.php");
+            if ($jobOffer->getState() == "Opened") {
+                $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
+                if ($value == 1) {
+                    $jobOffers = $this->jobOfferDAO->GetList();
+                    require_once(VIEWS_PATH . "jobOffer-list.php");
+                }
+            } else {
+                $closedOffer = true;
+                $companies = $this->CompanyDAO->GetAll();
+                $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
+                $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
+                require_once(VIEWS_PATH . "admin-jobOffer-show.php");
             }
         }
     }
@@ -83,26 +93,25 @@ class JobOfferController
         $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
         $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
         $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
-        
+
         if ($jobOffer->getState() == "Opened") {
             if ($limitDate >= date("Y-m-d")) {
                 $modifiedJobOffer = new JobOffer();
                 $modifiedJobOffer->setJobOfferId($jobOfferId);
                 $modifiedJobOffer->setJobOffer_description($jobOffer_description);
-                $modifiedJobOffer->setLimitDate($limitDate);                
+                $modifiedJobOffer->setLimitDate($limitDate);
                 $modifiedJobOffer->setCompanyId($companyId);
                 $modifiedJobOffer->setJobPositionId($jobPositionId);
 
                 $this->jobOfferDAO->modify($modifiedJobOffer);
-                
+
                 $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
                 $updateSuccess = true;
-                
             } else {
                 $invalidDate = true;
             }
         } else {
-            $closedOffer = true;            
+            $closedOffer = true;
         }
         require_once(VIEWS_PATH . "admin-jobOffer-show.php");
     }
@@ -133,9 +142,8 @@ class JobOfferController
         $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
         $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
 
-        if (isset($_SESSION['admin'])) {            
+        if (isset($_SESSION['admin'])) {
             require_once(VIEWS_PATH . "admin-jobOffer-show.php");
-
         } else {
             $user = $_SESSION['student'];
             require_once(VIEWS_PATH . "student-jobOffer-show.php");
@@ -147,7 +155,7 @@ class JobOfferController
         $user = $_SESSION['student'];
 
         if ($user->getJobOfferId() == null) {
-          
+
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
             if ($jobOffer->getState() == "Opened") {
                 $studentId = $user->getStudentId();
@@ -178,5 +186,14 @@ class JobOfferController
         $careers = $this->careerDAO->GetAllActive();
 
         require_once(VIEWS_PATH . "jobOffer-list.php");
+    }
+
+    public function FindCompanyInJobOffer($companyId){
+        $companyFound = false;
+        $joboffers = $this->jobOfferDAO->GetJobOfferByCompanyId($companyId);
+        if($joboffers != null){
+            $companyFound = true;
+        }
+        return $companyFound;
     }
 }
