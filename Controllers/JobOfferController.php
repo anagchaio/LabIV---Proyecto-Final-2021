@@ -131,14 +131,13 @@ class JobOfferController
         $companies = $this->CompanyDAO->GetAll();
         $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
         $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+        $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
 
-        if (isset($_SESSION['admin'])) {
-            $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
+        if (isset($_SESSION['admin'])) {            
             require_once(VIEWS_PATH . "admin-jobOffer-show.php");
+
         } else {
             $user = $_SESSION['student'];
-            $student = $this->studentDAO->GetByStudentId($user->getStudentId());
-
             require_once(VIEWS_PATH . "student-jobOffer-show.php");
         }
     }
