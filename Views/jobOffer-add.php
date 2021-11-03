@@ -43,10 +43,7 @@ require_once('nav.php');
                                    <input type="date" name="limitDate" class="form-control form-control-ml" required value="">
                               </div>
                          </div>
-                         <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
-                         <a class="btn btn-dark ml-auto d-block" href="<?php if (isset($jobOffer)) {
-                                                                                echo FRONT_ROOT . "JobOffer/deleteByBD/" . $jobOffer->getJobOfferId();
-                                                                           }; ?>">Eliminar</a>
+                         <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>                   
 
                     </div>
                </div>

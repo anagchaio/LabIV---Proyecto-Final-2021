@@ -31,23 +31,22 @@ class JobOfferDAO implements IJobOfferDAO
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
-            echo $response;
+            $response = $exception->getMessage();            
         }
     }
 
     public function deleteJobOfferById($jobOfferId)
     {
         try {
-            $query = "DELETE FROM " . $this->tableName . " WHERE jobOfferId = :jobOfferId;";
+            $query = "DELETE FROM " . $this->tableName . " WHERE id_jobOffer = :id_jobOffer;";
 
-            $parameters["jobOfferId"] = $jobOfferId;
+            $parameters["id_jobOffer"] = $jobOfferId;
 
             $this->connection = Connection::GetInstance();
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
-        } catch (Exception $ex) {
-            throw $ex;
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
         }
     }
 
@@ -259,4 +258,34 @@ class JobOfferDAO implements IJobOfferDAO
                 $response = $exception->getMessage();
             }
         }
+    
+
+    public function GetJobOfferByCompanyId($companyId)
+    {
+        try {
+            $jobOfferList = array();
+            $query = "SELECT j.id_jobOffer
+                FROM joboffers j
+                INNER JOIN companies cp on j.company_id = cp.id_company
+                WHERE j.company_id = " . $companyId . ";";
+
+
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+                $jobOffer = new JobOffer();
+                $jobOffer->setJobOfferId($row["id_jobOffer"]);
+
+                array_push($jobOfferList, $jobOffer);
+            }
+            
+            return $jobOfferList;
+
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
+        }
     }
+}
