@@ -106,7 +106,7 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setCareer_description($row["career_description"]);
                 $jobOffer->setLimitDate($row["limit_date"]);
                 $jobOffer->setState($row["state"]);
-                $jobOffer->getStudentId($row["student_id"]);
+                $jobOffer->setStudentId($row["student_id"]);
 
                 array_push($jobOfferList, $jobOffer);
             }
@@ -148,9 +148,9 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setCareer_description($row["career_description"]);
                 $jobOffer->setLimitDate($row["limit_date"]);
                 $jobOffer->setState($row["state"]);
-                $jobOffer->getStudentId($row["student_id"]);
+                $jobOffer->setStudentId($row["student_id"]);
             }
-
+            
             return $jobOffer;
         } catch (Exception $exception) {
             $response = $exception->getMessage();
@@ -172,7 +172,7 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setCareer_description($row["career_description"]);
                 $jobOffer->setLimitDate($row["limit_date"]);
                 $jobOffer->setState($row["state"]);
-                $jobOffer->getStudentId($row["student_id"]);
+                $jobOffer->setStudentId($row["student_id"]);
 
             return $jobOffer;
         },$value);
@@ -185,13 +185,12 @@ class JobOfferDAO implements IJobOfferDAO
         try {
 
             $query = "UPDATE " . $this->tableName . " SET jobOffer_description=:jobOffer_description, limit_date=:limit_date,
-                state=:state, company_id=:company_id, jobPosition_id=:jobPosition_id
+                company_id=:company_id, jobPosition_id=:jobPosition_id
                 WHERE id_jobOffer = :id_jobOffer;";
 
             $parameters["id_jobOffer"] = $jobOffer->getJobOfferId();
             $parameters["jobOffer_description"] = $jobOffer->getJobOffer_description();
             $parameters["limit_date"] = $jobOffer->getLimitDate();
-            $parameters["state"] = $jobOffer->getState();
             $parameters["company_id"] = $jobOffer->getCompanyId();
             $parameters["jobPosition_id"] = $jobOffer->getJobPositionId();
 

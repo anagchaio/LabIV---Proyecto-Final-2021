@@ -56,7 +56,7 @@ require_once('nav.php');
                             <label for="">Alumno</label>
                             <input readonly type="text" name="student" class="form-control form-control-ml" value="
                             <?php
-                            if ($student != null) {
+                            if ($jobOffer->getStudentId() != null) {
                                 echo $student->getFirstName() . " " . $student->getLastName();
                             } else {
                                 echo "Sin alumno";

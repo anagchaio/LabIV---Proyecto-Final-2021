@@ -79,23 +79,32 @@ class JobOfferController
     public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state)
     {
         Utils::checkAdminSession();
+        $companies = $this->CompanyDAO->GetAll();
+        $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
+        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+        $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
+        
+        if ($jobOffer->getState() == "Opened") {
+            if ($limitDate >= date("Y-m-d")) {
+                $modifiedJobOffer = new JobOffer();
+                $modifiedJobOffer->setJobOfferId($jobOfferId);
+                $modifiedJobOffer->setJobOffer_description($jobOffer_description);
+                $modifiedJobOffer->setLimitDate($limitDate);                
+                $modifiedJobOffer->setCompanyId($companyId);
+                $modifiedJobOffer->setJobPositionId($jobPositionId);
 
-        if ($limitDate >= date("Y-m-d")) {
-            $jobOffer = new JobOffer();
-            $jobOffer->setJobOfferId($jobOfferId);
-            $jobOffer->setJobOffer_description($jobOffer_description);
-            $jobOffer->setLimitDate($limitDate);
-            $jobOffer->setState($state);
-            $jobOffer->setCompanyId($companyId);
-            $jobOffer->setJobPositionId($jobPositionId);
-
-            $this->jobOfferDAO->modify($jobOffer);
-            $updateSuccess = true;
-            $this->ShowOffer($jobOfferId);
+                $this->jobOfferDAO->modify($modifiedJobOffer);
+                
+                $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+                $updateSuccess = true;
+                
+            } else {
+                $invalidDate = true;
+            }
         } else {
-            $invalidDate = true;
-            $this->ShowOffer($jobOfferId);
+            $closedOffer = true;            
         }
+        require_once(VIEWS_PATH . "admin-jobOffer-show.php");
     }
 
 
@@ -103,7 +112,7 @@ class JobOfferController
     {
         Utils::checkSession();
         $careers = $this->careerDAO->GetAllActive();
-        
+
         if (isset($_SESSION['admin'])) {
             $jobOffers = $this->jobOfferDAO->GetList();
         } else {
@@ -116,58 +125,59 @@ class JobOfferController
         require_once(VIEWS_PATH . "jobOffer-list.php");
     }
 
-
     public function ShowOffer($jobOfferId)
     {
         Utils::checkSession();
         $companies = $this->CompanyDAO->GetAll();
         $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
         $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-        
+
         if (isset($_SESSION['admin'])) {
             $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
             require_once(VIEWS_PATH . "admin-jobOffer-show.php");
-
         } else {
             $user = $_SESSION['student'];
             $student = $this->studentDAO->GetByStudentId($user->getStudentId());
-            
+
             require_once(VIEWS_PATH . "student-jobOffer-show.php");
         }
     }
 
-    public function Subscribe($jobOfferId){
-        
+    public function Subscribe($jobOfferId)
+    {
         $user = $_SESSION['student'];
-        
-        if($user->getJobOfferId() == null){
-            
+
+        if ($user->getJobOfferId() == null) {
+
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-            $studentId = $user->getStudentId();
-            $this->jobOfferDAO->AddStudent($jobOffer, $studentId);
-            $this->userDAO->Update($user,$jobOfferId);
-            $user->setJobOfferId($jobOfferId);
-            $_SESSION['student'] = $user;
-            $SubscribeSuccess = true;
-            
+            if ($jobOffer->getState() == "Opened") {
+                $studentId = $user->getStudentId();
+                $this->jobOfferDAO->AddStudent($jobOffer, $studentId);
+                $this->userDAO->Update($user, $jobOfferId);
+                $user->setJobOfferId($jobOfferId);
+                $_SESSION['student'] = $user;
+                $SubscribeSuccess = true;
+            } else {
+                $closedOffer = true;
+            }
         } else {
             $SubscribeError = true;
         }
-        
+
         $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
         $student = $this->studentDAO->GetByStudentId($user->getStudentId());
         require_once(VIEWS_PATH . "student-jobOffer-show.php");
-
     }
 
-    public function FilterByCareer($CareerId){
-        if($CareerId == 0){
+    public function FilterByCareer($CareerId)
+    {
+        if ($CareerId == 0) {
             $jobOffers = $this->jobOfferDAO->GetList();
         } else {
             $jobOffers = $this->jobOfferDAO->GetListByCareer($CareerId);
         }
         $careers = $this->careerDAO->GetAllActive();
-        
+
         require_once(VIEWS_PATH . "jobOffer-list.php");
     }
 }
