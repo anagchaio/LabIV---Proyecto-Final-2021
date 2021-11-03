@@ -147,7 +147,7 @@ class JobOfferController
         $user = $_SESSION['student'];
 
         if ($user->getJobOfferId() == null) {
-
+          
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
             if ($jobOffer->getState() == "Opened") {
                 $studentId = $user->getStudentId();
