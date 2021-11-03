@@ -57,7 +57,7 @@ class StudentController
         public function ShowListView()
         {
             Utils::checkAdminSession();
-            $students = $this->studentDAO->GetAll();
+            $students = $this->studentDAO->GetAllActive();
             $careers = $this->APIcareerDAO->GetAll();
             require_once(VIEWS_PATH."student-list.php");
         }

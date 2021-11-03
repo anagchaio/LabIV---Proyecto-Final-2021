@@ -145,9 +145,9 @@ class CompanyDAO
     public function deleteBD($idCompany)
     {
         try {
-            $query = "DELETE FROM " . $this->tableName . " WHERE idCompany = :idCompany;";
+            $query = "DELETE FROM " . $this->tableName . " WHERE id_company = :id_company;";
 
-            $parameters["idCompany"] = $idCompany;
+            $parameters["id_company"] = $idCompany;
 
             $this->connection = Connection::GetInstance();
 

@@ -54,6 +54,19 @@ class StudentDAO implements IStudentDAO
         return $this->listOfStudents;
     }
 
+    public function GetAllActive()
+    {
+        $this->retrieveData();
+        $activeStudents = array();
+
+        foreach ($this->listOfStudents as $student) {
+            if ($student->getActive() == true){
+                array_push($activeStudents, $student);
+            }
+        }
+        return $activeStudents;
+    }
+
     public function GetByStudentEmail($email)
     {
         $this->RetrieveData();
