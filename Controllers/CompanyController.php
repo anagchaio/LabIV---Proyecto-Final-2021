@@ -143,6 +143,7 @@ class CompanyController
 
         if($updateSuccess){
             $this->companyDAO->modify($company);
+            $successMessage = true;
             require_once(VIEWS_PATH . "admin-company-show.php");
         }
         
