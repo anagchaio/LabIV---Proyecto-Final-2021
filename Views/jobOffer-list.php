@@ -31,6 +31,7 @@ require_once('nav-shared.php');
             </div>
             <table class="table table-hover">
             <?php
+            
             if (isset($jobOffers) && $jobOffers != null) {
                 
                 echo "<thead>";

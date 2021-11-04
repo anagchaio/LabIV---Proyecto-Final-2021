@@ -126,13 +126,14 @@ class JobOfferController
 
         if (isset($_SESSION['admin'])) {
             $jobOffers = $this->jobOfferDAO->GetList();
+            
         } else {
             $user = $_SESSION['student'];
             $student = $this->studentDAO->GetByStudentId($user->getStudentId());
             $careerId = $student->getCareerId();
             $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
         }
-        if($jobOffers = null){
+        if($jobOffers == null){
             $noOffersToShow = true;
         }
 
