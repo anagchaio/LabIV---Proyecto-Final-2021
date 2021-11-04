@@ -68,7 +68,7 @@ class CompanyController
         }
     }
 
-    public function AddCompany($companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logo)
+    public function AddCompany($companyName, $yearFoundantion, $city, $email, $phoneNumber,$description, $logo)
     {
         Utils::checkAdminSession();
         if ($this->companyDAO->GetByCompanyEmail($email) == null) {
