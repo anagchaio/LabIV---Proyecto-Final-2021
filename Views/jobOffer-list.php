@@ -7,7 +7,7 @@ require_once('nav-shared.php');
             <h2 class="mb-4">Ofertas</h2>
 
 
-            <table class="table bg-dark-alpha">
+            <table class="table table-hover">
                 <thead>
                     <th>Empresa</th>
                     <th>Description</th>

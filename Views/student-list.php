@@ -5,9 +5,11 @@ require_once('nav.php');
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Listado de Alumnos</h2>
+               <div class="conteiner-title-list">
+               <h2 class="text-center">Listado de Alumnos</h2>
+               </div>
                
-               <table class="table bg-light-alpha">
+               <table class="table table-hover">
                     <thead>
                          <th>Nombre</th>
                          <th>Apellido</th>

@@ -1,6 +1,6 @@
-CREATE database BolsaDeEmpleo;
+CREATE database employmentExchange;
 
-use BolsaDeEmpleo;
+use employmentExchange;
 
 CREATE TABLE careers(
 	id_career int NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE companies(
 );
 
 CREATE TABLE jobPositions(
-	id_jobPosition int NOT NULL AUTO_INCREMENT,
+	id_jobPosition int NOT NULL,
 	jobPosition_description varchar(100) NOT NULL,
 	career_id int not null,
 	constraint pk_jobPosition primary key (id_jobPosition),
@@ -58,8 +58,10 @@ CREATE TABLE users(
 	name varchar(50) NOT NULL,
 	id_student int,
 	id_userType int NOT NULL,
+	id_jobOffer int,
     constraint pk_user primary key (id_user),
-    constraint fk_userType foreign key (id_userType) references userTypes(id_userType)
+    constraint fk_userType foreign key (id_userType) references userTypes(id_userType),
+	constraint fk_jobOffer foreign key (id_jobOffer) references jobOffers(id_jobOffer)
 );
 
 INSERT INTO userTypes (name)

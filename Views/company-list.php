@@ -5,16 +5,21 @@ require_once('nav-shared.php');
     <section id="listado" class="mb-5">
         <div class="container">
             <h2 class="mb-4">Lista de Empresas</h2>
-
-            <form action="<?php echo FRONT_ROOT ?>Company/FilterList" method="POST" enctype="multipart/form-data">
-                <input type="text" name="searchedWord" class="form-control form-control-ml" required value="">
-                <div class="container">
-                    <div class="row">
-                        <button type="submit" class="btn btn-primary ml-auto d-block">Buscar</button>
-                        <a class="btn btn-primary" href="<?php echo FRONT_ROOT ?>Company/ShowListView/">Limpiar</a>
-                    </div>
+            <div class="flex">
+                <div class="form-group-input">
+                    <form action="<?php echo FRONT_ROOT ?>Company/FilterList" method="POST" enctype="multipart/form-data" >
+                        <input type="text" name="searchedWord" class="form-control" required value="" placeholder="Buscador" style="width: 130vh;">
+                        <!-- <div class="container"> -->
                 </div>
-            </form>
+                <!-- <div class="row"> -->
+                <div style="margin-left: 103vh;">
+                    <button type="submit" class="btn btn-primary ml-auto d-block">Buscar</button>
+                </div>
+                <div>
+                    <a class="btn btn-primary" href="<?php echo FRONT_ROOT ?>Company/ShowListView/">Limpiar</a>
+                </div>
+                </form>
+            </div>
 
 
             <table class="table bg-dark-alpha">
