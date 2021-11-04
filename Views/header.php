@@ -13,6 +13,7 @@
      <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH ?>estilos.css">
      <link rel="stylesheet" type="text/css" href="<?php echo CSS_PATH ?>styles.css">
 
+
      <title>Bolsa de trabajo UTN</title>
 
 </head>
