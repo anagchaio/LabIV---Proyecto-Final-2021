@@ -1,6 +1,6 @@
-CREATE database BolsaDeEmpleo;
+CREATE database employmentExchange;
 
-use BolsaDeEmpleo;
+use employmentExchange;
 
 CREATE TABLE careers(
 	id_career int NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE companies(
 );
 
 CREATE TABLE jobPositions(
-	id_jobPosition int NOT NULL AUTO_INCREMENT,
+	id_jobPosition int NOT NULL,
 	jobPosition_description varchar(100) NOT NULL,
 	career_id int not null,
 	constraint pk_jobPosition primary key (id_jobPosition),

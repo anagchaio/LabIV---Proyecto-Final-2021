@@ -23,7 +23,7 @@ require_once('nav-shared.php');
             </form>
             </div>
 
-            <table class="table bg-dark-alpha">
+            <table class="table table-hover">
                 <thead>
                     <th>Empresa</th>
                     <th>Description</th>
