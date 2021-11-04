@@ -63,9 +63,9 @@ require_once('nav.php');
                                         </div>
 
                                         <div class="container">
-                                             <div class="row">
-                                                  <div class="col-lg-4">
-                                                       <div class="form-group">
+                                             <div>
+                                                  <div class="">
+                                                       <div class="form-group" style="text-align: center;">
                                                             <label for="">Logo:</label>
                                                             <input type="file" name="logo" required class="form-control-file">
 
