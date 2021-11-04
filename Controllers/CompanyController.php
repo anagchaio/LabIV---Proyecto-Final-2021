@@ -68,8 +68,15 @@ class CompanyController
         }
     }
 
-    public function AddCompany($companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logo)
+    public function AddCompany($companyName, $yearFoundantion, $city, $email, $phoneNumber,$description, $logo)
     {
+        var_dump($companyName);
+        var_dump($yearFoundantion);
+        var_dump($city);
+        var_dump($email);
+        var_dump($phoneNumber);
+        var_dump($description);
+        var_dump($logo);
         Utils::checkAdminSession();
         if ($this->companyDAO->GetByCompanyEmail($email) == null) {
             if ($yearFoundantion <= date("Y")) {
@@ -143,6 +150,7 @@ class CompanyController
 
         if($updateSuccess){
             $this->companyDAO->modify($company);
+            $successMessage = true;
             require_once(VIEWS_PATH . "admin-company-show.php");
         }
         

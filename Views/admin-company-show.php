@@ -8,7 +8,7 @@ require_once('nav.php');
                     <h3 class="mb-3">Ver Empresa</h3>
                     <h4 style="color: rgb(145, 39, 177)">
                          <?php
-                         if (isset($updateSuccess)) {
+                         if (isset($successMessage)) {
                               echo "Los datos fueron modificados correctamente";
                          }
                          if (isset($usedCompanyEmail)) {
