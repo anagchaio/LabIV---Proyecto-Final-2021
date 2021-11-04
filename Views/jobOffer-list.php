@@ -1,11 +1,27 @@
 <?php
 require_once('nav-shared.php');
+
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
         <div class="container">
             <h2 class="mb-4">Ofertas</h2>
-
+            <div class = "row">
+            <form action="<?php echo FRONT_ROOT ?>JobOffer/FilterByCareer" method="GET">
+                <label for="">Carrera: </label>
+                <select name="careerId" class="form-control form-control-ml">
+                    <?php
+                     echo "<option value=". 0 .">Todas</option>";
+                    if (isset($careers)) {
+                        foreach ($careers as $career) {
+                            echo "<option value=" . $career->getCareerId() . ">" . $career->getDescription() . "</option>";
+                        }
+                    }
+                    ?>
+                </select>
+                <button type="submit" name="filter-button" class="btn btn-dark ml-auto d-block">Filtrar</button>
+            </form>
+            </div>
 
             <table class="table table-hover">
                 <thead>

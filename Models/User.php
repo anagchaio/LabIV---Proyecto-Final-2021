@@ -8,6 +8,7 @@ class User {
     private $name;
     private $studentId;
     private $userTypeId;
+    private $jobOfferId;
 
 
     function __construct()
@@ -132,6 +133,26 @@ class User {
     public function setUserTypeId($userTypeId)
     {
         $this->userTypeId = $userTypeId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of jobOfferId
+     */ 
+    public function getJobOfferId()
+    {
+        return $this->jobOfferId;
+    }
+
+    /**
+     * Set the value of jobOfferId
+     *
+     * @return  self
+     */ 
+    public function setJobOfferId($jobOfferId)
+    {
+        $this->jobOfferId = $jobOfferId;
 
         return $this;
     }

@@ -5,6 +5,7 @@ namespace Controllers;
 use DAO\CompanyDAO as CompanyDAO;
 use Models\Company as Company;
 use Utils\Utils as Utils;
+use Controllers\JobOfferController as JobOfferController;
 
 class CompanyController
 {
@@ -49,13 +50,20 @@ class CompanyController
     {
         Utils::checkAdminSession();
         if (isset($_SESSION['admin'])) {
-            // $company = $this->companyDAO->GetByCompanyId($idCompany);
-            // //$this->companyDAO->delete($company);
-
-            $value = $this->companyDAO->deleteBD($idCompany);
+            $jobOfferController = new JobOfferController();
+            $companyFound = $jobOfferController->FindCompanyInJobOffer($idCompany);
+            if($companyFound == false){
+                $value = $this->companyDAO->deleteBD($idCompany);
             if ($value == 1) {
                 $this->ShowListView();
             }
+            } else {
+                $companyInUse = true;
+                $company = $this->companyDAO->GetByCompanyId($idCompany);
+                require_once(VIEWS_PATH . "admin-company-show.php");
+            }
+            
+            
             
         }
     }

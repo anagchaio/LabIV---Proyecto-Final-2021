@@ -69,8 +69,8 @@ VALUES ('ADMIN');
 INSERT INTO userTypes (name)
 VALUES ('STUDENT');
 
-INSERT INTO users (email, password, name, id_student, id_userType)
-VALUES ('admin@admin.com', 'admin', 'ADMIN', NULL, 1);
+INSERT INTO users (email, password, name, id_student, id_userType,id_jobOffer)
+VALUES ('admin@admin.com', 'admin', 'ADMIN', NULL, 1,NULL);
 
 
 

@@ -31,8 +31,7 @@ class JobOfferDAO implements IJobOfferDAO
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
-            echo $response;
+            $response = $exception->getMessage();            
         }
     }
 
@@ -46,8 +45,8 @@ class JobOfferDAO implements IJobOfferDAO
             $this->connection = Connection::GetInstance();
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
-        } catch (Exception $ex) {
-            throw $ex;
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
         }
     }
 
@@ -106,7 +105,7 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setCareer_description($row["career_description"]);
                 $jobOffer->setLimitDate($row["limit_date"]);
                 $jobOffer->setState($row["state"]);
-                $jobOffer->getStudentId($row["student_id"]);
+                $jobOffer->setStudentId($row["student_id"]);
 
                 array_push($jobOfferList, $jobOffer);
             }
@@ -148,9 +147,9 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setCareer_description($row["career_description"]);
                 $jobOffer->setLimitDate($row["limit_date"]);
                 $jobOffer->setState($row["state"]);
-                $jobOffer->getStudentId($row["student_id"]);
+                $jobOffer->setStudentId($row["student_id"]);
             }
-
+            
             return $jobOffer;
         } catch (Exception $exception) {
             $response = $exception->getMessage();
@@ -172,7 +171,7 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setCareer_description($row["career_description"]);
                 $jobOffer->setLimitDate($row["limit_date"]);
                 $jobOffer->setState($row["state"]);
-                $jobOffer->getStudentId($row["student_id"]);
+                $jobOffer->setStudentId($row["student_id"]);
 
             return $jobOffer;
         },$value);
@@ -185,13 +184,12 @@ class JobOfferDAO implements IJobOfferDAO
         try {
 
             $query = "UPDATE " . $this->tableName . " SET jobOffer_description=:jobOffer_description, limit_date=:limit_date,
-                state=:state, company_id=:company_id, jobPosition_id=:jobPosition_id
+                company_id=:company_id, jobPosition_id=:jobPosition_id
                 WHERE id_jobOffer = :id_jobOffer;";
 
             $parameters["id_jobOffer"] = $jobOffer->getJobOfferId();
             $parameters["jobOffer_description"] = $jobOffer->getJobOffer_description();
             $parameters["limit_date"] = $jobOffer->getLimitDate();
-            $parameters["state"] = $jobOffer->getState();
             $parameters["company_id"] = $jobOffer->getCompanyId();
             $parameters["jobPosition_id"] = $jobOffer->getJobPositionId();
 
@@ -213,9 +211,7 @@ class JobOfferDAO implements IJobOfferDAO
                 INNER JOIN companies cp on j.company_id = cp.id_company
                 INNER JOIN jobpositions p on j.jobPosition_id = p.id_jobPosition
                 INNER JOIN careers cr on p.career_id = cr.id_career
-                WHERE p.career_id = " . $CareerId . " AND j.state =" . "Opened" . ";";
-
-
+                WHERE p.career_id = ". $CareerId." AND j.state ='Opened';";
 
             $this->connection = Connection::GetInstance();
 
@@ -241,6 +237,55 @@ class JobOfferDAO implements IJobOfferDAO
         } catch (Exception $exception) {
             $response = $exception->getMessage();
             echo $response;
+        }
+    }
+
+        public function AddStudent(JobOffer $jobOffer, $studentId){
+            try {
+    
+                $query = "UPDATE ". $this->tableName ." SET student_id=:student_id, state=:state
+                WHERE id_jobOffer = :id_jobOffer;";
+    
+                $parameters["id_jobOffer"] = $jobOffer->getJobOfferId();
+                $parameters["state"] = "Closed";
+                $parameters["student_id"] = $studentId;
+    
+                $this->connection = Connection::GetInstance();
+    
+                return $this->connection->ExecuteNonQuery($query, $parameters);
+                
+            } catch (Exception $exception) {
+                $response = $exception->getMessage();
+            }
+        }
+    
+
+    public function GetJobOfferByCompanyId($companyId)
+    {
+        try {
+            $jobOfferList = array();
+            $query = "SELECT j.id_jobOffer
+                FROM joboffers j
+                INNER JOIN companies cp on j.company_id = cp.id_company
+                WHERE j.company_id = " . $companyId . ";";
+
+
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+                $jobOffer = new JobOffer();
+                $jobOffer->setJobOfferId($row["id_jobOffer"]);
+
+                array_push($jobOfferList, $jobOffer);
+            }
+            
+            return $jobOfferList;
+
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
         }
     }
 }
