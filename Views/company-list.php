@@ -27,6 +27,7 @@ require_once('nav-shared.php');
                     <th>Nombre</th>
                     <th>Ciudad</th>
                     <th>Descripcion</th>
+                    <th>Ver</th>
 
                 </thead>
                 <tbody>
@@ -39,7 +40,7 @@ require_once('nav-shared.php');
                             echo  "<td>" . $company->getDescription() . "</td>";
 
                             $companyId = $company->getIdCompany();
-                            echo "<td><a href=" . FRONT_ROOT . "Company/ShowCompany/" . $companyId . ">Ver</a></td>";
+                            echo "<td><a href=" . FRONT_ROOT . "Company/ShowCompany/" . $companyId . ">+ INFO</a></td>";
                         }
                     }
                     ?>

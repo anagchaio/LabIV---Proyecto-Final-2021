@@ -20,6 +20,9 @@ require_once('nav.php');
                          if (isset($notImageError)) {
                               echo "Hubo un error o el archivo seleccionado no es una imagen";
                          }
+                         if (isset($companyInUse)) {
+                              echo "La empresa posee ofertas y no puede ser eliminada";
+                         }
                          ?>
                     </h4>
 

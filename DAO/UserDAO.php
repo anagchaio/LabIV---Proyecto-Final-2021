@@ -15,8 +15,8 @@
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (email, password, name, id_student, id_userType) 
-                VALUES (:email, :password, :name, :id_student, :id_userType);";
+                $query = "INSERT INTO ".$this->tableName." (email, password, name, id_student, id_userType, id_jobOffer) 
+                VALUES (:email, :password, :name, :id_student, :id_userType, :id_jobOffer);";
                 
 
                 $parameters["email"] = $user->getEmail();
@@ -24,6 +24,7 @@
                 $parameters["name"] = $user->getName();
                 $parameters["id_student"] = $user->getStudentId();
                 $parameters["id_userType"] = $user->getUserTypeId();
+                $parameters["id_jobOffer"] = $user->getJobOfferId();
 
                 $this->connection = Connection::GetInstance();
 
@@ -56,6 +57,7 @@
                     $user->setName($row["name"]);
                     $user->setStudentId($row["id_student"]);
                     $user->setUserTypeId($row["id_userType"]);
+                    $user->setJobOfferId($row["id_jobOffer"]);
                     
                     array_push($userList, $user);
                 }
@@ -79,4 +81,56 @@
             }
             return $userExist;
         }
+
+        public function getUserById($userId)
+        {
+            try
+            {
+
+                $query = "SELECT * FROM ".$this->tableName .
+                " WHERE id_user =:id_user";
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $user = new User();
+                    $user->setUserId($row["id_user"]);
+                    $user->setEmail($row["email"]);
+                    $user->setPassword($row["password"]);
+                    $user->setName($row["name"]);
+                    $user->setStudentId($row["id_student"]);
+                    $user->setUserTypeId($row["id_userType"]);
+                    $user->setJobOfferId($row["id_jobOffer"]);
+                    
+                }
+                return $user;
+            }
+            catch(Exception $exception)
+            {
+                $response = $exception->getMessage();
+            }
+            
+        }
+
+        public function Update(User $user, $jobOfferId)
+    {
+        try {
+
+            $query = "UPDATE ". $this->tableName ." SET id_jobOffer=:id_jobOffer
+            WHERE id_user = :id_user;";
+
+            $parameters["id_user"] = $user->getUserId();
+            $parameters["id_jobOffer"] = $jobOfferId;
+
+            $this->connection = Connection::GetInstance();
+
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+            
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
+        }
+    }
     }
