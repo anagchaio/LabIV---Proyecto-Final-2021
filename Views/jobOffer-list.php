@@ -15,8 +15,12 @@ require_once('nav-shared.php');
                     <select name="careerId" class="form-control form-control-ml">
                         <?php
                         echo "<option value=" . 0 . ">Todas</option>";
+                        
                         if (isset($careers)) {
                             foreach ($careers as $career) {
+                                if(isset($student) && $career->getCareerId() == $student->getCareerId()){
+                                    echo "<option selected value=" . $career->getCareerId() . ">" . $career->getDescription() . "</option>";
+                                }
                                 echo "<option value=" . $career->getCareerId() . ">" . $career->getDescription() . "</option>";
                             }
                         }
