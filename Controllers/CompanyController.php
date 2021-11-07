@@ -70,13 +70,13 @@ class CompanyController
 
     public function AddCompany($companyName, $yearFoundantion, $city, $email, $phoneNumber,$description, $logo)
     {
-        var_dump($companyName);
-        var_dump($yearFoundantion);
-        var_dump($city);
-        var_dump($email);
-        var_dump($phoneNumber);
-        var_dump($description);
-        var_dump($logo);
+        // var_dump($companyName);
+        // var_dump($yearFoundantion);
+        // var_dump($city);
+        // var_dump($email);
+        // var_dump($phoneNumber);
+        // var_dump($description);
+        // var_dump($logo);
         Utils::checkAdminSession();
         if ($this->companyDAO->GetByCompanyEmail($email) == null) {
             if ($yearFoundantion <= date("Y")) {

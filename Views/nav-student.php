@@ -24,7 +24,7 @@
 
             </li>
             <li class="has-subnav">
-                <a href="#">
+                <a href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">
                     <i class="fa fa-laptop fa-2x"></i>
                     <span class="nav-text">
                         Propuestas
