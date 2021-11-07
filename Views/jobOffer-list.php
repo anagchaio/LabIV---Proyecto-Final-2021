@@ -1,4 +1,7 @@
 <?php
+
+use Models\JobOffer;
+
 require_once('nav-shared.php');
 
 ?>
@@ -28,35 +31,42 @@ require_once('nav-shared.php');
 
                 </form>
             </div>
-
             <table class="table table-hover">
-                <thead>
-                    <th>Empresa</th>
-                    <th>Description</th>
-                    <th>Position</th>
-                    <th>Carrera</th>
-                    <th>Fecha limite</th>
-                    <th>Estado</th>
-                    <th>Ver</th>
-                </thead>
-                <tbody>
-                    <?php
-                    if (isset($jobOffers)) {
-                        foreach ($jobOffers as $jobOffer) {
-                            echo  "<tr>";
-                            echo  "<td>" . $jobOffer->getCompany_name() . "</td>";
-                            echo  "<td>" . $jobOffer->getJobOffer_description() . "</td>";
-                            echo  "<td>" . $jobOffer->getJobPosition_description() . "</td>";
-                            echo  "<td>" . $jobOffer->getCareer_description() . "</td>";
-                            echo  "<td>" . $jobOffer->getLimitDate() . "</td>";
-                            echo  "<td>" . $jobOffer->getState() . "</td>";
+            <?php
+            
+            if (isset($jobOffers) && $jobOffers != null) {
+                
+                echo "<thead>";
+                echo " <th>Empresa</th>";
+                echo " <th>Description</th>";
+                echo " <th>Position</th>";
+                echo " <th>Carrera</th>";
+                echo " <th>Fecha limite</th>";
+                echo " <th>Estado</th>";
+                echo " <th>Ver</th>";
+                echo " </thead>";
+                echo " <tbody>";
 
-                            $jobOfferId = $jobOffer->getJobOfferId();
-                            echo "<td><a href=" . FRONT_ROOT . "JobOffer/ShowOffer/" . $jobOfferId . ">+ info</a></td>";
-                        }
-                    }
-                    ?>
-                </tbody>
+                foreach ($jobOffers as $jobOffer) {
+                    echo  "<tr>";
+                    echo  "<td>" . $jobOffer->getCompany_name() . "</td>";
+                    echo  "<td>" . $jobOffer->getJobOffer_description() . "</td>";
+                    echo  "<td>" . $jobOffer->getJobPosition_description() . "</td>";
+                    echo  "<td>" . $jobOffer->getCareer_description() . "</td>";
+                    echo  "<td>" . $jobOffer->getLimitDate() . "</td>";
+                    echo  "<td>" . $jobOffer->getState() . "</td>";
+
+                    $jobOfferId = $jobOffer->getJobOfferId();
+                    echo "<td><a href=" . FRONT_ROOT . "JobOffer/ShowOffer/" . $jobOfferId . ">+ info</a></td>";
+                }
+            } else {
+                echo "<h4>";
+                echo "No hay ofertas para mostrar de esta carrera";
+                echo "</h4>";
+            
+            }
+            ?>
+            </tbody>
 
             </table>
         </div>
