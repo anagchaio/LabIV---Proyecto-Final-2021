@@ -6,7 +6,7 @@ require_once('nav-shared.php');
           <div class="conteiner-card">
 
 
-               <div class="card" style="width: 18rem;">
+               <div class="card-student" style="width: 30rem;">
                     <!-- <img src="../Views/img/bg.jpg" class="card-img-top" alt="..."> -->
                     <div class="card-body" style="text-align: left;">
 
@@ -24,7 +24,18 @@ require_once('nav-shared.php');
                          ?>
                          <!-- <h5 class="card-title">Card title</h5>
                          <p class="card-text">Some quick example text </p> -->
-                         <a href="<?php echo FRONT_ROOT ?>Student/ShowListView" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Volver a la lista</a>
+
+                         <?php
+                         if (isset($_SESSION['admin'])) {
+                         ?>
+                              <a href="<?php echo FRONT_ROOT ?>Student/ShowListView" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Volver a la lista</a>
+                         <?php
+                         } else {
+                         ?>
+                              <a href="<?php echo FRONT_ROOT ?>Home/RedirectHome" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Atrás</a>
+                         <?php
+                         }
+                         ?>
 
                     </div>
 

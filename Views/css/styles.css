@@ -1,9 +1,13 @@
 @charset "UTF-8";
 
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+
 :root {
   --bs-blue: #01779b;
   --bs-obscure: #013b4d;
-  --bs-purple: #6f42c1;
+  --bs-obscure-dark: #01232e;
   --bs-pink: #d63384;
   --bs-red: #dc3545;
   --bs-orange: #fd7e14;
@@ -185,6 +189,22 @@ p {
   font-size: 20px;
 }
 
+.title-login{
+  text-align: center;
+  color: var(--bs-obscure);
+  margin-bottom: 5vh;
+}
+
+
+.card-student{
+  background-color: var(--bs-white);
+  margin-top: 8vh;
+  margin-left: 8vh;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
 .conteiner-card{
   padding-top: 7vh;
   text-align: center;
@@ -194,7 +214,6 @@ p {
 
 }
 
-
 .conteiner-title-list{
   background-color:var(--bs-gray-400);
   color: var(--bs-obscure);
@@ -203,14 +222,22 @@ p {
   max-height: 100px;
 }
 
+.menu-options{
+  margin-top: 3vh;
+}
+
+.menu-options-logout{
+  bottom: 0;
+  position: absolute;
+}
 .menu-title {
 
   padding-left: 9vh;
-  color: var(--bs-obscure);
+  color: var(--bs-white);
 }
 
 .title {
-  color: var(--bs-obscure);
+  color: var(--bs-white);
   margin-bottom: 5vh;
 }
 
@@ -221,7 +248,7 @@ nav.main-menu.expanded {
 }
 
 .main-menu {
-  background:var(--bs-gray-400);
+  background:var(--bs-obscure);
   border-right: 1px solid #e5e5e5;
   position: fixed;
   top: 0;
@@ -251,7 +278,7 @@ nav.main-menu.expanded {
   display: table;
   border-collapse: collapse;
   border-spacing: 0;
-  color: var(--bs-obscure);
+  color: var(--bs-white);
   font-family: arial;
   font-size: 14px;
   text-decoration: none;
@@ -322,7 +349,7 @@ nav.main-menu li.active > a,
 .no-touch .dashboard-page nav.dashboard-menu ul li:hover a,
 .dashboard-page nav.dashboard-menu ul li.active a {
   color: #fff;
-  background-color: var(--bs-obscure);
+  background-color: var(--bs-obscure-dark);
 }
 
 .container-menu,
@@ -376,7 +403,10 @@ nav.main-menu li.active > a,
   background-color: var(--bs-obscure);
   border-color: var(--bs-obscure);
 }
-
+.main-table{
+  margin-top: 5vh;
+  margin-left: 8vh;
+}
 .table{
   background-color: var(--bs-gray-400);
   color: var(--bs-obscure);
