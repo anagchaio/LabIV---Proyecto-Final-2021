@@ -86,6 +86,21 @@ require_once('nav.php');
                                 echo "Sin alumno";
                             }; ?>">
                         </div>
+                        <?php
+                        if ($jobOffer->getFlyer() != null) {
+                        ?>
+                            <div class="form-group">
+                                <label for="">Flyer:</label>
+                                <img src="<?php if (isset($jobOffer)) {
+                                                echo FRONT_ROOT . UPLOADS_PATH . $jobOffer->getFlyer();
+                                            }; ?>" alt="jobOffer-flyer" width="500" height="500">
+                                <?php
+                                if ($jobOffer->getState() == "Opened") {
+                                ?>
+                                    <input type="file" name="flyer" class="form-control-file">
+                                <?php }; ?>
+                            </div>
+                        <?php }; ?>
                         <div class="row">
                             <div class="button-conteiner">
 

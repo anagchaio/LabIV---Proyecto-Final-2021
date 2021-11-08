@@ -17,15 +17,16 @@ class JobOfferDAO implements IJobOfferDAO
     {
         $response = NULL;
         try {
-            $query = "INSERT INTO " . $this->tableName . " (jobOffer_description, limit_date, state, company_id, jobPosition_id, student_id) 
-                VALUES (:jobOffer_description, :limit_date, :state, :company_id, :jobPosition_id, :student_id);";
+            $query = "INSERT INTO " . $this->tableName . " (jobOffer_description, limit_date, state, company_id, jobPosition_id, student_id, flyer) 
+                VALUES (:jobOffer_description, :limit_date, :state, :company_id, :jobPosition_id, :student_id, :flyer);";
 
             $parameters["jobOffer_description"] = $jobOffer->getJobOffer_description();
             $parameters["limit_date"] = $jobOffer->getLimitDate();
             $parameters["state"] = $jobOffer->getState();
             $parameters["company_id"] = $jobOffer->getCompanyId();
             $parameters["jobPosition_id"] = $jobOffer->getJobPositionId();
-            $parameters["student_id"] = $jobOffer->getUserId();
+            $parameters["student_id"] = $jobOffer->getStudentId();
+            $parameters["flyer"] = $jobOffer->getFlyer();
 
             $this->connection = Connection::GetInstance();
 
@@ -86,7 +87,7 @@ class JobOfferDAO implements IJobOfferDAO
             $jobOfferList = array();
 
             $query = "SELECT j.id_jobOffer, cp.company_name, j.jobOffer_description, p.jobPosition_description, 
-                cr.career_description, j.limit_date, j.state, j.student_id
+                cr.career_description, j.limit_date, j.state, j.student_id, j.flyer
                 FROM joboffers j
                 INNER JOIN companies cp on j.company_id = cp.id_company
                 INNER JOIN jobpositions p on j.jobPosition_id = p.id_jobPosition
@@ -106,6 +107,7 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setLimitDate($row["limit_date"]);
                 $jobOffer->setState($row["state"]);
                 $jobOffer->setStudentId($row["student_id"]);
+                $jobOffer->setFlyer($row["flyer"]);
 
                 array_push($jobOfferList, $jobOffer);
             }

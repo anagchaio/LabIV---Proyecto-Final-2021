@@ -14,6 +14,7 @@ class JobOffer {
     private $jobPosition_description;
     private $career_description;
     private $studentId;
+    private $flyer;
 
     public function __construct(){
        
@@ -257,6 +258,26 @@ class JobOffer {
     public function setCompany_name($company_name)
     {
         $this->company_name = $company_name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of flyer
+     */ 
+    public function getFlyer()
+    {
+        return $this->flyer;
+    }
+
+    /**
+     * Set the value of flyer
+     *
+     * @return  self
+     */ 
+    public function setFlyer($flyer)
+    {
+        $this->flyer = $flyer;
 
         return $this;
     }

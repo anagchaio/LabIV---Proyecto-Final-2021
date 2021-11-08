@@ -88,7 +88,7 @@ class JobOfferController
 
 
 
-    public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state)
+    public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state, $flyer)
     {
         Utils::checkAdminSession();
         $companies = $this->CompanyDAO->GetAll();
@@ -104,6 +104,17 @@ class JobOfferController
                 $modifiedJobOffer->setLimitDate($limitDate);
                 $modifiedJobOffer->setCompanyId($companyId);
                 $modifiedJobOffer->setJobPositionId($jobPositionId);
+
+                if ($flyer['error'] == 0) {
+                    $uploadSuccess = Utils::UploadImage($flyer);
+                    if ($uploadSuccess) {
+                        $jobOffer->setFlyer($flyer['name']);
+                    } else {
+                        $updateSuccess = false;
+                        $notImageError = true;
+                        require_once(VIEWS_PATH . "admin-joboffer-show.php");
+                    }
+                }
 
                 $this->jobOfferDAO->modify($modifiedJobOffer);
 
