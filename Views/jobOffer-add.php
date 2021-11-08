@@ -7,7 +7,7 @@ require_once('nav.php');
 <div class="conteiner-card">
      <div class="card text-center " style="width: 40rem;">
           <div class="card-header">
-               Empresa
+               Oferta laboral
           </div>
           <div class="card-body">
 
@@ -62,7 +62,8 @@ require_once('nav.php');
                                              <textarea type="text" name="jobOffer_description" maxlength="200" class="form-control form-control-ml" required value="" placeholder="Descripción"></textarea>
                                         </div>
                                         <div class="form-group">
-                                             <label class="text-center">Limit date</label>
+
+                                             <label class="text-center">Fecha límite</label>
 
                                              <input type="date" name="limitDate" class="form-control form-control-ml" required value="" placeholder="Tiempo de finalización">
                                         </div>

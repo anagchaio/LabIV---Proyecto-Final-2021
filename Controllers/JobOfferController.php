@@ -175,20 +175,7 @@ class JobOfferController
         }
     }
 
-    public function ShowOfferOnlyView($jobOfferId){
-        Utils::checkSession();
-        $companies = $this->CompanyDAO->GetAll();
-        $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
-        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-        $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
 
-        if (isset($_SESSION['admin'])) {
-            require_once(VIEWS_PATH . "jobOffer-show.php");
-        } else {
-            $user = $_SESSION['student'];
-            require_once(VIEWS_PATH . "student-jobOffer-show.php");
-        }
-    }
 
     public function Subscribe($jobOfferId)
     {
