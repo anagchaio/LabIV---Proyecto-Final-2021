@@ -80,7 +80,7 @@ class CompanyController
         Utils::checkAdminSession();
         if ($this->companyDAO->GetByCompanyEmail($email) == null) {
             if ($yearFoundantion <= date("Y")) {
-                $uploadedSuccess = $this->companyDAO->UploadLogo($logo);
+                $uploadedSuccess = Utils::UploadImage($logo);
                 if ($uploadedSuccess) {
                     $newCompany = new Company();
                     $newCompany->setName($companyName);
@@ -133,7 +133,7 @@ class CompanyController
         }
 
         if ($logo['error'] == 0) {
-            $uploadSuccess = $this->companyDAO->UploadLogo($logo);
+            $uploadSuccess = Utils::UploadImage($logo);
             if ($uploadSuccess) {
                 $company->setLogo($logo['name']);
             } else {
