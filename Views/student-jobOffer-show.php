@@ -73,7 +73,7 @@ if (isset($_SESSION['admin'])) {
                         <div class="row">
                             <div class="button-conteiner">
                                 
-                                <?php if ($jobOffer->getState() != "Opened") {
+                                <?php if ($jobOffer->getState() == "Opened") {
                                 ?>
                                     <button type="submit" name="subscribe-button" class="btn btn-dark ml-auto d-block">Inscribirse</button>
                                 <?php
