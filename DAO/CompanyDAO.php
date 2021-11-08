@@ -117,26 +117,7 @@ class CompanyDAO implements ICompanyDAO
     }
 
 
-    public function UploadLogo($logo)
-    {
-        $uploadSuccess = false;
-        $fileName = $logo["name"];
-        $tempFileName = $logo["tmp_name"];
-        $type = $logo["type"];
-
-        $filePath = UPLOADS_PATH . basename($fileName);
-
-        if (in_array($type, IMAGES_TYPE)) {
-            if (move_uploaded_file($tempFileName, $filePath)) {
-                $uploadSuccess = true;
-            } else {
-                $uploadError = true;
-            }
-        } else {
-            $notImageError = true;
-        }
-        return $uploadSuccess;
-    }
+ 
 
 
     public function modify(Company $company){

@@ -21,4 +21,25 @@ class Utils {
         return $needle != '' && strncmp($haystack, $needle, strlen($needle)) == 0;
     }
 
+    public static function UploadImage($image)
+    {
+        $uploadSuccess = false;
+        $fileName = $image["name"];
+        $tempFileName = $image["tmp_name"];
+        $type = $image["type"];
+
+        $filePath = UPLOADS_PATH . basename($fileName);
+
+        if (in_array($type, IMAGES_TYPE)) {
+            if (move_uploaded_file($tempFileName, $filePath)) {
+                $uploadSuccess = true;
+            } else {
+                $uploadError = true;
+            }
+        } else {
+            $notImageError = true;
+        }
+        return $uploadSuccess;
+    }
+
 }
