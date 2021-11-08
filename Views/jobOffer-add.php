@@ -62,14 +62,14 @@ require_once('nav.php');
                                              <textarea type="text" name="jobOffer_description" maxlength="200" class="form-control form-control-ml" required value="" placeholder="Descripción"></textarea>
                                         </div>
                                         <div class="form-group">
-                                             <!-- <label for="">Limit date</label> -->
+                                             <label class="text-center">Limit date</label>
                                              <input type="date" name="limitDate" class="form-control form-control-ml" required value="" placeholder="Tiempo de finalización">
                                         </div>
                                    </div>
                                    <button type="submit" name="button" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Agregar</button>
-                                   <a class="btn btn-primary btn-lg btn-block" href="<?php if (isset($jobOffer)) {
+                                   <!-- <a class="btn btn-primary btn-lg btn-block" href="<?php if (isset($jobOffer)) {
                                                                                           echo FRONT_ROOT . "JobOffer/deleteByBD/" . $jobOffer->getJobOfferId();
-                                                                                     }; ?>">Eliminar</a>
+                                                                                     }; ?>">Eliminar</a> -->
 
                               </div>
                          </div>

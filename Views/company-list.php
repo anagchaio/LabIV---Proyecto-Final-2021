@@ -44,7 +44,7 @@ if (isset($_SESSION['admin'])) {
                             echo  "<td>" . $company->getDescription() . "</td>";
 
                             $companyId = $company->getIdCompany();
-                            echo "<td><a href=" . FRONT_ROOT . "Company/ShowCompany/" . $companyId . ">+ INFO</a></td>";
+                            echo "<td><a href=" . FRONT_ROOT . "Company/ShowCompany/" . $companyId . ">+ info</a></td>";
                         }
                     }
                     ?>
