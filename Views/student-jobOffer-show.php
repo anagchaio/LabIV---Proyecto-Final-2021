@@ -1,6 +1,10 @@
 <?php
 
-require_once('nav.php');
+if (isset($_SESSION['admin'])) {
+    require_once('nav.php');
+} else {
+    require_once('nav-student.php');
+}
 
 ?>
 <main class="py-5">

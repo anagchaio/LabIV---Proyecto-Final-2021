@@ -2,9 +2,13 @@
 
 use Models\JobOffer;
 
-require_once('nav-shared.php');
-
+if (isset($_SESSION['admin'])) {
+    require_once('nav.php');
+} else {
+    require_once('nav-student.php');
+}
 ?>
+
 <main class="py-5">
     <section id="listado" class="mb-5">
         <div class="container">
@@ -57,7 +61,7 @@ require_once('nav-shared.php');
                     echo  "<td>" . $jobOffer->getState() . "</td>";
 
                     $jobOfferId = $jobOffer->getJobOfferId();
-                    echo "<td><a href=" . FRONT_ROOT . "JobOffer/ShowOffer/" . $jobOfferId . ">+ info</a></td>";
+                    echo "<td><a href=" . FRONT_ROOT . "JobOffer/ShowOfferOnlyView/" . $jobOfferId . ">+ info</a></td>";
                 }
             } else {
                 echo "<h4>";

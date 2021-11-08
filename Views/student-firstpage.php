@@ -8,10 +8,8 @@ require_once(VIEWS_PATH . "nav-student.php");
 
     <!-- Header-->
 
-    <header >
 
-
-        <div class="conteiner-card" style="margin-left:8.5vh">
+        <div class="conteiner-card" style="margin-left:8.5vh; margin-top:15vh;">
             <div class="card text-center " style="width: 60rem;">
                 <div class="card-header">
                     Home
@@ -34,6 +32,5 @@ require_once(VIEWS_PATH . "nav-student.php");
                 </div>
             </div>
         </div>
-    </header>
 
 </body>

@@ -13,7 +13,7 @@ CREATE TABLE careers(
 CREATE TABLE companies(
 	id_company int NOT NULL AUTO_INCREMENT,
 	company_name varchar(50) NOT NULL,
-	yearFoundantion DATE NOT NULL,
+	yearFoundantion YEAR(4) NOT NULL,
 	city varchar(50) NOT NULL,
 	description varchar(100) NOT NULL,
 	logo varchar(200) NOT NULL,
