@@ -63,14 +63,10 @@ require_once('nav.php');
                                         </div>
 
                                         <div class="container">
-                                             <div>
-                                                  <div class="">
-                                                       <div class="form-group" style="text-align: center;">
-                                                            <label for="">Logo:</label>
-                                                            <input type="file" name="logo" required class="form-control-file">
+                                             <div class="form-group" style="text-align: center;">
+                                                  <label for="">Logo:</label>
+                                                  <input type="file" name="logo" required class="form-control-file">
 
-                                                       </div>
-                                                  </div>
                                              </div>
                                         </div>
                                    </div>
@@ -79,7 +75,7 @@ require_once('nav.php');
                          </div>
                     </form>
                </section>
-               
+
 
           </div>
           <div class="card-footer text-muted">

@@ -2,7 +2,7 @@
 require_once('nav.php');
 
 ?>
-<main class="py-5">
+<main class="main-table">
      <section id="listado" class="mb-5">
           <div class="container">
                <div class="conteiner-title-list">

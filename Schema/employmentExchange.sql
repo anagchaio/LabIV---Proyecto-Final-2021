@@ -13,10 +13,10 @@ CREATE TABLE careers(
 CREATE TABLE companies(
 	id_company int NOT NULL AUTO_INCREMENT,
 	company_name varchar(50) NOT NULL,
-	yearFoundantion DATE NOT NULL,
+	yearFoundantion YEAR(4) NOT NULL,
 	city varchar(50) NOT NULL,
 	description varchar(100) NOT NULL,
-	logo longblob NOT NULL,
+	logo varchar(200) NOT NULL,
 	email varchar(50) unique NOT NULL,
 	phonenumber int(11) NOT NULL,
 	constraint pk_company primary key (id_company)
@@ -34,7 +34,7 @@ CREATE TABLE jobOffers(
 	id_jobOffer int NOT NULL AUTO_INCREMENT,
 	jobOffer_description varchar(300) NOT NULL,
 	limit_date DATE NOT NULL,
-	state boolean NOT NULL,
+	state varchar(50) NOT NULL,
 	company_id int NOT NULL,
 	jobPosition_id int NOT NULL,
 	student_id int,

@@ -32,21 +32,28 @@ class JobOfferController
         $this->userDAO = new UserDAO();
     }
 
-    public function add($companyId, $jobPositionId, $jobOffer_description, $limitDate)
+    public function add($companyId, $jobPositionId, $jobOffer_description, $limitDate, $flyer)
     {
         Utils::checkAdminSession();
 
         if ($limitDate >= date("Y-m-d")) {
-            $jobOffer = new JobOffer();
-            $jobOffer->setJobOffer_description($jobOffer_description);
-            $jobOffer->setLimitDate($limitDate);
-            $jobOffer->setState("Opened");
-            $jobOffer->setCompanyId($companyId);
-            $jobOffer->setJobPositionId($jobPositionId);
-            $jobOffer->setStudentId(null);
+            $uploadedSuccess = Utils::UploadImage($flyer);
+            if ($uploadedSuccess) {
+                $jobOffer = new JobOffer();
+                $jobOffer->setJobOffer_description($jobOffer_description);
+                $jobOffer->setLimitDate($limitDate);
+                $jobOffer->setState("Opened");
+                $jobOffer->setCompanyId($companyId);
+                $jobOffer->setJobPositionId($jobPositionId);
+                $jobOffer->setStudentId(null);
+                $jobOffer->setFlyer($flyer['name']);
 
-            $this->jobOfferDAO->add($jobOffer);
-            $this->showListView();
+                $this->jobOfferDAO->add($jobOffer);
+                $this->showListView();
+            } else {
+                $notImageError = true;
+                require_once(VIEWS_PATH . "jobOffer-add.php");
+            }
         } else {
             $invalidDate = true;
             $companies = $this->CompanyDAO->GetAll();
@@ -88,7 +95,7 @@ class JobOfferController
 
 
 
-    public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state, $flyer)
+    public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state, $studentName, $student, $flyer)
     {
         Utils::checkAdminSession();
         $companies = $this->CompanyDAO->GetAll();
@@ -104,11 +111,13 @@ class JobOfferController
                 $modifiedJobOffer->setLimitDate($limitDate);
                 $modifiedJobOffer->setCompanyId($companyId);
                 $modifiedJobOffer->setJobPositionId($jobPositionId);
-
+                
                 if ($flyer['error'] == 0) {
                     $uploadSuccess = Utils::UploadImage($flyer);
+
                     if ($uploadSuccess) {
-                        $jobOffer->setFlyer($flyer['name']);
+                        $modifiedJobOffer->setFlyer($flyer['name']);
+                        
                     } else {
                         $updateSuccess = false;
                         $notImageError = true;
@@ -137,14 +146,13 @@ class JobOfferController
 
         if (isset($_SESSION['admin'])) {
             $jobOffers = $this->jobOfferDAO->GetList();
-            
         } else {
             $user = $_SESSION['student'];
             $student = $this->studentDAO->GetByStudentId($user->getStudentId());
             $careerId = $student->getCareerId();
             $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
         }
-        if($jobOffers == null){
+        if ($jobOffers == null) {
             $noOffersToShow = true;
         }
 
@@ -161,6 +169,22 @@ class JobOfferController
 
         if (isset($_SESSION['admin'])) {
             require_once(VIEWS_PATH . "admin-jobOffer-show.php");
+        } else {
+            $user = $_SESSION['student'];
+            require_once(VIEWS_PATH . "student-jobOffer-show.php");
+        }
+    }
+
+    public function ShowOfferOnlyView($jobOfferId)
+    {
+        Utils::checkSession();
+        $companies = $this->CompanyDAO->GetAll();
+        $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
+        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+        $student = $this->studentDAO->GetByStudentId($jobOffer->getStudentId());
+
+        if (isset($_SESSION['admin'])) {
+            require_once(VIEWS_PATH . "jobOffer-show.php");
         } else {
             $user = $_SESSION['student'];
             require_once(VIEWS_PATH . "student-jobOffer-show.php");
@@ -205,10 +229,11 @@ class JobOfferController
         require_once(VIEWS_PATH . "jobOffer-list.php");
     }
 
-    public function FindCompanyInJobOffer($companyId){
+    public function FindCompanyInJobOffer($companyId)
+    {
         $companyFound = false;
         $joboffers = $this->jobOfferDAO->GetJobOfferByCompanyId($companyId);
-        if($joboffers != null){
+        if ($joboffers != null) {
             $companyFound = true;
         }
         return $companyFound;

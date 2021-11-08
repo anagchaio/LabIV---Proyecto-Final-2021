@@ -19,6 +19,9 @@ require_once('nav.php');
                     if (isset($closedOffer)) {
                         echo "La oferta no puede ser modificada/eliminada una vez que esta cerrada";
                     }
+                    if (isset($notImageError)) {
+                        echo "Hubo un error o el archivo seleccionado no es una imagen";
+                    }
                     ?>
                 </h4>
                 <input type="number" name="jobOfferId" class="form-control form-control-ml" hidden value="<?php echo $jobOffer->getJobOfferId(); ?>">
@@ -89,19 +92,19 @@ require_once('nav.php');
                         <?php
                         if ($jobOffer->getFlyer() != null) {
                         ?>
-                            <div class="form-group">
+                            <div class="col-lg-4">
                                 <label for="">Flyer:</label>
                                 <img src="<?php if (isset($jobOffer)) {
                                                 echo FRONT_ROOT . UPLOADS_PATH . $jobOffer->getFlyer();
-                                            }; ?>" alt="jobOffer-flyer" width="500" height="500">
+                                            }; ?>" alt="jobOffer-flyer" width="300" height="300">
                                 <?php
                                 if ($jobOffer->getState() == "Opened") {
                                 ?>
-                                    <input type="file" name="flyer" class="form-control-file">
-                                <?php }; ?>
-                            </div>
-                        <?php }; ?>
-                        <div class="row">
+                                    <input type="file" name="flyer">
+                                <?php } ?>
+                                </div>
+                        <?php } ?>
+                        <div class="col-lg-4">
                             <div class="button-conteiner">
 
                                 <button type="submit" name="update-button" class="btn btn-dark ml-auto d-block">Guardar</button>

@@ -2,31 +2,37 @@
 
 use Models\JobOffer;
 
-require_once('nav-shared.php');
-
+if (isset($_SESSION['admin'])) {
+    require_once('nav.php');
+} else {
+    require_once('nav-student.php');
+}
 ?>
+
 <main class="py-5">
     <section id="listado" class="mb-5">
         <div class="container">
             <h2 class="mb-4">Ofertas</h2>
-            <div class="row">
-                <form action="<?php echo FRONT_ROOT ?>JobOffer/FilterByCareer" method="GET">
-                    <label for="">Carrera: </label>
-                    <select name="careerId" class="form-control form-control-ml">
-                        <?php
-                        echo "<option value=" . 0 . ">Todas</option>";
-                        
-                        if (isset($careers)) {
-                            foreach ($careers as $career) {
-                                if(isset($student) && $career->getCareerId() == $student->getCareerId()){
-                                    echo "<option selected value=" . $career->getCareerId() . ">" . $career->getDescription() . "</option>";
+            <div class="flex">
+                <div class="form-group-input">
+
+                    <form action="<?php echo FRONT_ROOT ?>JobOffer/FilterByCareer" method="GET">
+                        <select name="careerId" class="form-control form-control-ml" style="width: 130vh;">
+                            <?php
+                            echo "<option value=" . 0 . ">Todas</option>";
+                            if (isset($careers)) {
+                                foreach ($careers as $career) {
+                                    echo "<option value=" . $career->getCareerId() . ">" . $career->getDescription() . "</option>";
                                 }
-                                echo "<option value=" . $career->getCareerId() . ">" . $career->getDescription() . "</option>";
                             }
-                        }
-                        ?>
-                    </select>
-                    <button type="submit" name="filter-button" class="btn btn-dark ml-auto d-block">Filtrar</button>
+                            ?>
+                        </select>
+
+                </div>
+                <div style="margin-left: 103vh;">
+                    <button type="submit" name="filter-button" class="btn btn-primary">Filtrar</button>
+                </div>
+
                 </form>
             </div>
             <table class="table table-hover">

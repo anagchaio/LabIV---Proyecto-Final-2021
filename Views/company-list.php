@@ -1,5 +1,9 @@
 <?php
-require_once('nav-shared.php');
+if (isset($_SESSION['admin'])) {
+    require_once('nav.php');
+} else {
+    require_once('nav-student.php');
+}
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
@@ -40,7 +44,7 @@ require_once('nav-shared.php');
                             echo  "<td>" . $company->getDescription() . "</td>";
 
                             $companyId = $company->getIdCompany();
-                            echo "<td><a href=" . FRONT_ROOT . "Company/ShowCompany/" . $companyId . ">+ INFO</a></td>";
+                            echo "<td><a href=" . FRONT_ROOT . "Company/ShowCompany/" . $companyId . ">+ info</a></td>";
                         }
                     }
                     ?>
