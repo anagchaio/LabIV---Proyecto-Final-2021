@@ -18,6 +18,7 @@ require_once('nav.php');
                         <div class="container">
                             <!-- <h3 class="title">Oferta</h3> -->
                             <h4 style="color: rgb(145, 39, 177)">
+
                                 <?php
                                 if (isset($updateSuccess)) {
                                     echo "Los datos se guardaron correctamente";
@@ -146,13 +147,30 @@ require_once('nav.php');
                             } else {
                                 echo "Sin alumno";
                             }; ?>">
+
                                     </div>
+                                      <?php
+                        if ($jobOffer->getFlyer() != null) {
+                        ?>
+                            <div class="col-lg-4">
+                                <label for="">Flyer:</label>
+                                <img src="<?php if (isset($jobOffer)) {
+                                                echo FRONT_ROOT . UPLOADS_PATH . $jobOffer->getFlyer();
+                                            }; ?>" alt="jobOffer-flyer" width="300" height="300">
+                                <?php
+                                if ($jobOffer->getState() == "Opened") {
+                                ?>
+                                    <input type="file" name="flyer">
+                                <?php } ?>
+                                </div>
+                        <?php } ?>
                                     <div>
                                         <div class="conteiner" style="margin-top:5vh">
                                             <?php
                                             if ($jobOffer->getState() == "Opened") {
                                             ?>
                                                 <button type="submit" name="update-button" class="btn btn-primary btn-lg btn-block">Guardar</button>
+
 
                                                 <a class="btn btn-primary btn-lg btn-block" href="
                                 <?php if (isset($jobOffer)) {

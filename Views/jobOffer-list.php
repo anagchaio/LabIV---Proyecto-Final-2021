@@ -9,7 +9,9 @@ if (isset($_SESSION['admin'])) {
 }
 ?>
 
+
 <main class="py-5" style="margin-left:5vh">
+
     <section id="listado" class="mb-5">
         <div class="container">
             <h2 class="mb-4">Ofertas</h2>
@@ -22,6 +24,7 @@ if (isset($_SESSION['admin'])) {
                             echo "<option value=" . 0 . ">Todas</option>";
                             if (isset($careers)) {
                                 foreach ($careers as $career) {
+
                                     
                                     if(isset($student) && $career->getCareerId() == $student->getCareerId()){
                                         echo "<option selected value=" . $career->getCareerId() . ">" . $career->getDescription() . "</option>";
@@ -32,6 +35,7 @@ if (isset($_SESSION['admin'])) {
                             }
 
                             
+
                             ?>
                         </select>
 

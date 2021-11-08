@@ -88,11 +88,13 @@ if (isset($_SESSION['admin'])) {
                                         }
                                         ?>
 
+
                                         <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Volver</a>
 
                                     </div>
 
                                 </div>
+
 
                             </div>
 
