@@ -61,7 +61,7 @@ if (isset($_SESSION['admin'])) {
                     echo  "<td>" . $jobOffer->getState() . "</td>";
 
                     $jobOfferId = $jobOffer->getJobOfferId();
-                    echo "<td><a href=" . FRONT_ROOT . "JobOffer/ShowOffer/" . $jobOfferId . ">+ info</a></td>";
+                    echo "<td><a href=" . FRONT_ROOT . "JobOffer/ShowOfferOnlyView/" . $jobOfferId . ">+ info</a></td>";
                 }
             } else {
                 echo "<h4>";

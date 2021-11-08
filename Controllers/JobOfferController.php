@@ -175,8 +175,7 @@ class JobOfferController
         }
     }
 
-    public function ShowOfferOnlyView($jobOfferId)
-    {
+    public function ShowOfferOnlyView($jobOfferId){
         Utils::checkSession();
         $companies = $this->CompanyDAO->GetAll();
         $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
