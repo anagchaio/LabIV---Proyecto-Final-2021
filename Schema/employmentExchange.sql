@@ -18,7 +18,7 @@ CREATE TABLE companies(
 	description varchar(100) NOT NULL,
 	logo varchar(200) NOT NULL,
 	email varchar(50) unique NOT NULL,
-	phonenumber int(11) NOT NULL,
+	phonenumber int NOT NULL,
 	constraint pk_company primary key (id_company)
 );
 
@@ -40,11 +40,19 @@ CREATE TABLE jobOffers(
 	student_id int,
 	constraint pk_jobOffer primary key (id_jobOffer),
 	constraint fk_company_id foreign key (company_id) references company(id_company),
-	constraint fk_jobPosition_id foreign key (jobPosition_id) references jobPosition(id_jobPosition),
-	constraint fk_student_id foreign key(student_id) references users(id_student)
+	constraint fk_jobPosition_id foreign key (jobPosition_id) references jobPosition(id_jobPosition)
 );
 
--- Parte Usuarios
+CREATE TABLE studentXjobOffer(
+	id_studentXjobOffer int NOT NULL AUTO_INCREMENT,
+	student_id int NOT NULL,
+	id_jobOffer int NOT NULL,
+	constraint pk_studentXjobOffer primary key (id_studentXjobOffer),
+	constraint fk_student_id foreign key(student_id) references users(id_student),
+	constraint fk_jobOffer foreign key (id_jobOffer) references jobOffers(id_jobOffer)
+);
+
+
 CREATE TABLE userTypes(
 	id_userType int NOT NULL AUTO_INCREMENT,
 	name varchar(50) NOT NULL,
@@ -57,20 +65,23 @@ CREATE TABLE users(
 	password varchar(50) NOT NULL,
 	name varchar(50) NOT NULL,
 	id_student int,
+	id_company int,
 	id_userType int NOT NULL,
-	id_jobOffer int,
     constraint pk_user primary key (id_user),
     constraint fk_userType foreign key (id_userType) references userTypes(id_userType),
-	constraint fk_jobOffer foreign key (id_jobOffer) references jobOffers(id_jobOffer)
+	constraint fk_company foreign key (id_company) references companies(id_company)
 );
 
 INSERT INTO userTypes (name)
 VALUES ('ADMIN');
 INSERT INTO userTypes (name)
 VALUES ('STUDENT');
+INSERT INTO userTypes (name)
+VALUES ('COMPANY');
 
-INSERT INTO users (email, password, name, id_student, id_userType,id_jobOffer)
-VALUES ('admin@admin.com', 'admin', 'ADMIN', NULL, 1,NULL);
+
+INSERT INTO users (email, password, name, id_student, id_company, id_userType)
+VALUES ('admin@admin.com', 'admin', 'ADMIN', NULL, NULL, 1);
 
 
 
