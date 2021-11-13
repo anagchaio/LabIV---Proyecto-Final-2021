@@ -74,11 +74,9 @@ require_once('nav.php');
 
                                    </div>
                                    <button type="submit" name="button" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Agregar</button>
-
                                    <!-- <a class="btn btn-primary btn-lg btn-block" href="<?php if (isset($jobOffer)) {
                                                                                           echo FRONT_ROOT . "JobOffer/deleteByBD/" . $jobOffer->getJobOfferId();
                                                                                      }; ?>">Eliminar</a> -->
-
 
                               </div>
                          </div>
