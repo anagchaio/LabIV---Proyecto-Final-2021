@@ -13,7 +13,6 @@ class JobOffer {
     private $company_name;
     private $jobPosition_description;
     private $career_description;
-    private $studentId;
     private $flyer;
 
     public function __construct(){
@@ -222,25 +221,6 @@ class JobOffer {
         return $this;
     }
 
-    /**
-     * Get the value of studentId
-     */ 
-    public function getStudentId()
-    {
-        return $this->studentId;
-    }
-
-    /**
-     * Set the value of studentId
-     *
-     * @return  self
-     */ 
-    public function setStudentId($studentId)
-    {
-        $this->studentId = $studentId;
-
-        return $this;
-    }
 
     /**
      * Get the value of company_name

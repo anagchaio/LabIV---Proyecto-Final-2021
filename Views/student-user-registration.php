@@ -18,7 +18,7 @@
         </header>
 
         <form action="<?php echo FRONT_ROOT ?>Student/Register" method="POST" class="login-form bg-dark-alpha p-5 bg-light">
-            <h3 class="title-login">Ingresar datos</h3>
+            <h3 class="title-login">Ingresar Datos</h3>
 
             <div class="form-group">
                 <!-- <label for="">Email</label> -->
@@ -28,7 +28,7 @@
                 <!-- <label for="">password</label> -->
                 <input type="password" name="password" class="form-control form-control-lg" placeholder="Ingresar contraseña" required>
             </div>
-            <button class="btn btn-primary btn-block btn-lg" type="submit">Registrarse</button>
+            <button class="btn btn-primary btn-block btn-lg" type="submit">Registrarse como Alumno</button>
            
         </form>
     </div>

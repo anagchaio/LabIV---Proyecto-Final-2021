@@ -22,9 +22,9 @@ class StudentController
         }
 
         public function Register($email, $password){
-            $studentController = new StudentController();
+            
             $student = new Student();
-            $student = $studentController->getByEmail($email);
+            $student = $this->getByEmail($email);
     
             if ($student != null) {
                 if($student->getActive()){
@@ -42,15 +42,15 @@ class StudentController
                         require_once(VIEWS_PATH . "index.php");
                     } else {
                         $registedEmail = true;
-                        require_once(VIEWS_PATH . "user-registration.php");
+                        require_once(VIEWS_PATH . "student-user-registration.php");
                     }
                 }  else {
                     $invalidEmail = true;
-                    require_once(VIEWS_PATH . "user-registration.php");
+                    require_once(VIEWS_PATH . "student-user-registration.php");
                 }
             } else {
                 $invalidEmail = true;
-                require_once(VIEWS_PATH . "user-registration.php");
+                require_once(VIEWS_PATH . "student-user-registration.php");
             }
         }
 
