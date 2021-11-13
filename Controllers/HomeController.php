@@ -29,7 +29,7 @@ class HomeController
                     $_SESSION['admin'] = $user;
                     require_once(VIEWS_PATH . "admin-firstpage.php");
         
-                } else {
+                } else if ($user->getUserTypeId() == 2) {
                     $studentController = new StudentController();
                     $student = new Student();
                     $student = $studentController->getByEmail($email);
@@ -46,6 +46,9 @@ class HomeController
                         $invalidEmail = true;
                         require_once(VIEWS_PATH . "index.php");
                     }
+                } else if ($user->getUserTypeId() == 3){
+                   $_SESSION['company'] = $user;
+                   // require_once(VIEWS_PATH . "company-firstpage.php");
                 }
 
             } else {
@@ -85,7 +88,7 @@ class HomeController
 
     public function ShowRegister()
     {
-        require_once(VIEWS_PATH . "user-registration.php");
+        require_once(VIEWS_PATH . "company-user-registration.php");
     }
 
     public function Logout()

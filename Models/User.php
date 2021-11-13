@@ -7,8 +7,8 @@ class User {
     private $password;
     private $name;
     private $studentId;
+    private $companyId;
     private $userTypeId;
-    private $jobOfferId;
 
 
     function __construct()
@@ -153,6 +153,26 @@ class User {
     public function setJobOfferId($jobOfferId)
     {
         $this->jobOfferId = $jobOfferId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of companyId
+     */ 
+    public function getCompanyId()
+    {
+        return $this->companyId;
+    }
+
+    /**
+     * Set the value of companyId
+     *
+     * @return  self
+     */ 
+    public function setCompanyId($companyId)
+    {
+        $this->companyId = $companyId;
 
         return $this;
     }

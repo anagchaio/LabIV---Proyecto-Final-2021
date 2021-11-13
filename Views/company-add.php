@@ -1,6 +1,8 @@
 <?php
+if (isset($_SESSION['admin'])) {
+     require_once('nav.php');
+}
 
-require_once('nav.php');
 ?>
 
 
@@ -50,8 +52,14 @@ require_once('nav.php');
 
                                         <div class="form-group">
                                              <!-- <label for="">Email</label> -->
-                                             <input type="email" name="email" class="form-control form-control-ml" required value="" placeholder="Email">
+                                             <input type="email" name="email" class="form-control form-control-ml" required value="<?php if (isset($email)) {
+                                                                                                                                            echo $email;
+                                                                                                                                       }; ?>" placeholder="Email">
                                         </div>
+
+                                        
+                                        <input type="password" name="password" class="form-control form-control-ml" hidden value="<?php if (isset($password)) { echo $password; }; ?>">
+                                        
 
                                         <div class="form-group">
                                              <!-- <label for="">Telefono</label> -->

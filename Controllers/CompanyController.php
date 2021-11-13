@@ -3,7 +3,9 @@
 namespace Controllers;
 
 use DAO\CompanyDAO as CompanyDAO;
+use DAO\UserDAO as UserDAO;
 use Models\Company as Company;
+use Models\User as User;
 use Utils\Utils as Utils;
 use Controllers\JobOfferController as JobOfferController;
 
@@ -14,6 +16,37 @@ class CompanyController
     public function __construct()
     {
         $this->companyDAO = new CompanyDAO();
+        $this->UserDAO = new UserDAO();
+    }
+
+    public function Register($email, $password)
+    {
+
+        $company = $this->companyDAO->GetByCompanyEmail($email);
+
+        if ($company != null) {
+
+            if ($this->UserDAO->getUserByEmail($email) == null) {
+                $newUser = new User();
+                $newUser->setEmail($email);
+                $newUser->setPassword($password);
+                $newUser->setName($company->getName());
+                $newUser->setCompanyId($company->getIdCompany());
+                $newUser->setUserTypeId(3);
+
+                $this->UserDAO->Add($newUser);
+
+                $succesfulRegistration = true;
+                require_once(VIEWS_PATH . "index.php");
+            } else {
+                $registedEmail = true;
+                require_once(VIEWS_PATH . "company-user-registration.php");
+            }
+        } else {
+            $invalidCompany = true;
+            
+            require_once(VIEWS_PATH . "company-add.php");
+        }
     }
 
     public function ShowListView()
@@ -52,32 +85,21 @@ class CompanyController
         if (isset($_SESSION['admin'])) {
             $jobOfferController = new JobOfferController();
             $companyFound = $jobOfferController->FindCompanyInJobOffer($idCompany);
-            if($companyFound == false){
+            if ($companyFound == false) {
                 $value = $this->companyDAO->deleteBD($idCompany);
-            if ($value == 1) {
-                $this->ShowListView();
-            }
+                if ($value == 1) {
+                    $this->ShowListView();
+                }
             } else {
                 $companyInUse = true;
                 $company = $this->companyDAO->GetByCompanyId($idCompany);
                 require_once(VIEWS_PATH . "admin-company-show.php");
             }
-            
-            
-            
         }
     }
 
-    public function AddCompany($companyName, $yearFoundantion, $city, $email, $phoneNumber,$description, $logo)
+    public function AddCompany($companyName, $yearFoundantion, $city, $email, $password, $phoneNumber, $description, $logo)
     {
-        // var_dump($companyName);
-        // var_dump($yearFoundantion);
-        // var_dump($city);
-        // var_dump($email);
-        // var_dump($phoneNumber);
-        // var_dump($description);
-        // var_dump($logo);
-        Utils::checkAdminSession();
         if ($this->companyDAO->GetByCompanyEmail($email) == null) {
             if ($yearFoundantion <= date("Y")) {
                 $uploadedSuccess = Utils::UploadImage($logo);
@@ -92,7 +114,13 @@ class CompanyController
                     $newCompany->setLogo($logo['name']);
 
                     $this->companyDAO->add($newCompany);
-                    $this->ShowListView();
+
+                    if(isset($_SESSION['admin'])){
+                        $this->ShowListView();
+                    } else {
+                        $this->Register($email,$password);
+                    }
+                    
                 } else {
                     $notImageError = true;
                     require_once(VIEWS_PATH . "company-add.php");
@@ -148,12 +176,11 @@ class CompanyController
         $company->setDescription($description);
         $company->setPhoneNumber($phoneNumber);
 
-        if($updateSuccess){
+        if ($updateSuccess) {
             $this->companyDAO->modify($company);
             $successMessage = true;
             require_once(VIEWS_PATH . "admin-company-show.php");
         }
-        
     }
 
     public function FilterList($searchedWord)
