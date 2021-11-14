@@ -30,9 +30,11 @@ if (isset($_SESSION['admin'])) {
                          <p class="card-text">Some quick example text </p> -->
 
                          <?php
-                         if (isset($_SESSION['offerList']) || isset($_SESSION['company'])) {
+                         if (isset($_SESSION['offerList']) && $_SESSION['offerList'] != NULL) {
+                              $jobOfferId = $_SESSION['offerList'];
+                              $_SESSION['offerList'] = null;
                          ?>
-                              <a href="<?php echo FRONT_ROOT . "JobOffer/ShowStudentList/" . $_SESSION['offerList'];?>" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Volver a la lista</a>
+                              <a href="<?php echo FRONT_ROOT . "JobOffer/ShowStudentList/" . $jobOfferId;?>" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Volver a la lista</a>
                          <?php
                          } else if (isset($_SESSION['admin'])) {
                          ?>
