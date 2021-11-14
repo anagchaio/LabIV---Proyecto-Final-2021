@@ -23,23 +23,17 @@ if (isset($_SESSION['admin'])) {
                             <?php
                             echo "<option value=" . 0 . ">Todas</option>";
                             if (isset($careers)) {
-                                foreach ($careers as $career) {
-
-                                    
-                                    if(isset($student) && $career->getCareerId() == $student->getCareerId()){
+                                foreach ($careers as $career) {                                    
+                                    if(isset($careerId) && $career->getCareerId() == $careerId){
                                         echo "<option selected value=" . $career->getCareerId() . ">" . $career->getDescription() . "</option>";
                                     } else {
                                         echo "<option value=" . $career->getCareerId() . ">" . $career->getDescription() . "</option>";
                                     }
                                 }
-                            }
-
-                            
-
-                            ?>
+                            }?>
                         </select>
-
                 </div>
+                
                 <div style="margin-left: 103vh;">
                     <button type="submit" name="filter-button" class="btn btn-primary">Filtrar</button>
                 </div>
@@ -72,7 +66,7 @@ if (isset($_SESSION['admin'])) {
                     echo  "<td>" . $jobOffer->getState() . "</td>";
 
                     $jobOfferId = $jobOffer->getJobOfferId();
-                    echo "<td><a href=" . FRONT_ROOT . "JobOffer/ShowOfferOnlyView/" . $jobOfferId . ">+ info</a></td>";
+                    echo "<td><a href=" . FRONT_ROOT . "JobOffer/ShowOffer/" . $jobOfferId . ">+ info</a></td>";
                 }
             } else {
                 echo "<h4>";

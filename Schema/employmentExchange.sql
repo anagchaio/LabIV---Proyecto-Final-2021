@@ -38,6 +38,7 @@ CREATE TABLE jobOffers(
 	company_id int NOT NULL,
 	jobPosition_id int NOT NULL,
 	student_id int,
+	flyer varchar(50) NOT NULL,
 	constraint pk_jobOffer primary key (id_jobOffer),
 	constraint fk_company_id foreign key (company_id) references company(id_company),
 	constraint fk_jobPosition_id foreign key (jobPosition_id) references jobPosition(id_jobPosition)

@@ -14,9 +14,10 @@ class JobOffer {
     private $jobPosition_description;
     private $career_description;
     private $flyer;
+    private $studentList;
 
     public function __construct(){
-       
+        $this->studentList = array();       
     }
 
 
@@ -260,5 +261,35 @@ class JobOffer {
         $this->flyer = $flyer;
 
         return $this;
+    }
+
+    /**
+     * Get the value of studentList
+     */ 
+    public function getStudentList()
+    {
+        return $this->studentList;
+    }
+
+    /**
+     * Set the value of studentList
+     *
+     * @return  self
+     */ 
+    public function setStudentList($studentList)
+    {
+        $this->studentList = $studentList;
+
+        return $this;
+    }
+
+    public function isStudentInJobOffer($studentId){
+        $studentFound = false;
+        foreach($this->getStudentList() as $student){
+            if($student->getStudentId() == $studentId){
+                $studentFound = true;
+            }
+        }
+        return $studentFound;
     }
 }

@@ -40,7 +40,10 @@
             </div>
             <button class="btn btn-primary btn-block btn-lg" type="submit">Iniciar Sesión</button>
             <div class="text-center">
-                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Home/ShowRegister">Crear una nueva cuenta</a>
+                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Home/ShowStudentRegister">Crear una nueva cuenta Alumno</a>
+            </div>
+            <div class="text-center">
+                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Home/ShowCompanyRegister">Crear una nueva cuenta Empresa</a>
             </div>
 
         </form>

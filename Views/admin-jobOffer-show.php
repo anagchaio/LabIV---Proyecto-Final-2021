@@ -35,7 +35,7 @@ require_once('nav.php');
                             <div>
                                 <div>
                                     <div class="form-group">
-                                        <!-- <label for="">Empresa</label> -->
+                                        <label for="">Empresa</label>
                                         <?php
                                         if ($jobOffer->getState() == "Opened") {
                                         ?>
@@ -67,7 +67,7 @@ require_once('nav.php');
 
                                     </div>
                                     <div class="form-group">
-                                        <!-- <label for="">Puesto</label> -->
+                                        <label for="">Puesto</label>
 
                                         <?php
                                         if ($jobOffer->getState() == "Opened") {
@@ -96,7 +96,7 @@ require_once('nav.php');
 
                                     </div>
                                     <div class="form-group">
-                                        <!-- <label for="">Descripción</label> -->
+                                        <label for="">Descripción</label>
                                         <?php
                                         if ($jobOffer->getState() == "Opened") {
                                         ?>
@@ -112,7 +112,7 @@ require_once('nav.php');
 
                                     </div>
                                     <div class="form-group">
-                                        <!-- <label for="">Fecha limite</label> -->
+                                        <label for="">Fecha limite</label>
                                         <?php
                                         if ($jobOffer->getState() == "Opened") {
                                         ?>
@@ -128,64 +128,62 @@ require_once('nav.php');
                                         ?>
                                     </div>
                                     <div class="form-group">
-                                        <!-- <label for="">Estado</label> -->
+                                        <label for="">Estado</label>
                                         <input readonly name="state" class="form-control form-control-ml" value="
-                                <?php if ($jobOffer->getState() == "Opened") {
-                                    echo "Abierta";
-                                } else {
-                                    echo "Cerrada";
-                                }
-                                ?>">
+                                            <?php if ($jobOffer->getState() == "Opened") {
+                                                echo "Abierta";
+                                            } else {
+                                                echo "Cerrada";
+                                            } ?>">
                                     </div>
 
                                     <div class="form-group">
-                                        <!-- <label for="">Alumno</label> -->
-                                        <input readonly type="text" name="student" class="form-control form-control-ml" value="
-                            <?php
-                            if ($jobOffer->getStudentId() != null) {
-                                echo $student->getFirstName() . " " . $student->getLastName();
-                            } else {
-                                echo "Sin alumno";
-                            }; ?>">
+                                        <label for="">Inscriptos</label>
 
+                                        <?php if ($jobOffer->getStudentList() == null) { ?>
+                                            <input readonly type="text" name="student" class="form-control form-control-ml" value="Sin alumnos">
+                                        <?php } else {  ?>
+                                            <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT . "JobOffer/ShowStudentList/" . $jobOffer->getJobOfferId(); ?>">Ver Listado</a>
+                                        <?php }; ?>
                                     </div>
-                                      <?php
-                        if ($jobOffer->getFlyer() != null) {
-                        ?>
-                            <div class="col-lg-4">
-                                <label for="">Flyer:</label>
-                                <img src="<?php if (isset($jobOffer)) {
-                                                echo FRONT_ROOT . UPLOADS_PATH . $jobOffer->getFlyer();
-                                            }; ?>" alt="jobOffer-flyer" width="300" height="300">
-                                <?php
-                                if ($jobOffer->getState() == "Opened") {
-                                ?>
-                                    <input type="file" name="flyer">
+
+                                    <?php
+                                    if ($jobOffer->getFlyer() != null) {
+                                    ?>
+                                        <div class=" col-lg-4">
+                                                <label for="">Aviso:</label>
+                                                <img src="<?php if (isset($jobOffer)) {
+                                                                echo FRONT_ROOT . UPLOADS_PATH . $jobOffer->getFlyer();
+                                                            }; ?>" alt="jobOffer-flyer" width="300" height="300">
+                                                <?php
+                                                if ($jobOffer->getState() == "Opened") {
+                                                ?>
+                                                    <input type="file" name="flyer">
+                                                <?php } ?>
+                                    </div>
                                 <?php } ?>
-                                </div>
-                        <?php } ?>
-                                    <div>
-                                        <div class="conteiner" style="margin-top:5vh">
-                                            <?php
-                                            if ($jobOffer->getState() == "Opened") {
-                                            ?>
-                                                <button type="submit" name="update-button" class="btn btn-primary btn-lg btn-block">Guardar</button>
+                                <div>
+                                    <div class="conteiner" style="margin-top:5vh">
+                                        <?php
+                                        if ($jobOffer->getState() == "Opened") {
+                                        ?>
+                                            <button type="submit" name="update-button" class="btn btn-primary btn-lg btn-block">Guardar</button>
 
 
-                                                <a class="btn btn-primary btn-lg btn-block" href="
-                                <?php if (isset($jobOffer)) {
+                                            <a class="btn btn-primary btn-lg btn-block" href="
+                                                <?php if (isset($jobOffer)) {
                                                     echo FRONT_ROOT . "JobOffer/Delete/" . $jobOffer->getJobOfferId();
                                                 }; ?>">Eliminar Oferta</a>
 
-                                            <?php
-                                            }
-                                            ?>
-                                            <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Volver</a>
+                                        <?php
+                                        }
+                                        ?>
+                                        <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Volver</a>
 
-
-                                        </div>
 
                                     </div>
+
+                                </div>
 
                                 </div>
 
