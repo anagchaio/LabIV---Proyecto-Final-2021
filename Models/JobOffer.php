@@ -14,9 +14,10 @@ class JobOffer {
     private $jobPosition_description;
     private $career_description;
     private $flyer;
+    private $studentList;
 
     public function __construct(){
-       
+        $this->studentList = array();       
     }
 
 
@@ -258,6 +259,26 @@ class JobOffer {
     public function setFlyer($flyer)
     {
         $this->flyer = $flyer;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of studentList
+     */ 
+    public function getStudentList()
+    {
+        return $this->studentList;
+    }
+
+    /**
+     * Set the value of studentList
+     *
+     * @return  self
+     */ 
+    public function setStudentList($studentList)
+    {
+        $this->studentList = $studentList;
 
         return $this;
     }
