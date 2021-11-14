@@ -86,9 +86,14 @@ class HomeController
        
     }
 
-    public function ShowRegister()
+    public function ShowCompanyRegister()
     {
         require_once(VIEWS_PATH . "company-user-registration.php");
+    }
+
+    public function ShowStudentRegister()
+    {
+        require_once(VIEWS_PATH . "student-user-registration.php");
     }
 
     public function Logout()

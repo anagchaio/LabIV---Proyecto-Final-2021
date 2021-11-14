@@ -5,7 +5,7 @@ if (isset($_SESSION['admin'])) {
 } else {
     require_once('nav-student.php');
 }
-
+var_dump($jobOffer);
 ?>
 
 
@@ -17,19 +17,15 @@ if (isset($_SESSION['admin'])) {
         <div class="card-body">
 
             <section id="listado" class="mb-5">
-                <form action="<?php echo FRONT_ROOT ?>JobOffer/Subscribe" method="POST" enctype="multipart/form-data"class="form-horizontal">
+                <form action="<?php echo FRONT_ROOT ?>JobOffer/Subscribe" method="POST" enctype="multipart/form-data" class="form-horizontal">
                     <div class="container">
-                        <!-- <h3 class="mb-3">Oferta</h3> -->
                         <h4 style="color: rgb(145, 39, 177)">
                             <?php
                             if (isset($SubscribeSuccess)) {
                                 echo "Usted esta inscripto en la Oferta";
                             }
                             if (isset($SubscribeError)) {
-                                echo "Error: Ya se encuentra inscripto en otra oferta.";
-                            }
-                            if (isset($closedOffer)) {
-                                echo "No puede inscribirse en una oferta que ya esta cerrada";
+                                echo "Error: Ya se encuentra inscripto en esta oferta.";
                             }
                             ?>
                         </h4>
@@ -37,51 +33,60 @@ if (isset($_SESSION['admin'])) {
                         <div>
                             <div>
                                 <div class="form-group">
-                                    <!-- <label for="">Empresa</label> -->
+                                    <label for="">Empresa</label>
                                     <input readonly name="companyName" class="form-control form-control-ml" value=" <?php echo $jobOffer->getCompany_name(); ?>">
                                 </div>
 
                                 <div class="form-group">
-                                    <!-- <label for="">Puesto</label> -->
+                                    <label for="">Puesto</label>
                                     <input readonly name="jobPositionDescription" class="form-control form-control-ml" value=" <?php echo $jobOffer->getJobPosition_description(); ?>">
                                 </div>
 
                                 <div class="form-group">
-                                    <!-- <label for="">Descripción</label> -->
+                                    <label for="">Descripción</label>
                                     <textarea readonly type="text" name="jobOffer_description" maxlength="200" class="form-control form-control-ml" value=""><?php echo $jobOffer->getJobOffer_description(); ?></textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <!-- <label for="">Fecha limite</label> -->
+                                    <label for="">Fecha limite</label>
                                     <input readonly type="date" name="limitDate" class="form-control form-control-ml" value="<?php echo $jobOffer->getLimitDate(); ?>">
                                 </div>
 
                                 <div class="form-group">
-                                    <!-- <label for="">Estado</label> -->
-                                    <input readonly name="state" class="form-control form-control-ml" value="
-                                <?php if ($jobOffer->getState() == "Opened") {
+                                    <label for="">Estado</label>
+                                    <input readonly name="state" class="form-control form-control-ml" 
+                                    value="<?php if ($jobOffer->getState() == "Opened") {
                                     echo "Abierta";
-                                } else {
-                                    echo "Cerrada";
-                                }
-                                ?>">
+                                    } else {
+                                        echo "Cerrada";
+                                    }?>">
+                                
+                                
                                 </div>
 
                                 <div class="form-group">
-                                    <!-- <label for="">Alumno</label> -->
-                                    <input readonly type="text" name="student" class="form-control form-control-ml" value="
-                            <?php
-                            if ($jobOffer->getStudentId() != null) {
-                                echo $student->getFirstName() . " " . $student->getLastName();
-                            } else {
-                                echo "Sin alumno";
-                            }; ?>">
+                                    <label for="">Inscriptos</label>
+                                    <input readonly type="text" name="student" class="form-control form-control-ml" 
+                                    value="<?php if ($jobOffer->getStudentList() != null) {
+                                        echo  count($jobOffer->getStudentList()) . " alumno/s";
+                                       
+                                        if ($jobOffer->isStudentInJobOffer($studentId)) {
+                                            echo " -  Usted está inscripto";
+                                        }
+                                    } else {
+                                        echo "Sin alumnos";
+                                    } ?>">
+
+
+
+
+
                                 </div>
 
                                 <div>
                                     <div class="conteiner" style="margin-top: 5vh;">
 
-                                        <?php if ($jobOffer->getState() == "Opened") {
+                                        <?php if ($jobOffer->getState() == "Opened" && !($jobOffer->isStudentInJobOffer($studentId))) {
                                         ?>
                                             <button type="submit" name="subscribe-button" class="btn btn-primary btn-lg btn-block">Inscribirse</button>
                                         <?php

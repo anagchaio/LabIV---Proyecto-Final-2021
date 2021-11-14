@@ -30,16 +30,18 @@ if (isset($_SESSION['admin'])) {
                          <p class="card-text">Some quick example text </p> -->
 
                          <?php
-                         if (isset($_SESSION['admin'])) {
+                         if (isset($_SESSION['offerList']) || isset($_SESSION['company'])) {
+                         ?>
+                              <a href="<?php echo FRONT_ROOT . "JobOffer/ShowStudentList/" . $_SESSION['offerList'];?>" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Volver a la lista</a>
+                         <?php
+                         } else if (isset($_SESSION['admin'])) {
                          ?>
                               <a href="<?php echo FRONT_ROOT ?>Student/ShowListView" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Volver a la lista</a>
                          <?php
-                         } else {
+                         } else if(isset($_SESSION['student'])){
                          ?>
                               <a href="<?php echo FRONT_ROOT ?>Home/RedirectHome" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Atrás</a>
-                         <?php
-                         }
-                         ?>
+                         <?php }?>                         
 
                     </div>
 

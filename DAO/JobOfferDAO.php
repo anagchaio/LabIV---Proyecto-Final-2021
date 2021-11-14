@@ -288,19 +288,42 @@ class JobOfferDAO implements IJobOfferDAO
         }
     }
 
-    public function AddStudentToJobOffer(JobOffer $jobOffer, $studentId){
+    public function AddStudentToJobOffer($jobOfferId, $studentId){
         try {
 
             $query = "INSERT INTO ". $this->tableStudentXjobOffer ." (student_id, id_jobOffer) 
             VALUES (:student_id, :id_jobOffer)";
 
-            $parameters["id_jobOffer"] = $jobOffer->getJobOfferId();
+            $parameters["id_jobOffer"] = $jobOfferId;
             $parameters["student_id"] = $studentId;
 
             $this->connection = Connection::GetInstance();
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
             
+        } catch (Exception $exception) {
+            $response = $exception->getMessage();
+        }
+    }
+
+    public function isStudentInJobOffer($jobOfferId, $studentId){
+        try {
+            $student = array();
+            $query = "SELECT student_id
+                FROM ". $this->tableStudentXjobOffer ."            
+                WHERE id_jobOffer = " . $jobOfferId . " AND student_id =". $studentId .";";
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            foreach ($resultSet as $row) {
+                $student = new Student();
+                $student->setStudentId($row["student_id"]);                
+            }
+            
+            return $student;
+
         } catch (Exception $exception) {
             $response = $exception->getMessage();
         }

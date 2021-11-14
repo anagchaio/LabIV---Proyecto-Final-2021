@@ -173,6 +173,7 @@ class JobOfferController
             require_once(VIEWS_PATH . "admin-jobOffer-show.php");
         } else if (isset($_SESSION['student'])) {
             $user = $_SESSION['student'];
+            $studentId = $user->getStudentId();
             require_once(VIEWS_PATH . "student-jobOffer-show.php");
         }
     }
@@ -191,12 +192,12 @@ class JobOfferController
         require_once(VIEWS_PATH . "student-jobOffer-show.php");
     }
 
-    public function FilterByCareer($CareerId)
+    public function FilterByCareer($careerId)
     {
-        if ($CareerId == 0) {
+        if ($careerId == 0) {
             $jobOffers = $this->jobOfferDAO->GetList();
         } else {
-            $jobOffers = $this->jobOfferDAO->GetListByCareer($CareerId);
+            $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
         }
         $careers = $this->careerDAO->GetAllActive();
 
@@ -211,5 +212,15 @@ class JobOfferController
             $companyFound = true;
         }
         return $companyFound;
+    }
+
+    public function ShowStudentList($jobOfferId)
+    {
+        Utils::checkSession();
+        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+        $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
+        $careers = $this->careerDAO->GetAllActive();
+        $_SESSION['offerList'] = $jobOfferId;
+        require_once(VIEWS_PATH . "student-list.php");
     }
 }

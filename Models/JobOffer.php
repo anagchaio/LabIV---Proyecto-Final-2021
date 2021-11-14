@@ -282,4 +282,14 @@ class JobOffer {
 
         return $this;
     }
+
+    public function isStudentInJobOffer($studentId){
+        $studentFound = false;
+        foreach($this->getStudentList() as $student){
+            if($student->getStudentId() == $studentId){
+                $studentFound = true;
+            }
+        }
+        return $studentFound;
+    }
 }

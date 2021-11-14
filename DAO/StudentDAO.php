@@ -93,21 +93,19 @@ class StudentDAO implements IStudentDAO
         return null;
     }
 
-    public function GetFullStudentList($studentIdsList)
+    public function GetFullStudentList($offerStudentList)
     {
         $this->RetrieveData();
 
         $fullStudentList = array();
 
         foreach ($this->listOfStudents as $student) {
-            foreach($studentIdsList as $studentId){
-                if ($student->getStudentId() == $studentId){
+            foreach($offerStudentList as $offerStudent){
+                if ($student->getStudentId() == $offerStudent->getStudentId()){
                     array_push($fullStudentList, $student);
                 }
-            }
-            
+            }            
         }
-
         return $fullStudentList;
     }
 
