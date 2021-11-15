@@ -12,8 +12,13 @@ class Utils {
         if(!(isset($_SESSION['admin']))){
             $userNotAdmin = true;
             require_once(VIEWS_PATH ."index.php");
-        } else {
-            $adminLogged = true;
+        }
+    }
+
+    public static function checkAdminCompanySession(){
+        if(!(isset($_SESSION['admin'])) || !(isset($_SESSION['company']))){
+            $userNotAdmin = true;
+            require_once(VIEWS_PATH ."index.php");
         }
     }
 

@@ -29,7 +29,8 @@ require_once('nav.php');
                                              <!-- <label for="">Empresa</label> -->
                                              <!-- <label for="empresa001" class="col-sm-2 control-label">Empresa</label> -->
 
-
+                                             <?php if (isset($_SESSION['admin'])) { ?>                                        
+                                              
                                              <select name="companyId" required class="form-control form-control-ml">
                                                   <option style="color:grey" hidden selected>Empresa</option>
 
@@ -41,7 +42,9 @@ require_once('nav.php');
                                                   }
                                                   ?>
                                              </select>
-
+                                             <?php } else if (isset($_SESSION['company'])){ ?>
+                                                  <input readonly name="companyName" class="form-control form-control-ml" value=" <?php echo $user->getName(); ?>">
+                                             <?php } ?>
                                         </div>
                                         <div class="form-group">
                                              <!-- <label for="">Puesto</label> -->
@@ -75,8 +78,8 @@ require_once('nav.php');
                                    </div>
                                    <button type="submit" name="button" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Agregar</button>
                                    <!-- <a class="btn btn-primary btn-lg btn-block" href="<?php if (isset($jobOffer)) {
-                                                                                          echo FRONT_ROOT . "JobOffer/deleteByBD/" . $jobOffer->getJobOfferId();
-                                                                                     }; ?>">Eliminar</a> -->
+                                                                                               echo FRONT_ROOT . "JobOffer/deleteByBD/" . $jobOffer->getJobOfferId();
+                                                                                          }; ?>">Eliminar</a> -->
 
                               </div>
                          </div>

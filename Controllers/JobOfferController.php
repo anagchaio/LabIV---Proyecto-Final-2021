@@ -34,7 +34,7 @@ class JobOfferController
 
     public function add($companyId, $jobPositionId, $jobOffer_description, $limitDate, $flyer)
     {
-        Utils::checkAdminSession();
+        Utils::checkAdminCompanySession();
 
         if ($limitDate >= date("Y-m-d")) {
             $uploadedSuccess = Utils::UploadImage($flyer);
@@ -85,7 +85,7 @@ class JobOfferController
 
     public function RedirectAddFormJobOffer()
     {
-        Utils::checkAdminSession();
+        Utils::checkAdminCompanySession();
 
         $companies = $this->CompanyDAO->GetAll();
         $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
@@ -97,7 +97,7 @@ class JobOfferController
 
     public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state, $studentName, $student, $flyer)
     {
-        Utils::checkAdminSession();
+        Utils::checkAdminCompanySession();
         $companies = $this->CompanyDAO->GetAll();
         $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
         $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
