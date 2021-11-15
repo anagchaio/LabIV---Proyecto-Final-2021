@@ -16,7 +16,7 @@ class Utils {
     }
 
     public static function checkAdminCompanySession(){
-        if(!(isset($_SESSION['admin'])) || !(isset($_SESSION['company']))){
+        if(!(isset($_SESSION['admin']) || isset($_SESSION['company']))){
             $userNotAdmin = true;
             require_once(VIEWS_PATH ."index.php");
         }

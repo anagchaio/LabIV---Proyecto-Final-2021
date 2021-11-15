@@ -97,11 +97,17 @@ require_once('nav.php');
 
                                                   <button type="submit" name="modify-company-button" class="btn btn-primary btn-lg btn-block">Guardar</button>
 
+                                                  <?php if(isset($_SESSION['admin'])) { ?>
+
+                                                  
                                                   <a class="btn btn-primary btn-lg btn-block" href="<?php if (isset($company)) {
                                                                                                          echo FRONT_ROOT . "Company/DeleteCompany/" . $company->getIdCompany();
                                                                                                     }; ?>">Eliminar Empresa</a>
                                                   <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Company/ShowListView/">Volver</a>
-
+                                                  <?php } else { ?>
+                                                       <!-- Agregar href para volver al Home de company -->
+                                                  <!--     <a class="btn btn-primary btn-lg btn-block" href="">Volver</a> -->  
+                                                  <?php } ?>
 
                                              </div>
 

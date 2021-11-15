@@ -95,7 +95,7 @@ class JobOfferController
 
 
 
-    public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state, $studentName, $student, $flyer)
+    public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state, $students, $flyer)
     {
         Utils::checkAdminCompanySession();
         $companies = $this->CompanyDAO->GetAll();
