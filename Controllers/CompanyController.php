@@ -60,7 +60,7 @@ class CompanyController
     {
         Utils::checkSession();
         $company = $this->companyDAO->GetByCompanyId($idCompany);
-        if (isset($_SESSION['admin'])) {
+        if (isset($_SESSION['admin']) || isset($_SESSION['company']) ) {
             require_once(VIEWS_PATH . "admin-company-show.php");
         } else {
             require_once(VIEWS_PATH . "student-company-show.php");
