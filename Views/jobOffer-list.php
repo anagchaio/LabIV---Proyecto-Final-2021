@@ -18,7 +18,7 @@ if (isset($_SESSION['admin'])) {
             <div class="flex">
                 <div class="form-group-input">
 
-                    <form action="<?php echo FRONT_ROOT ?>JobOffer/FilterByCareer" method="GET">
+                    <form action="<?php echo FRONT_ROOT ?>JobOffer/ShowListView" method="GET">
                         <select name="careerId" class="form-control form-control-ml" style="width: 130vh;">
                             <?php
                             echo "<option value=" . 0 . ">Todas</option>";

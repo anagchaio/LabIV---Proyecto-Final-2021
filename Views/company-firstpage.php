@@ -1,5 +1,5 @@
 <?php
-require_once('nav.php');
+require_once('nav-company.php');
 ?>
 
 <body>
@@ -19,12 +19,12 @@ require_once('nav.php');
 
                         <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">Lista de Propuestas</a>
                         <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/RedirectAddFormJobOffer">Agregar Propuestas</a>
-                        <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Lista de Alumnos</a>
+                        <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Mis datos</a>
 
                     </div>
 
                 </div>
-                
+
                 <div class="card-footer text-muted">
                 <div class="d-grid gap-2 col-6 mx-auto">
 
