@@ -30,6 +30,9 @@ if (isset($_SESSION['admin'])) {
                                    if (isset($notImageError)) {
                                         echo "Hubo un error o el archivo seleccionado no es una imagen";
                                    }
+                                   if (isset($DBerror)) {
+                                        echo "Error: No se puede acceder a la base de datos. Intente mas tarde.";
+                                   }
                                    ?>
                               </h4>
 

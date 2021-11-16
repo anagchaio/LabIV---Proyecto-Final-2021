@@ -3,6 +3,8 @@
 namespace Controllers;
 
 use DAO\JobPositionDAO as JobPositionDAO;
+use \Exception as Exception;
+
 
 class JobPositionController
 {
@@ -14,11 +16,14 @@ class JobPositionController
         $this->jobPositionDAO = new JobPositionDAO();
     }
 
-    public function Update(){
-
-        $this->jobPositionDAO->updatePositionsFromAPI();
-
-        require_once(VIEWS_PATH . "admin-firstpage.php");
-
+    public function Update()
+    {
+        try {
+            $this->jobPositionDAO->updatePositionsFromAPI();
+            require_once(VIEWS_PATH . "admin-firstpage.php");
+        } catch (Exception $exception) {
+            $DBerror = $exception->getMessage();
+            HomeController::RedirectHome();
+        }
     }
 }

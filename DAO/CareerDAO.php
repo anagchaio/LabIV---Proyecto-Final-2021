@@ -26,9 +26,8 @@ class CareerDAO implements ICareerDAO
 
             $this->connection = Connection::GetInstance();
             return $this->connection->ExecuteNonQuery($query, $parameters);
-
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 
@@ -52,56 +51,33 @@ class CareerDAO implements ICareerDAO
                 array_push($careerList, $career);
             }
             return $careerList;
-
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 
-   /*  public function GetAllActive()
-    {
-        try {
-            $careerList = array();
-
-            $query = "SELECT * FROM " . $this->tableName;
-
-            $this->connection = Connection::GetInstance();
-
-            $resultSet = $this->connection->Execute($query);
-
-            foreach ($resultSet as $row) {
-                $career = new Career();
-                $career->setCareerId($row["id_career"]);
-                $career->setDescription($row["career_description"]);
-                $career->setActive($row["active"]);
-
-                array_push($careerList, $career);
-            }
-            return $careerList;
-
-        } catch (Exception $exception) {
-            $response = $exception->getMessage();
-        }
-    } */
-
     public function getCareerById($idCareer)
     {
-        $foundCareer = NULL;
-        $careers = $this->GetAll();
-        foreach ($careers as $career) {
-            if ($career->getCareerId() == $idCareer) {
+        try {
+            $foundCareer = NULL;
+            $careers = $this->GetAll();
+            foreach ($careers as $career) {
+                if ($career->getCareerId() == $idCareer) {
 
-                $foundCareer = $career;
+                    $foundCareer = $career;
+                }
             }
+            return $foundCareer;
+        } catch (Exception $exception) {
+            throw $exception;
         }
-        return $foundCareer;
     }
 
     public function Update(Career $career)
     {
         try {
 
-            $query = "UPDATE ". $this->tableName ." SET career_description=:career_description, active=:active
+            $query = "UPDATE " . $this->tableName . " SET career_description=:career_description, active=:active
             WHERE id_career = :id_career;";
 
             $parameters["id_career"] = $career->getCareerId();
@@ -111,38 +87,45 @@ class CareerDAO implements ICareerDAO
             $this->connection = Connection::GetInstance();
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
-            
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
-    
 
 
-    public function updateCareersFromAPI(){
 
-        $API_CareerDAO = new API_CareerDAO();
-        $careersFromAPI = $API_CareerDAO->GetAll();
+    public function updateCareersFromAPI()
+    {
+        try {
+            $API_CareerDAO = new API_CareerDAO();
+            $careersFromAPI = $API_CareerDAO->GetAll();
 
-        foreach($careersFromAPI as $APICareer){
-            if($this->getCareerById($APICareer->getCareerId())!=null){
-                $this->Update($APICareer);
-            } else {
-                $this->Add($APICareer);
+            foreach ($careersFromAPI as $APICareer) {
+                if ($this->getCareerById($APICareer->getCareerId()) != null) {
+                    $this->Update($APICareer);
+                } else {
+                    $this->Add($APICareer);
+                }
             }
+        } catch (Exception $exception) {
+            throw $exception;
         }
     }
 
     public function GetAllActive()
     {
-        $careers = $this->GetAll();
-        $activeCareers = array();
+        try {
+            $careers = $this->GetAll();
+            $activeCareers = array();
 
-        foreach($careers as $career){
-            if($career->getActive() == 1){
-                array_push($activeCareers, $career);
+            foreach ($careers as $career) {
+                if ($career->getActive() == 1) {
+                    array_push($activeCareers, $career);
+                }
             }
+            return $activeCareers;
+        } catch (Exception $exception) {
+            throw $exception;
         }
-        return $activeCareers;
     }
 }

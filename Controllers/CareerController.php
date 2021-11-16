@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use DAO\CareerDAO as CareerDAO;
+use \Exception as Exception;
 
 class CareerController
 {
@@ -14,11 +15,15 @@ class CareerController
         $this->careerDAO = new CareerDAO();
     }
 
-    public function Update(){
-
-        $this->careerDAO->updateCareersFromAPI();
-
-        require_once(VIEWS_PATH . "admin-firstpage.php");
-
+    public function Update()
+    {
+        try {
+            $this->careerDAO->updateCareersFromAPI();
+            require_once(VIEWS_PATH . "admin-firstpage.php");
+            
+        } catch (Exception $exception) {
+            $DBerror = $exception->getMessage();
+            HomeController::RedirectHome();
+        }
     }
 }

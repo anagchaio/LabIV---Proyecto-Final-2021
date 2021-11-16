@@ -29,13 +29,11 @@ class CompanyDAO implements ICompanyDAO
             $parameters["logo"] = $company->getLogo();
             $parameters["email"] = $company->getEmail();
             $parameters["phonenumber"] = $company->getPhoneNumber();
-            
+
             $this->connection = Connection::GetInstance();
             return $this->connection->ExecuteNonQuery($query, $parameters);
-
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
-            var_dump($response);
+            throw $exception;
         }
     }
 
@@ -49,8 +47,8 @@ class CompanyDAO implements ICompanyDAO
             $this->connection = Connection::GetInstance();
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
-        } catch (Exception $ex) {
-            throw $ex;
+        } catch (Exception $exception) {
+            throw $exception;
         }
     }
 
@@ -84,46 +82,55 @@ class CompanyDAO implements ICompanyDAO
 
             return $companyList;
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 
     public function GetByCompanyId($idCompany)
     {
-        $foundCompany = null;
-        $this->listOfCompanies = $this->GetAll();
-        if ($this->listOfCompanies != null) {
-            foreach ($this->listOfCompanies as $company) {
-                if ($company->getIdCompany() == $idCompany) {
-                    $foundCompany = $company;
+        try {
+            $foundCompany = null;
+            $this->listOfCompanies = $this->GetAll();
+            if ($this->listOfCompanies != null) {
+                foreach ($this->listOfCompanies as $company) {
+                    if ($company->getIdCompany() == $idCompany) {
+                        $foundCompany = $company;
+                    }
                 }
             }
+            return $foundCompany;
+        } catch (Exception $exception) {
+            throw $exception;
         }
-        return $foundCompany;
     }
 
     public function GetByCompanyEmail($companyEmail)
     {
-        $foundCompany = null;
-        $this->listOfCompanies = $this->GetAll();
-        if ($this->listOfCompanies != null) {
-            foreach ($this->listOfCompanies as $company) {
-                if ($company->getEmail() == $companyEmail) {
-                    $foundCompany = $company;
+        try {
+            $foundCompany = null;
+            $this->listOfCompanies = $this->GetAll();
+            if ($this->listOfCompanies != null) {
+                foreach ($this->listOfCompanies as $company) {
+                    if ($company->getEmail() == $companyEmail) {
+                        $foundCompany = $company;
+                    }
                 }
             }
+            return $foundCompany;
+        } catch (Exception $exception) {
+            throw $exception;
         }
-        return $foundCompany;
     }
 
 
- 
 
 
-    public function modify(Company $company){
+
+    public function modify(Company $company)
+    {
         try {
 
-            $query = "UPDATE ". $this->tableName ." SET company_name=:company_name, yearFoundantion=:yearFoundantion,
+            $query = "UPDATE " . $this->tableName . " SET company_name=:company_name, yearFoundantion=:yearFoundantion,
             city=:city, description=:description, logo=:logo, email=:email, phonenumber=:phonenumber
             WHERE id_company = :id_company;";
 
@@ -139,9 +146,8 @@ class CompanyDAO implements ICompanyDAO
             $this->connection = Connection::GetInstance();
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
-            
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 }
