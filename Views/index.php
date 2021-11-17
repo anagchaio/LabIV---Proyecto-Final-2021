@@ -44,8 +44,8 @@
             </div>
             <div class="text-center" style="display: flex; margin-left: 5vh">
                 <a >¿Registrarse como empresa?</a>
+                
                 <a style="margin-left: 2vh;" href="<?php echo FRONT_ROOT ?>Home/ShowCompanyRegister">Ingrese aquí</a>
-               <!-- <a>¿Registrarse como compañía?</a> <a class="nav-link" href="<?php echo FRONT_ROOT ?>Home/ShowCompanyRegister"> Ingresar aquí</a> -->
             </div>
 
         </form>

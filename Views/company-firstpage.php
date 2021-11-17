@@ -18,8 +18,10 @@ require_once('nav-company.php');
 
 
                         <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">Lista de Propuestas</a>
-                        <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/RedirectAddFormJobOffer">Agregar Propuestas</a>
-                        <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Mis datos</a>
+                        <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/RedirectAddFormJobOffer/">Agregar Propuestas</a>
+                        <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT .  "Company/ShowCompany/" . $_SESSION['company']->getCompanyId()  ?>">Mis datos</a>
+
+
 
                     </div>
 

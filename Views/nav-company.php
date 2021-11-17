@@ -40,7 +40,9 @@
 
             </li>
             <li class="has-subnav">
-                <a href="<?php echo FRONT_ROOT ?>Company/ShowCompany">
+            <a href="<?php echo FRONT_ROOT .  "Company/ShowCompany/" . $_SESSION['company']->getCompanyId()  ?>">
+
+                <!-- <a href="<?php echo FRONT_ROOT ?>Company/ShowCompany"> -->
                     <i class="fa fa-list fa-2x"></i>
                     <span class="nav-text">
                         Mis Datos
