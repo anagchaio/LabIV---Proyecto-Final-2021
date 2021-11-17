@@ -88,8 +88,7 @@ class JobOfferController
                 }
             }
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -102,8 +101,7 @@ class JobOfferController
 
             require_once(VIEWS_PATH . "jobOffer-add.php");
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -151,8 +149,7 @@ class JobOfferController
             }
             require_once(VIEWS_PATH . "admin-jobOffer-show.php");
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -177,11 +174,10 @@ class JobOfferController
             if ($jobOffers == null) {
                 $noOffersToShow = true;
             }
-
             require_once(VIEWS_PATH . "jobOffer-list.php");
+
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -202,8 +198,7 @@ class JobOfferController
                 require_once(VIEWS_PATH . "student-jobOffer-show.php");
             }
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -221,8 +216,7 @@ class JobOfferController
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
             require_once(VIEWS_PATH . "student-jobOffer-show.php");
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -238,8 +232,7 @@ class JobOfferController
 
             require_once(VIEWS_PATH . "jobOffer-list.php");
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -267,8 +260,7 @@ class JobOfferController
             $_SESSION['offerList'] = $jobOfferId;
             require_once(VIEWS_PATH . "student-list.php");
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 }

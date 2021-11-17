@@ -1,6 +1,7 @@
 <?php
 
 namespace Controllers;
+
 use Models\User as User;
 use Controllers\StudentController as StudentController;
 use Controllers\UserController as UserController;
@@ -75,17 +76,17 @@ class HomeController
         }
     }
 
-    public static function RedirectHome()
+    public function RedirectHome()
     {
         Utils::checkSession();
-
+        
         if (isset($_SESSION['admin'])) {
             require_once(VIEWS_PATH . "admin-firstpage.php");
         } else {
-
             require_once(VIEWS_PATH . "student-firstpage.php");
         }
     }
+
 
     public function ShowCompanyRegister()
     {

@@ -69,8 +69,7 @@ class StudentController
             $careers = $this->APIcareerDAO->GetAll();
             require_once(VIEWS_PATH . "student-list.php");
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -87,8 +86,7 @@ class StudentController
                 Utils::checkAdminCompanySession();
             }
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -96,10 +94,10 @@ class StudentController
     public function getByEmail($email)
     {
         try {
-        $student = $this->studentDAO->GetByStudentEmail($email);
-        return $student;
-    } catch (Exception $exception) {
-        throw $exception;
-    }
+            $student = $this->studentDAO->GetByStudentEmail($email);
+            return $student;
+        } catch (Exception $exception) {
+            throw $exception;
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace Controllers;
 
 use DAO\CareerDAO as CareerDAO;
 use \Exception as Exception;
+use Utils\Utils as Utils;
 
 class CareerController
 {
@@ -22,8 +23,7 @@ class CareerController
             require_once(VIEWS_PATH . "admin-firstpage.php");
             
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 }

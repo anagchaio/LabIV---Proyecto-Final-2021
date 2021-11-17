@@ -59,9 +59,8 @@ class CompanyController
         try {
             $companies = $this->companyDAO->GetAll();
             require_once(VIEWS_PATH . "company-list.php");
-        } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+        } catch (Exception $exception) {          
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -77,7 +76,7 @@ class CompanyController
             }
         } catch (Exception $exception) {
             $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -112,8 +111,7 @@ class CompanyController
                 }
             }
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -206,8 +204,7 @@ class CompanyController
                 require_once(VIEWS_PATH . "admin-company-show.php");
             }
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
@@ -226,8 +223,7 @@ class CompanyController
             $companies = $filteredCompanies;
             require_once(VIEWS_PATH . "company-list.php");
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
-            HomeController::RedirectHome();
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 }
