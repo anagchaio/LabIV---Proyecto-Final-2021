@@ -203,6 +203,23 @@ class JobOfferDAO implements IJobOfferDAO
         }
     }
 
+    public function closeOffer($jobOfferId)
+    {
+        try {
+            $query = "UPDATE " . $this->tableName . " SET state=:state
+                WHERE id_jobOffer = :id_jobOffer;";
+
+            $parameters["id_jobOffer"] = $jobOfferId;
+            $parameters["state"] = 'Closed';
+
+            $this->connection = Connection::GetInstance();
+
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $exception) {
+            throw $exception;
+        }
+    }
+
     public function GetListByCareer($CareerId)
     {
         try {

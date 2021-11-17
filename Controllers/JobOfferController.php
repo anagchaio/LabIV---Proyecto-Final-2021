@@ -202,6 +202,18 @@ class JobOfferController
         }
     }
 
+    public function Close($jobOfferId)
+    {
+        Utils::checkAdminCompanySession();
+        try {
+            $this->jobOfferDAO->closeOffer($jobOfferId);
+            $this->ShowOffer($jobOfferId);
+
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
+        }
+    }
+    
 
 
     public function Subscribe($jobOfferId)
