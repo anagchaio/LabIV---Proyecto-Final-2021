@@ -28,7 +28,7 @@ class JobPositionDAO implements IJobPositionDAO
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 
@@ -53,7 +53,7 @@ class JobPositionDAO implements IJobPositionDAO
             }
             return $jobPositionList;
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
     public function Update(JobPosition $jobPosition)
@@ -72,36 +72,43 @@ class JobPositionDAO implements IJobPositionDAO
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
     public function getPositionById($idJobPosition)
     {
-        $foundPosition = NULL;
-        $jobPositions = $this->GetAll();
+        try {
+            $foundPosition = NULL;
+            $jobPositions = $this->GetAll();
 
-        foreach ($jobPositions as $jobPosition) {
-            if ($jobPosition->getJobPositionId() == $idJobPosition) {
+            foreach ($jobPositions as $jobPosition) {
+                if ($jobPosition->getJobPositionId() == $idJobPosition) {
 
-                $foundPosition = $jobPosition;
+                    $foundPosition = $jobPosition;
+                }
             }
+            return $foundPosition;
+        } catch (Exception $exception) {
+            throw $exception;
         }
-        return $foundPosition;
     }
 
 
     public function updatePositionsFromAPI()
     {
+        try {
+            $API_jobPositionDAO = new API_JobPositionDAO();
+            $positionsFromAPI = $API_jobPositionDAO->GetAll();
 
-        $API_jobPositionDAO = new API_JobPositionDAO();
-        $positionsFromAPI = $API_jobPositionDAO->GetAll();
-
-        foreach ($positionsFromAPI as $APIposition) {
-            if ($this->getPositionById($APIposition->getJobPositionId()) != null) {
-                $this->Update($APIposition);
-            } else {
-                $this->Add($APIposition);
+            foreach ($positionsFromAPI as $APIposition) {
+                if ($this->getPositionById($APIposition->getJobPositionId()) != null) {
+                    $this->Update($APIposition);
+                } else {
+                    $this->Add($APIposition);
+                }
             }
+        } catch (Exception $exception) {
+            throw $exception;
         }
     }
 
@@ -129,7 +136,7 @@ class JobPositionDAO implements IJobPositionDAO
             }
             return $jobPositionList;
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 }

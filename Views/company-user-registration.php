@@ -6,6 +6,9 @@
                 if (isset($registedEmail)) {
                     echo "Error: el email ya se encuentra en el sistema.";
                 }
+                if (isset($DBerror)) {
+                    echo "Error: No se puede acceder a la base de datos. Intente mas tarde.";
+                }
                 ?>
             </h4>
         </header>

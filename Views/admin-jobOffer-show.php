@@ -159,9 +159,10 @@ require_once('nav.php');
                                                     }; ?>">Ver Imagen</a>                                            
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Cambiar imagen:</label>
+                                            
                                         <?php if ($jobOffer->getState() == "Opened") {  ?>
-                                                <input type="file" name="flyer">
+                                            <label for="">Cambiar imagen:</label>
+                                            <input type="file" name="flyer">
                                             <?php } ?>
                                         </div>
                                     <?php } ?>
@@ -172,6 +173,10 @@ require_once('nav.php');
                                             ?>
                                                 <button type="submit" name="update-button" class="btn btn-primary btn-lg btn-block">Guardar</button>
 
+                                                <a class="btn btn-primary btn-lg btn-block" href="
+                                                <?php if (isset($jobOffer)) {
+                                                    echo FRONT_ROOT . "JobOffer/Close/" . $jobOffer->getJobOfferId();
+                                                }; ?>">Cerrar Oferta</a>
 
                                                 <a class="btn btn-primary btn-lg btn-block" href="
                                                 <?php if (isset($jobOffer)) {

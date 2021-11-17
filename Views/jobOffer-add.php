@@ -24,6 +24,9 @@ if (isset($_SESSION['admin'])) {
                                    if (isset($invalidDate)) {
                                         echo "La fecha limite no puede ser menor a la actual";
                                    }
+                                   if (isset($DBerror)) {
+                                        echo "Error: No se puede acceder a la base de datos. Intente mas tarde.";
+                                   }
                                    ?>
                               </h4>
                               <div>

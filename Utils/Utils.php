@@ -22,6 +22,15 @@ class Utils {
         }
     }
 
+    public static function ShowDateBaseError($DBerror)
+    {               
+        if (isset($_SESSION['admin'])) {
+            require_once(VIEWS_PATH . "admin-firstpage.php");
+        } else if (isset($_SESSION['student'])) {
+            require_once(VIEWS_PATH . "student-firstpage.php");
+        }
+    }
+
     public static function strStartsWith(String $haystack, String $needle){
         return $needle != '' && strncmp($haystack, $needle, strlen($needle)) == 0;
     }
