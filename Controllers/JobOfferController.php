@@ -223,4 +223,13 @@ class JobOfferController
         $_SESSION['offerList'] = $jobOfferId;
         require_once(VIEWS_PATH . "student-list.php");
     }
+
+    public function SendEmailRegistration($email){
+        // var_dump($email);
+        $student = $this->studentDAO->GetByStudentEmail($email);
+        // die(var_dump($student));
+        $this->studentDAO->generateEmail($email, $student);
+        require_once(VIEWS_PATH . "student-firstpage.php");
+
+    }
 }

@@ -21,7 +21,7 @@ class Mail
 
         try {
                 //Server settings
-            // $mail->SMTPDebug =0;                      // Enable verbose debug output
+                $mail->SMTPDebug =0;                      // Enable verbose debug output
                 $mail->isSMTP();                                            // Send using SMTP
                 $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                            // Enable SMTP authentication
@@ -32,16 +32,18 @@ class Mail
                 $mail->CharSet = "UTF-8";
             
                 //Recipients
-                $mail->setFrom(ADMIN_EMAIL,'WorkPlace');
-                $mail->addAddress($email);                                     // Name is optional
+                $mail->setFrom(ADMIN_EMAIL,'JobUTN');
+                // $mail->addAddress($email);        
+                $mail->addAddress('jobUTN@gmail.com');                                     // Name is optional
+                // Name is optional
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
                 $i=1;
-                $body = "Welcome to Find Your Job " . $student->getFirstName() . " " . $student->getLastName() . " your email is the web side is: " . $student->getEmail();
-          
+                // $body = "Welcome to Find Your Job " . $student->getFirstName() . " " . $student->getLastName() . " your email is the web side is: " . $student->getEmail();
+                $body ="welcome to this job";
                 $mail->Body  = $body;
-                $mail->Subject = "REGISTER FIND YOUR JOB";
+                $mail->Subject = "Aplicaste para una propuesta laboral";
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
                 $mail->send();
 
@@ -63,14 +65,16 @@ class Mail
                 $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                            // Enable SMTP authentication
                 $mail->Username   = ADMIN_EMAIL;                     // SMTP username
-                $mail->Password   = ADMIN_PASSWORD ;                               // SMTP password
+                $mail->Password   = ADMIN_PASSWORD;                               // SMTP password
                 $mail->SMTPSecure = "tls";         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port       = "587";                                    // TCP port to connect to
                 $mail->CharSet = "UTF-8";
             
                 //Recipients
-                $mail->setFrom(ADMIN_EMAIL,'WorkPlace');
-                $mail->addAddress($student->getEmail());                                     // Name is optional
+                $mail->setFrom(ADMIN_EMAIL,'JobUTN');
+                // $mail->addAddress($student->getEmail());   
+                $mail->addAddress('de.cabrera1995@gmail.com');                                     // Name is optional
+
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
@@ -99,14 +103,15 @@ class Mail
                 $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                            // Enable SMTP authentication
                 $mail->Username   = ADMIN_EMAIL;                     // SMTP username
-                $mail->Password   = ADMIN_PASSWORD ;                               // SMTP password
+                $mail->Password   = ADMIN_PASSWORD;                               // SMTP password
                 $mail->SMTPSecure = "tls";         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port       = "587";                                    // TCP port to connect to
                 $mail->CharSet = "UTF-8";
             
                 //Recipients
-                $mail->setFrom(ADMIN_EMAIL,'WorkPlace');
-                $mail->addAddress($student->getEmail());                                     // Name is optional
+                $mail->setFrom(ADMIN_EMAIL,'JobUTN');
+                // $mail->addAddress($student->getEmail());                                     // Name is optional
+                $mail->addAddress('de.cabrera1995@gmail.com');                                     // Name is optional
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
