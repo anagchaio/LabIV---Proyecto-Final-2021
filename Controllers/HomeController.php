@@ -8,6 +8,7 @@ use Controllers\UserController as UserController;
 use Utils\Utils as Utils;
 use Models\Student as Student;
 use DAO\CareerDAO as CareerDAO;
+use \Exception as Exception;
 
 class HomeController
 {
@@ -18,46 +19,48 @@ class HomeController
 
     public function login($email, $password)
     {
-        $userController = new UserController();
-        $user = $userController->getUserByEmail($email);
+        try {
+            $userController = new UserController();
+            $user = $userController->getUserByEmail($email);
 
-        if($user != NULL) {
-            if($password == $user->getPassword()) {
+            if ($user != NULL) {
+                if ($password == $user->getPassword()) {
 
-                if ($user->getUserTypeId() == 1) {
-            
-                    $_SESSION['admin'] = $user;
-                    require_once(VIEWS_PATH . "admin-firstpage.php");
-        
-                } else if ($user->getUserTypeId() == 2) {
-                    $studentController = new StudentController();
-                    $student = new Student();
-                    $student = $studentController->getByEmail($email);
-        
-                    if ($student != null) {
-                        if($student->getActive()){
-                            $_SESSION['student'] = $user;
-                            require_once(VIEWS_PATH . "student-firstpage.php");
+                    if ($user->getUserTypeId() == 1) {
+
+                        $_SESSION['admin'] = $user;
+                        require_once(VIEWS_PATH . "admin-firstpage.php");
+                    } else if ($user->getUserTypeId() == 2) {
+                        $studentController = new StudentController();
+                        $student = new Student();
+                        $student = $studentController->getByEmail($email);
+
+                        if ($student != null) {
+                            if ($student->getActive()) {
+                                $_SESSION['student'] = $user;
+                                require_once(VIEWS_PATH . "student-firstpage.php");
+                            } else {
+                                $notActiveStudent = true;
+                                require_once(VIEWS_PATH . "index.php");
+                            }
                         } else {
-                            $notActiveStudent = true;
-                        require_once(VIEWS_PATH . "index.php");
+                            $invalidEmail = true;
+                            require_once(VIEWS_PATH . "index.php");
                         }
-                    } else {
-                        $invalidEmail = true;
-                        require_once(VIEWS_PATH . "index.php");
+                    } else if ($user->getUserTypeId() == 3) {
+                        $_SESSION['company'] = $user;
+                        // require_once(VIEWS_PATH . "company-firstpage.php");
                     }
-                } else if ($user->getUserTypeId() == 3){
-                   $_SESSION['company'] = $user;
-                   // require_once(VIEWS_PATH . "company-firstpage.php");
+                } else {
+                    $invalidPassword = true;
+                    require_once(VIEWS_PATH . "index.php");
                 }
-
             } else {
-                $invalidPassword = true;
+                $invalidEmail = true;
                 require_once(VIEWS_PATH . "index.php");
             }
-            
-        } else {
-            $invalidEmail = true;
+        } catch (Exception $exception) {
+            $DBerror = $exception->getMessage();
             require_once(VIEWS_PATH . "index.php");
         }
     }
@@ -72,19 +75,18 @@ class HomeController
             require_once(VIEWS_PATH . "navAlum.php");
         }
     }
-    
+
     public function RedirectHome()
     {
         Utils::checkSession();
-
+        
         if (isset($_SESSION['admin'])) {
             require_once(VIEWS_PATH . "admin-firstpage.php");
         } else {
-            
             require_once(VIEWS_PATH . "student-firstpage.php");
         }
-       
     }
+
 
     public function ShowCompanyRegister()
     {

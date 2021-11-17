@@ -31,7 +31,7 @@ class UserDAO implements IUserDAO
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception->getMessage();
         }
     }
 
@@ -60,21 +60,25 @@ class UserDAO implements IUserDAO
             }
             return $userList;
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 
     public function getUserByEmail($email)
     {
-        $userExist = NULL;
-        $users = $this->GetAll();
+        try {
+            $userExist = NULL;
+            $users = $this->GetAll();
 
-        foreach ($users as $user) {
-            if ($user->getEmail() == $email) {
-                $userExist = $user;
+            foreach ($users as $user) {
+                if ($user->getEmail() == $email) {
+                    $userExist = $user;
+                }
             }
+            return $userExist;
+        } catch (Exception $exception) {
+            throw $exception;
         }
-        return $userExist;
     }
 
     public function getUserById($userId)
@@ -100,13 +104,13 @@ class UserDAO implements IUserDAO
             }
             return $user;
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 
     // NO anda mas. Modificar con nueva logica de inscripcion
 
-/*     public function Update(User $user, $jobOfferId)
+    /*     public function Update(User $user, $jobOfferId)
     {
         try {
 
