@@ -12,6 +12,7 @@ use DAO\StudentDAO as StudentDAO;
 use DAO\CareerDAO as CareerDAO;
 use DAO\UserDAO as UserDAO;
 use Models\Career;
+use \Exception as Exception;
 
 class JobOfferController
 {
@@ -35,28 +36,32 @@ class JobOfferController
     public function add($companyId, $jobPositionId, $jobOffer_description, $limitDate, $flyer)
     {
         Utils::checkAdminCompanySession();
+        try {
+            if ($limitDate >= date("Y-m-d")) {
+                $uploadedSuccess = Utils::UploadImage($flyer);
+                if ($uploadedSuccess) {
+                    $jobOffer = new JobOffer();
+                    $jobOffer->setJobOffer_description($jobOffer_description);
+                    $jobOffer->setLimitDate($limitDate);
+                    $jobOffer->setState("Opened");
+                    $jobOffer->setCompanyId($companyId);
+                    $jobOffer->setJobPositionId($jobPositionId);
+                    $jobOffer->setFlyer($flyer['name']);
 
-        if ($limitDate >= date("Y-m-d")) {
-            $uploadedSuccess = Utils::UploadImage($flyer);
-            if ($uploadedSuccess) {
-                $jobOffer = new JobOffer();
-                $jobOffer->setJobOffer_description($jobOffer_description);
-                $jobOffer->setLimitDate($limitDate);
-                $jobOffer->setState("Opened");
-                $jobOffer->setCompanyId($companyId);
-                $jobOffer->setJobPositionId($jobPositionId);
-                $jobOffer->setFlyer($flyer['name']);
-
-                $this->jobOfferDAO->add($jobOffer);
-                $this->showListView();
+                    $this->jobOfferDAO->add($jobOffer);
+                    $this->showListView();
+                } else {
+                    $notImageError = true;
+                    require_once(VIEWS_PATH . "jobOffer-add.php");
+                }
             } else {
-                $notImageError = true;
+                $invalidDate = true;
+                $companies = $this->CompanyDAO->GetAll();
+                $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
                 require_once(VIEWS_PATH . "jobOffer-add.php");
             }
-        } else {
-            $invalidDate = true;
-            $companies = $this->CompanyDAO->GetAll();
-            $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
+        } catch (Exception $exception) {
+            $DBerror = $exception->getMessage();
             require_once(VIEWS_PATH . "jobOffer-add.php");
         }
     }
@@ -64,33 +69,40 @@ class JobOfferController
     public function Delete($jobOfferId)
     {
         Utils::checkAdminSession();
-        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-        if (isset($_SESSION['admin'])) {
-            if ($jobOffer->getState() == "Opened") {
-                $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
-                if ($value == 1) {
-                    $jobOffers = $this->jobOfferDAO->GetList();
-                    require_once(VIEWS_PATH . "jobOffer-list.php");
+        try {
+            $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+            if (isset($_SESSION['admin'])) {
+                if ($jobOffer->getState() == "Opened") {
+                    $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
+                    if ($value == 1) {
+                        $jobOffers = $this->jobOfferDAO->GetList();
+                        require_once(VIEWS_PATH . "jobOffer-list.php");
+                    }
+                } else {
+                    $closedOffer = true;
+                    $companies = $this->CompanyDAO->GetAll();
+                    $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
+                    $studentIdsList = $this->jobOfferDAO->GetStudentsByJobOffer($jobOfferId);
+                    $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
+                    require_once(VIEWS_PATH . "admin-jobOffer-show.php");
                 }
-            } else {
-                $closedOffer = true;
-                $companies = $this->CompanyDAO->GetAll();
-                $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
-                $studentIdsList = $this->jobOfferDAO->GetStudentsByJobOffer($jobOfferId);
-                $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
-                require_once(VIEWS_PATH . "admin-jobOffer-show.php");
             }
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
     public function RedirectAddFormJobOffer()
     {
         Utils::checkAdminCompanySession();
+        try {
+            $companies = $this->CompanyDAO->GetAll();
+            $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
 
-        $companies = $this->CompanyDAO->GetAll();
-        $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
-
-        require_once(VIEWS_PATH . "jobOffer-add.php");
+            require_once(VIEWS_PATH . "jobOffer-add.php");
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
+        }
     }
 
 
@@ -98,130 +110,170 @@ class JobOfferController
     public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state, $students, $flyer)
     {
         Utils::checkAdminCompanySession();
-        $companies = $this->CompanyDAO->GetAll();
-        $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
-        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-        $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
+        try {
+            $companies = $this->CompanyDAO->GetAll();
+            $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
+            $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+            $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
 
-        if ($jobOffer->getState() == "Opened") {
-            if ($limitDate >= date("Y-m-d")) {
-                $modifiedJobOffer = new JobOffer();
-                $modifiedJobOffer->setJobOfferId($jobOfferId);
-                $modifiedJobOffer->setJobOffer_description($jobOffer_description);
-                $modifiedJobOffer->setLimitDate($limitDate);
-                $modifiedJobOffer->setCompanyId($companyId);
-                $modifiedJobOffer->setJobPositionId($jobPositionId);
+            if ($jobOffer->getState() == "Opened") {
+                if ($limitDate >= date("Y-m-d")) {
+                    $modifiedJobOffer = new JobOffer();
+                    $modifiedJobOffer->setJobOfferId($jobOfferId);
+                    $modifiedJobOffer->setJobOffer_description($jobOffer_description);
+                    $modifiedJobOffer->setLimitDate($limitDate);
+                    $modifiedJobOffer->setCompanyId($companyId);
+                    $modifiedJobOffer->setJobPositionId($jobPositionId);
 
-                if ($flyer['error'] == 0) {
-                    $uploadSuccess = Utils::UploadImage($flyer);
+                    if ($flyer['error'] == 0) {
+                        $uploadSuccess = Utils::UploadImage($flyer);
 
-                    if ($uploadSuccess) {
-                        $modifiedJobOffer->setFlyer($flyer['name']);
-                    } else {
-                        $updateSuccess = false;
-                        $notImageError = true;
-                        require_once(VIEWS_PATH . "admin-joboffer-show.php");
+                        if ($uploadSuccess) {
+                            $modifiedJobOffer->setFlyer($flyer['name']);
+                        } else {
+                            $updateSuccess = false;
+                            $notImageError = true;
+                            require_once(VIEWS_PATH . "admin-joboffer-show.php");
+                        }
                     }
+
+                    $this->jobOfferDAO->modify($modifiedJobOffer);
+
+                    $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+                    $updateSuccess = true;
+                } else {
+                    $invalidDate = true;
                 }
-
-                $this->jobOfferDAO->modify($modifiedJobOffer);
-
-                $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-                $updateSuccess = true;
             } else {
-                $invalidDate = true;
+                $closedOffer = true;
             }
-        } else {
-            $closedOffer = true;
+            require_once(VIEWS_PATH . "admin-jobOffer-show.php");
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
         }
-        require_once(VIEWS_PATH . "admin-jobOffer-show.php");
     }
 
 
     public function ShowListView()
     {
         Utils::checkSession();
-        $careers = $this->careerDAO->GetAllActive();
+        try {
+            $careers = $this->careerDAO->GetAllActive();
 
-        if (isset($_SESSION['admin'])) {
-            $jobOffers = $this->jobOfferDAO->GetList();
-        } else if (isset($_SESSION['student'])) {
-            $user = $_SESSION['student'];
-            $student = $this->studentDAO->GetByStudentId($user->getStudentId());
-            $careerId = $student->getCareerId();
-            $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
-        } else {
-            $user = $_SESSION['company'];
-            $jobOffers = $this->jobOfferDAO->GetListByCompanyId($user->getCompanyId());
-        }
-        if ($jobOffers == null) {
-            $noOffersToShow = true;
-        }
+            if (isset($_SESSION['admin'])) {
+                $jobOffers = $this->jobOfferDAO->GetList();
+            } else if (isset($_SESSION['student'])) {
+                $user = $_SESSION['student'];
+                $student = $this->studentDAO->GetByStudentId($user->getStudentId());
+                $careerId = $student->getCareerId();
+                $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
+            } else {
+                $user = $_SESSION['company'];
+                $jobOffers = $this->jobOfferDAO->GetListByCompanyId($user->getCompanyId());
+            }
+            if ($jobOffers == null) {
+                $noOffersToShow = true;
+            }
+            require_once(VIEWS_PATH . "jobOffer-list.php");
 
-        require_once(VIEWS_PATH . "jobOffer-list.php");
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
+        }
     }
 
     public function ShowOffer($jobOfferId)
     {
         Utils::checkSession();
-        $companies = $this->CompanyDAO->GetAll();
-        $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
-        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-        $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
+        try {
+            $companies = $this->CompanyDAO->GetAll();
+            $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
+            $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+            $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
 
-        if (isset($_SESSION['admin']) || isset($_SESSION['company'])) {
-            require_once(VIEWS_PATH . "admin-jobOffer-show.php");
-        } else if (isset($_SESSION['student'])) {
-            $user = $_SESSION['student'];
-            $studentId = $user->getStudentId();
-            require_once(VIEWS_PATH . "student-jobOffer-show.php");
+            if (isset($_SESSION['admin']) || isset($_SESSION['company'])) {
+                require_once(VIEWS_PATH . "admin-jobOffer-show.php");
+            } else if (isset($_SESSION['student'])) {
+                $user = $_SESSION['student'];
+                $studentId = $user->getStudentId();
+                require_once(VIEWS_PATH . "student-jobOffer-show.php");
+            }
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
         }
     }
 
+    public function Close($jobOfferId)
+    {
+        Utils::checkAdminCompanySession();
+        try {
+            $this->jobOfferDAO->closeOffer($jobOfferId);
+            $this->ShowOffer($jobOfferId);
+
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
+        }
+    }
+    
 
 
     public function Subscribe($jobOfferId)
     {
-        $user = $_SESSION['student'];
-        $studentId = $user->getStudentId();
+        try {
+            $user = $_SESSION['student'];
+            $studentId = $user->getStudentId();
 
-        $this->jobOfferDAO->AddStudentToJobOffer($jobOfferId, $studentId);
-        $SubscribeSuccess = true;
+            $this->jobOfferDAO->AddStudentToJobOffer($jobOfferId, $studentId);
+            $SubscribeSuccess = true;
 
-        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-        require_once(VIEWS_PATH . "student-jobOffer-show.php");
+            $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+            require_once(VIEWS_PATH . "student-jobOffer-show.php");
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
+        }
     }
 
     public function FilterByCareer($careerId)
     {
-        if ($careerId == 0) {
-            $jobOffers = $this->jobOfferDAO->GetList();
-        } else {
-            $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
-        }
-        $careers = $this->careerDAO->GetAllActive();
+        try {
+            if ($careerId == 0) {
+                $jobOffers = $this->jobOfferDAO->GetList();
+            } else {
+                $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
+            }
+            $careers = $this->careerDAO->GetAllActive();
 
-        require_once(VIEWS_PATH . "jobOffer-list.php");
+            require_once(VIEWS_PATH . "jobOffer-list.php");
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
+        }
     }
 
     public function FindCompanyInJobOffer($companyId)
     {
-        $companyFound = false;
-        $joboffers = $this->jobOfferDAO->GetListByCompanyId($companyId);
-        if ($joboffers != null) {
-            $companyFound = true;
+        try {
+            $companyFound = false;
+            $joboffers = $this->jobOfferDAO->GetListByCompanyId($companyId);
+            if ($joboffers != null) {
+                $companyFound = true;
+            }
+            return $companyFound;
+        } catch (Exception $exception) {
+            throw $exception;
         }
-        return $companyFound;
     }
 
     public function ShowStudentList($jobOfferId)
     {
-        Utils::checkSession();
-        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-        $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
-        $careers = $this->careerDAO->GetAllActive();
-        $_SESSION['offerList'] = $jobOfferId;
-        require_once(VIEWS_PATH . "student-list.php");
+        try {
+            Utils::checkSession();
+            $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+            $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
+            $careers = $this->careerDAO->GetAllActive();
+            $_SESSION['offerList'] = $jobOfferId;
+            require_once(VIEWS_PATH . "student-list.php");
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
+        }
     }
 
     public function SendEmailRegistration($email){

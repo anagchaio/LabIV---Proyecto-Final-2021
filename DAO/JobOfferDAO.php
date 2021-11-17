@@ -32,7 +32,7 @@ class JobOfferDAO implements IJobOfferDAO
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $exception) {
-            $response = $exception->getMessage();            
+            throw $exception;            
         }
     }
 
@@ -47,7 +47,7 @@ class JobOfferDAO implements IJobOfferDAO
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 
@@ -78,7 +78,7 @@ class JobOfferDAO implements IJobOfferDAO
 
             return $jobOfferList;
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 
@@ -114,8 +114,7 @@ class JobOfferDAO implements IJobOfferDAO
             }
             return $jobOfferList;
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
-            echo $response;
+            throw $exception;
         }
     }
 
@@ -156,8 +155,7 @@ class JobOfferDAO implements IJobOfferDAO
             
             return $jobOffer;
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
-            echo $response;
+            throw $exception;
         }
     }
 
@@ -201,7 +199,24 @@ class JobOfferDAO implements IJobOfferDAO
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
+        }
+    }
+
+    public function closeOffer($jobOfferId)
+    {
+        try {
+            $query = "UPDATE " . $this->tableName . " SET state=:state
+                WHERE id_jobOffer = :id_jobOffer;";
+
+            $parameters["id_jobOffer"] = $jobOfferId;
+            $parameters["state"] = 'Closed';
+
+            $this->connection = Connection::GetInstance();
+
+            return $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $exception) {
+            throw $exception;
         }
     }
 
@@ -240,8 +255,7 @@ class JobOfferDAO implements IJobOfferDAO
 
             return $jobOfferList;
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
-            echo $response;
+            throw $exception;
         }
     }
 
@@ -284,7 +298,7 @@ class JobOfferDAO implements IJobOfferDAO
             return $jobOfferList;
 
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 
@@ -302,7 +316,7 @@ class JobOfferDAO implements IJobOfferDAO
             return $this->connection->ExecuteNonQuery($query, $parameters);
             
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 
@@ -325,7 +339,7 @@ class JobOfferDAO implements IJobOfferDAO
             return $student;
 
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 
@@ -351,7 +365,7 @@ class JobOfferDAO implements IJobOfferDAO
             return $studentList;
 
         } catch (Exception $exception) {
-            $response = $exception->getMessage();
+            throw $exception;
         }
     }
 }

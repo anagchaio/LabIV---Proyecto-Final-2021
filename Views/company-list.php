@@ -9,6 +9,7 @@ if (isset($_SESSION['admin'])) {
     <section id="listado" class="mb-5">
         <div class="container">
             <h2 class="mb-4">Lista de Empresas</h2>
+            
             <div class="flex">
                 <div class="form-group-input">
                     <form action="<?php echo FRONT_ROOT ?>Company/FilterList" method="POST" enctype="multipart/form-data" >

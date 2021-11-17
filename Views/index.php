@@ -23,6 +23,9 @@
                     if (isset($userNotAdmin)) {
                         echo "Error: Debe estar loggeado como Administrador para acceder.";
                     }
+                    if (isset($DBerror)) {
+                        echo "Error: No se puede acceder a la base de datos. Intente mas tarde.";
+                    }
                     ?>
                 </h4>
             </div>
