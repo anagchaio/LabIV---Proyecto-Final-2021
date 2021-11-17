@@ -5,9 +5,8 @@ if (isset($_SESSION['admin'])) {
 } else {
     require_once('nav-student.php');
 }
-var_dump($jobOffer);
-?>
 
+?>
 
 <div class="conteiner-card">
     <div class="card text-center " style="width: 40rem;">

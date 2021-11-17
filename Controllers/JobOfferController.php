@@ -72,19 +72,13 @@ class JobOfferController
         try {
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
             if (isset($_SESSION['admin'])) {
-                if ($jobOffer->getState() == "Opened") {
-                    $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
-                    if ($value == 1) {
-                        $jobOffers = $this->jobOfferDAO->GetList();
-                        require_once(VIEWS_PATH . "jobOffer-list.php");
-                    }
-                } else {
-                    $closedOffer = true;
-                    $companies = $this->CompanyDAO->GetAll();
-                    $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
-                    $studentIdsList = $this->jobOfferDAO->GetStudentsByJobOffer($jobOfferId);
-                    $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
-                    require_once(VIEWS_PATH . "admin-jobOffer-show.php");
+
+                $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
+                $this->jobOfferDAO->DeleteStudentsOfDeletedJobOffer($jobOfferId);
+                
+                if ($value == 1) {
+                    $jobOffers = $this->jobOfferDAO->GetList();
+                    require_once(VIEWS_PATH . "jobOffer-list.php");
                 }
             }
         } catch (Exception $exception) {
@@ -175,7 +169,6 @@ class JobOfferController
                 $noOffersToShow = true;
             }
             require_once(VIEWS_PATH . "jobOffer-list.php");
-
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }
@@ -208,12 +201,11 @@ class JobOfferController
         try {
             $this->jobOfferDAO->closeOffer($jobOfferId);
             $this->ShowOffer($jobOfferId);
-
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }
     }
-    
+
 
 
     public function Subscribe($jobOfferId)
