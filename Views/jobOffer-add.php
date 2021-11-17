@@ -1,6 +1,9 @@
 <?php
-
-require_once('nav.php');
+if (isset($_SESSION['admin'])) {
+     require_once('nav.php');
+ } else {
+     require_once('nav-company.php');
+ }
 ?>
 
 
@@ -46,7 +49,7 @@ require_once('nav.php');
                                                   ?>
                                              </select>
                                              <?php } else if (isset($_SESSION['company'])){ ?>
-                                                  <input readonly name="companyName" class="form-control form-control-ml" value=" <?php echo $user->getName(); ?>">
+                                                  <input readonly name="companyName" class="form-control form-control-ml" value=" <?php echo $_SESSION['company']->getName(); ?>">
                                              <?php } ?>
                                         </div>
                                         <div class="form-group">
@@ -83,6 +86,11 @@ require_once('nav.php');
                                    <!-- <a class="btn btn-primary btn-lg btn-block" href="<?php if (isset($jobOffer)) {
                                                                                                echo FRONT_ROOT . "JobOffer/deleteByBD/" . $jobOffer->getJobOfferId();
                                                                                           }; ?>">Eliminar</a> -->
+                                   
+                                        <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Home/RedirectHome/">Volver</a>
+
+
+
 
                               </div>
                          </div>
