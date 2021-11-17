@@ -369,4 +369,22 @@ class JobOfferDAO implements IJobOfferDAO
             throw $exception;
         }
     }
+
+    public function createPDF(){
+
+        // $jobOffer = new JobOfferController();
+    
+        // $jobOfferList = $jobOffer->getAll();
+        
+        $pdf = new FPDF();
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','',16);
+        
+        while(){
+    
+        }
+    
+        $pdf->Output();
+    }
 }
