@@ -167,6 +167,7 @@ class JobOfferController
                 $student = $this->studentDAO->GetByStudentId($user->getStudentId());
                 $careerId = $student->getCareerId();
                 $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
+                // die(var_dump($jobOffers));
             } else {
                 $user = $_SESSION['company'];
                 $jobOffers = $this->jobOfferDAO->GetListByCompanyId($user->getCompanyId());
@@ -284,4 +285,15 @@ class JobOfferController
         require_once(VIEWS_PATH . "student-firstpage.php");
 
     }
+
+    public function notifyRejectRegistration(){
+        Utils::checkSession();
+
+        //$this->jobOfferDAO->notifyEndedJobOffers();
+
+        require_once(VIEWS_PATH . "admin-firstpage.php");
+
+    }
 }
+
+

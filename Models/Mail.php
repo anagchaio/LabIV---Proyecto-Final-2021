@@ -33,15 +33,15 @@ class Mail
             
                 //Recipients
                 $mail->setFrom(ADMIN_EMAIL,'JobUTN');
-                // $mail->addAddress($email);        
-                $mail->addAddress('jobUTN@gmail.com');                                     // Name is optional
+                $mail->addAddress($email);        
+                // $mail->addAddress('jobUTN@gmail.com');                                     // Name is optional
                 // Name is optional
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
                 $i=1;
-                // $body = "Welcome to Find Your Job " . $student->getFirstName() . " " . $student->getLastName() . " your email is the web side is: " . $student->getEmail();
-                $body ="welcome to this job";
+                 $body = "Bienvenido a Jobs UTN " . $student->getFirstName() . " " . $student->getLastName() . " tu mail para ingresar es: " . $student->getEmail();
+                // $body ="welcome to this job";
                 $mail->Body  = $body;
                 $mail->Subject = "Aplicaste para una propuesta laboral";
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
@@ -54,7 +54,7 @@ class Mail
 
     }
 
-    public function sendEmailEndedJobOffer($student, $jobPosition){
+    public function emailEndJobOffer($student, $jobPosition){
 
         $mail = new PHPMailer(true);
 
@@ -72,14 +72,13 @@ class Mail
             
                 //Recipients
                 $mail->setFrom(ADMIN_EMAIL,'JobUTN');
-                // $mail->addAddress($student->getEmail());   
-                $mail->addAddress('de.cabrera1995@gmail.com');                                     // Name is optional
+                $mail->addAddress($student->getEmail());   
 
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
                 $i=1;
-                $body = "Dear " . $student->getEmail() .", the job offer you applied to with the position of: ". $jobPosition->getDescription() ." has come to an end. <br><br> Please wait for the company administration to contact you back.";
+                $body =  $student->getEmail() .", La oferta laboral a la cual aplicó: ". $jobPosition->getDescription() ." ah sido finalizada.";
           
                 $mail->Body  = $body;
                 $mail->Subject = "Job Offer - ". $jobPosition->getDescription();
@@ -92,7 +91,7 @@ class Mail
         }
     }
 
-    public function sendEmailDeclinatedApplication($student, $jobPosition){
+    public function emailApplicationRejected($student, $jobPosition){
 
         $mail = new PHPMailer(true);
 
@@ -110,16 +109,15 @@ class Mail
             
                 //Recipients
                 $mail->setFrom(ADMIN_EMAIL,'JobUTN');
-                // $mail->addAddress($student->getEmail());                                     // Name is optional
-                $mail->addAddress('de.cabrera1995@gmail.com');                                     // Name is optional
+                 $mail->addAddress($student->getEmail());                                     // Name is optional
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
                 $i=1;
-                $body = "Dear " . $student->getEmail() .", your application to the job offer you applied to with the position of: ". $jobPosition->getDescription() ." has been declined. <br><br> If you have any doubt please contact the student administration.";
+                $body = "Dear " . $student->getEmail() .", su inscripción a la oferta laboral de: ". $jobPosition->getDescription() ." ha sido rechazada";
           
                 $mail->Body  = $body;
-                $mail->Subject = "Declinated application - ". $jobPosition->getDescription();
+                $mail->Subject = " Aplicación rechazada - ". $jobPosition->getDescription();
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
                 $mail->send();
 

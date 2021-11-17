@@ -235,8 +235,9 @@ class JobOfferDAO implements IJobOfferDAO
             $this->connection = Connection::GetInstance();
 
             $resultSet = $this->connection->Execute($query);
-
+           // esto me esta dando un array vacío
             foreach ($resultSet as $row) {
+               
                 $jobOffer = new JobOffer();
                 $jobOffer->setJobOfferId($row["id_jobOffer"]);
                 $jobOffer->setCompanyId($row["company_id"]);
@@ -249,7 +250,7 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setState($row["state"]);
                 $jobOffer->setFlyer($row["flyer"]);
                 $jobOffer->setStudentList($this->GetStudentsByJobOffer($row["id_jobOffer"]));
-
+                
                 array_push($jobOfferList, $jobOffer);
             }
 
