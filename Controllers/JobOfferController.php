@@ -226,6 +226,9 @@ class JobOfferController
             $this->jobOfferDAO->AddStudentToJobOffer($jobOfferId, $studentId);
             $SubscribeSuccess = true;
 
+            // $this->SendEmailRegistration($email); // esta linea es para que se mande el mensaje predeterminado
+                                                    //cuando este alumno se registre
+
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
             require_once(VIEWS_PATH . "student-jobOffer-show.php");
         } catch (Exception $exception) {
@@ -278,9 +281,7 @@ class JobOfferController
     }
 
     public function SendEmailRegistration($email){
-        // var_dump($email);
         $student = $this->studentDAO->GetByStudentEmail($email);
-        // die(var_dump($student));
         $this->studentDAO->generateEmail($email, $student);
         require_once(VIEWS_PATH . "student-firstpage.php");
 
