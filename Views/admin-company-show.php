@@ -97,7 +97,7 @@ require_once('nav.php');
 
                                                   <button type="submit" name="modify-company-button" class="btn btn-primary btn-lg btn-block">Guardar</button>
 
-                                                  <?php if(isset($_SESSION['admin'])) { ?>
+                                                  <?php if(isset($_SESSION['admin']) || isset($_SESSION['company'])) { ?>
 
                                                   
                                                   <a class="btn btn-primary btn-lg btn-block" href="<?php if (isset($company)) {
@@ -106,6 +106,8 @@ require_once('nav.php');
                                                   <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Company/ShowListView/">Volver</a>
                                                   <?php } else { ?>
                                                        <!-- Agregar href para volver al Home de company -->
+                                                       <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Home/RedirectHome/">Volver</a>
+
                                                   <!--     <a class="btn btn-primary btn-lg btn-block" href="">Volver</a> -->  
                                                   <?php } ?>
 

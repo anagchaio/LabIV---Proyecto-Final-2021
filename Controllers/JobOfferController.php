@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Models\JobOffer as JobOffer;
+use Models\Mail as Mail;
 use Controllers\UserController as UserController;
 use Utils\Utils as Utils;
 use DAO\JobOfferDAO as JobOfferDAO;
@@ -161,6 +162,7 @@ class JobOfferController
                 $student = $this->studentDAO->GetByStudentId($user->getStudentId());
                 $careerId = $student->getCareerId();
                 $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
+                // die(var_dump($jobOffers));
             } else {
                 $user = $_SESSION['company'];
                 $jobOffers = $this->jobOfferDAO->GetListByCompanyId($user->getCompanyId());
@@ -199,7 +201,15 @@ class JobOfferController
     {
         Utils::checkAdminCompanySession();
         try {
-            $this->jobOfferDAO->closeOffer($jobOfferId);
+            //me tengo que traer el array de alumnos los cuales aplicaron a la job offer
+
+            $studentList = $this->jobOfferDAO->GetStudentsByJobOffer($jobOfferId);
+
+            $this->createEmailJobOffer($studentList, $jobOfferId, 1);
+
+
+             $this->jobOfferDAO->closeOffer($jobOfferId);
+
             $this->ShowOffer($jobOfferId);
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
@@ -216,6 +226,9 @@ class JobOfferController
 
             $this->jobOfferDAO->AddStudentToJobOffer($jobOfferId, $studentId);
             $SubscribeSuccess = true;
+
+            // $this->SendEmailRegistration($email); // esta linea es para que se mande el mensaje predeterminado
+            //cuando este alumno se registre
 
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
             require_once(VIEWS_PATH . "student-jobOffer-show.php");
@@ -266,5 +279,38 @@ class JobOfferController
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }
+    }
+
+    public function SendEmailRegistration($email)
+    {
+        $student = $this->studentDAO->GetByStudentEmail($email);
+        $this->studentDAO->generateEmail($email, $student);
+        require_once(VIEWS_PATH . "student-firstpage.php");
+    }
+
+
+    public function createEmailJobOffer($studentList, $jobOfferId, $select)
+    {
+        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+ 
+
+        if (!empty($studentList)) {
+
+            $mail = new Mail();
+
+            if ($select == 0) {
+                 $mail->emailApplicationRejected($studentList, $jobOffer);
+
+            } else if ($select == 1) {
+                foreach ($studentList as $student) {
+                    $mail->emailEndJobOffer($student, $jobOffer);
+                }
+            }
+        }
+    }
+
+    public function createPDF($jobOfferId)
+    {
+        $this->jobOfferDAO->createReportPdf($jobOfferId);
     }
 }

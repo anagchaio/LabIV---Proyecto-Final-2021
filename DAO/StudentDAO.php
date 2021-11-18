@@ -3,6 +3,7 @@
 namespace DAO;
 
 use Models\Student as Student;
+use Models\Mail as Mail;
 use DAO\IStudentDAO as IStudentDAO;
 
 class StudentDAO implements IStudentDAO
@@ -108,5 +109,18 @@ class StudentDAO implements IStudentDAO
         }
         return $fullStudentList;
     }
+
+
+    public function generateEmail($email, $student){
+        // echo "ESTA ES LA FUNCION GENERATEEMAIL";
+        // var_dump($email);
+        // die(var_dump($student));
+        if(!empty($email)){
+            
+            $mail = new Mail();
+            $mail->sendMail($email,$student); 
+        }
+    }
+
 
 }
