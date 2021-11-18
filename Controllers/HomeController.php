@@ -23,6 +23,7 @@ class HomeController
             $userController = new UserController();
             $user = $userController->getUserByEmail($email);
 
+
             if ($user != NULL) {
                 if ($password == $user->getPassword()) {
 
@@ -45,22 +46,27 @@ class HomeController
                             }
                         } else {
                             $invalidEmail = true;
+
                             require_once(VIEWS_PATH . "index.php");
                         }
                     } else if ($user->getUserTypeId() == 3) {
                         $_SESSION['company'] = $user;
-                        // require_once(VIEWS_PATH . "company-firstpage.php");
+                         require_once(VIEWS_PATH . "company-firstpage.php");
                     }
+
                 } else {
                     $invalidPassword = true;
                     require_once(VIEWS_PATH . "index.php");
+
                 }
             } else {
                 $invalidEmail = true;
                 require_once(VIEWS_PATH . "index.php");
             }
+
         } catch (Exception $exception) {
             $DBerror = $exception->getMessage();
+                          
             require_once(VIEWS_PATH . "index.php");
         }
     }
@@ -82,7 +88,10 @@ class HomeController
         
         if (isset($_SESSION['admin'])) {
             require_once(VIEWS_PATH . "admin-firstpage.php");
+        }else if(isset($_SESSION['company'])){
+            require_once(VIEWS_PATH . "company-firstpage.php");
         } else {
+
             require_once(VIEWS_PATH . "student-firstpage.php");
         }
     }

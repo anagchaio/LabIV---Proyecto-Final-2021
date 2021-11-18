@@ -5,6 +5,10 @@ if (isset($_SESSION['admin'])) {
 } else {
     require_once('nav-student.php');
 }
+<<<<<<< HEAD
+=======
+?>
+>>>>>>> master
 
 ?>
 
