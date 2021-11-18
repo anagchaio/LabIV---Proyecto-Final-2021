@@ -426,25 +426,5 @@ class JobOfferDAO implements IJobOfferDAO
         }
     } //si retorna 1 elimino, si no retorna 0
 
-
-
-    public function DeleteStudentsOfDeletedJobOffer($jobOfferId)
-    {
-        try {
-            $studentList = array();
-            $query = "DELETE FROM ". $this->tableStudentXjobOffer ."            
-                WHERE id_jobOffer = " . $jobOfferId . ";";
-
-            $parameters["id_jobOffer"] = $jobOfferId;
-
-            $this->connection = Connection::GetInstance();
-
-            return $this->connection->ExecuteNonQuery($query, $parameters);
-
-        } catch (Exception $exception) {
-            throw $exception;
-        }
-    }
-
 }
 
