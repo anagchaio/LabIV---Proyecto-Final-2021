@@ -8,6 +8,7 @@ use Models\JobOffer as JobOffer;
 use DAO\Connection as Connection;
 use Models\Student as Student;
 use Models\Mail as Mail;
+use Models\FPDF as FPDF;
 
 class JobOfferDAO implements IJobOfferDAO
 {
@@ -33,7 +34,7 @@ class JobOfferDAO implements IJobOfferDAO
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
         } catch (Exception $exception) {
-            throw $exception;            
+            throw $exception;
         }
     }
 
@@ -153,32 +154,33 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setFlyer($row["flyer"]);
                 $jobOffer->setStudentList($this->GetStudentsByJobOffer($row["id_jobOffer"]));
             }
-            
+
             return $jobOffer;
         } catch (Exception $exception) {
             throw $exception;
         }
     }
 
-    protected function mapJobOffer($value){
-        $value=is_array($value) ? $value: array();
-        
-        $result= array_map(function ($row){
-         $jobOffer = new JobOffer();
-                $jobOffer->setJobOfferId($row["id_jobOffer"]);
-                $jobOffer->setCompanyId($row["company_id"]);
-                $jobOffer->setCompany_name($row["company_name"]);
-                $jobOffer->setJobOffer_description($row["jobOffer_description"]);
-                $jobOffer->setJobPositionId($row["jobPosition_id"]);
-                $jobOffer->setJobPosition_description($row["jobPosition_description"]);
-                $jobOffer->setCareer_description($row["career_description"]);
-                $jobOffer->setLimitDate($row["limit_date"]);
-                $jobOffer->setState($row["state"]);
+    protected function mapJobOffer($value)
+    {
+        $value = is_array($value) ? $value : array();
+
+        $result = array_map(function ($row) {
+            $jobOffer = new JobOffer();
+            $jobOffer->setJobOfferId($row["id_jobOffer"]);
+            $jobOffer->setCompanyId($row["company_id"]);
+            $jobOffer->setCompany_name($row["company_name"]);
+            $jobOffer->setJobOffer_description($row["jobOffer_description"]);
+            $jobOffer->setJobPositionId($row["jobPosition_id"]);
+            $jobOffer->setJobPosition_description($row["jobPosition_description"]);
+            $jobOffer->setCareer_description($row["career_description"]);
+            $jobOffer->setLimitDate($row["limit_date"]);
+            $jobOffer->setState($row["state"]);
 
             return $jobOffer;
-        },$value);
+        }, $value);
 
-        return count($result)>1 ? $result: $result["0"];
+        return count($result) > 1 ? $result : $result["0"];
     }
 
     public function modify(JobOffer $jobOffer)
@@ -231,14 +233,14 @@ class JobOfferDAO implements IJobOfferDAO
                 INNER JOIN companies cp on j.company_id = cp.id_company
                 INNER JOIN jobpositions p on j.jobPosition_id = p.id_jobPosition
                 INNER JOIN careers cr on p.career_id = cr.id_career
-                WHERE p.career_id = ". $CareerId." AND j.state ='Opened';";
+                WHERE p.career_id = " . $CareerId . " AND j.state ='Opened';";
 
             $this->connection = Connection::GetInstance();
 
             $resultSet = $this->connection->Execute($query);
-           // esto me esta dando un array vacío
+            // esto me esta dando un array vacío
             foreach ($resultSet as $row) {
-               
+
                 $jobOffer = new JobOffer();
                 $jobOffer->setJobOfferId($row["id_jobOffer"]);
                 $jobOffer->setCompanyId($row["company_id"]);
@@ -251,7 +253,7 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setState($row["state"]);
                 $jobOffer->setFlyer($row["flyer"]);
                 $jobOffer->setStudentList($this->GetStudentsByJobOffer($row["id_jobOffer"]));
-                
+
                 array_push($jobOfferList, $jobOffer);
             }
 
@@ -262,7 +264,7 @@ class JobOfferDAO implements IJobOfferDAO
     }
 
 
-    
+
 
     public function GetListByCompanyId($companyId)
     {
@@ -274,7 +276,7 @@ class JobOfferDAO implements IJobOfferDAO
                 INNER JOIN companies cp on j.company_id = cp.id_company
                 INNER JOIN jobpositions p on j.jobPosition_id = p.id_jobPosition
                 INNER JOIN careers cr on p.career_id = cr.id_career
-                WHERE cp.id_company = ". $companyId.";";
+                WHERE cp.id_company = " . $companyId . ";";
 
             $this->connection = Connection::GetInstance();
 
@@ -296,18 +298,18 @@ class JobOfferDAO implements IJobOfferDAO
 
                 array_push($jobOfferList, $jobOffer);
             }
-            
-            return $jobOfferList;
 
+            return $jobOfferList;
         } catch (Exception $exception) {
             throw $exception;
         }
     }
 
-    public function AddStudentToJobOffer($jobOfferId, $studentId){
+    public function AddStudentToJobOffer($jobOfferId, $studentId)
+    {
         try {
 
-            $query = "INSERT INTO ". $this->tableStudentXjobOffer ." (student_id, id_jobOffer) 
+            $query = "INSERT INTO " . $this->tableStudentXjobOffer . " (student_id, id_jobOffer) 
             VALUES (:student_id, :id_jobOffer)";
 
             $parameters["id_jobOffer"] = $jobOfferId;
@@ -316,18 +318,18 @@ class JobOfferDAO implements IJobOfferDAO
             $this->connection = Connection::GetInstance();
 
             return $this->connection->ExecuteNonQuery($query, $parameters);
-            
         } catch (Exception $exception) {
             throw $exception;
         }
     }
 
-    public function isStudentInJobOffer($jobOfferId, $studentId){
+    public function isStudentInJobOffer($jobOfferId, $studentId)
+    {
         try {
             $student = array();
             $query = "SELECT student_id
-                FROM ". $this->tableStudentXjobOffer ."            
-                WHERE id_jobOffer = " . $jobOfferId . " AND student_id =". $studentId .";";
+                FROM " . $this->tableStudentXjobOffer . "            
+                WHERE id_jobOffer = " . $jobOfferId . " AND student_id =" . $studentId . ";";
 
             $this->connection = Connection::GetInstance();
 
@@ -335,11 +337,10 @@ class JobOfferDAO implements IJobOfferDAO
 
             foreach ($resultSet as $row) {
                 $student = new Student();
-                $student->setStudentId($row["student_id"]);                
+                $student->setStudentId($row["student_id"]);
             }
-            
-            return $student;
 
+            return $student;
         } catch (Exception $exception) {
             throw $exception;
         }
@@ -350,7 +351,7 @@ class JobOfferDAO implements IJobOfferDAO
         try {
             $studentList = array();
             $query = "SELECT student_id
-                FROM ". $this->tableStudentXjobOffer ."            
+                FROM " . $this->tableStudentXjobOffer . "            
                 WHERE id_jobOffer = " . $jobOfferId . ";";
 
             $this->connection = Connection::GetInstance();
@@ -363,9 +364,39 @@ class JobOfferDAO implements IJobOfferDAO
 
                 array_push($studentList, $student);
             }
-            
-            return $studentList;
 
+            return $studentList;
+        } catch (Exception $exception) {
+            throw $exception;
+        }
+    }
+
+    public function createReportPdf($jobOfferId)
+    {
+
+        try {
+
+            $query = "SELECT" . $this->tableStudentXjobOffer . "            
+            WHERE id_jobOffer = " . $jobOfferId . ";";
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query);
+
+            $pdf = new FPDF();
+
+            $pdf->AliasNbPages();
+            $pdf->AddPage();
+            $pdf->SetFont('Arial', '', 16);
+
+            while ($row = $resultSet->fetch_assoc()) {
+                $pdf->Cell(90, 10, $row['id_user'], 1, 0, 'C', 0);
+                $pdf->Cell(90, 10, $row['name'], 1, 0, 'C', 0);
+                $pdf->Cell(90, 10, $row['email'], 1, 1, 'C', 0);
+                // $pdf->Cell(90,10,$row[''],1,1,'C',0);
+            }
+
+            $pdf->Output();
         } catch (Exception $exception) {
             throw $exception;
         }
@@ -373,7 +404,9 @@ class JobOfferDAO implements IJobOfferDAO
 
 
 
-    public function deleteAplicationJobOffer($idJobOffer, $idStudent){
+
+    public function deleteAplicationJobOffer($idJobOffer, $idStudent)
+    {
         $query = "DELETE FROM studentXjobOffer WHERE student_id = :student_id AND id_jobOffer = :id_jobOffer;";
 
         $parameters['student_id'] = $idStudent;
@@ -387,26 +420,4 @@ class JobOfferDAO implements IJobOfferDAO
         }
     } //si retorna 1 elimino, si no retorna 0
 
-    
- 
-
-
-
-    // public function createPDF(){
-
-    //     // $jobOffer = new JobOfferController();
-    
-    //     // $jobOfferList = $jobOffer->getAll();
-        
-    //     $pdf = new FPDF();
-    //     $pdf->AliasNbPages();
-    //     $pdf->AddPage();
-    //     $pdf->SetFont('Arial','',16);
-        
-    //     while(){
-    
-    //     }
-    
-    //     $pdf->Output();
-    // }
 }

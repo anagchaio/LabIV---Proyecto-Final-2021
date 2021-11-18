@@ -295,7 +295,7 @@ class JobOfferController
     public function createEmailJobOffer($studentList, $jobOfferId, $select)
     {
         $jobPosition = $this->jobPositionDAO->getPositionById($jobOfferId);
-        
+
         if (!empty($studentList)) {
 
             $mail = new Mail();
@@ -310,4 +310,9 @@ class JobOfferController
             }
         }
     }
+
+    public function createPDF($jobOfferId){
+        $this->jobOfferDAO->createReportPdf($jobOfferId);
+    }
+    
 }
