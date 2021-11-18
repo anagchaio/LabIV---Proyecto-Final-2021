@@ -72,7 +72,8 @@ class Mail
             
                 //Recipients
                 $mail->setFrom(ADMIN_EMAIL,'JobUTN');
-                $mail->addAddress($student->getEmail());   
+                // $mail->addAddress($student->getEmail());   
+                $mail->addAddress(ADMIN_EMAIL);   
 
 
                 // Content
@@ -114,7 +115,7 @@ class Mail
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
                 $i=1;
-                $body = "Dear " . $student->getEmail() .", su inscripción a la oferta laboral de: ". $jobPosition->getDescription() ." ha sido rechazada";
+                $body = "Estimado " . $student->getEmail() .", su inscripción a la oferta laboral de: ". $jobPosition->getDescription() ." ha sido rechazada";
           
                 $mail->Body  = $body;
                 $mail->Subject = " Aplicación rechazada - ". $jobPosition->getDescription();

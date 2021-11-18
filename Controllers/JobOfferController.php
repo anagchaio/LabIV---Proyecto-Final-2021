@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Models\JobOffer as JobOffer;
+use Models\Mail as Mail;
 use Controllers\UserController as UserController;
 use Utils\Utils as Utils;
 use DAO\JobOfferDAO as JobOfferDAO;
@@ -176,7 +177,6 @@ class JobOfferController
                 $noOffersToShow = true;
             }
             require_once(VIEWS_PATH . "jobOffer-list.php");
-
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }
@@ -208,13 +208,17 @@ class JobOfferController
         Utils::checkAdminCompanySession();
         try {
             $this->jobOfferDAO->closeOffer($jobOfferId);
-            $this->ShowOffer($jobOfferId);
+            //me tengo que traer el array de alumnos los cuales aplicaron a la job offer
+            $studentList = $this->jobOfferDAO->GetStudentsByJobOffer($jobOfferId);
 
+            $this->createEmailJobOffer($studentList, $jobOfferId, 1);
+
+            $this->ShowOffer($jobOfferId);
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }
     }
-    
+
 
 
     public function Subscribe($jobOfferId)
@@ -227,7 +231,7 @@ class JobOfferController
             $SubscribeSuccess = true;
 
             // $this->SendEmailRegistration($email); // esta linea es para que se mande el mensaje predeterminado
-                                                    //cuando este alumno se registre
+            //cuando este alumno se registre
 
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
             require_once(VIEWS_PATH . "student-jobOffer-show.php");
@@ -280,21 +284,30 @@ class JobOfferController
         }
     }
 
-    public function SendEmailRegistration($email){
+    public function SendEmailRegistration($email)
+    {
         $student = $this->studentDAO->GetByStudentEmail($email);
         $this->studentDAO->generateEmail($email, $student);
         require_once(VIEWS_PATH . "student-firstpage.php");
-
     }
 
-    public function notifyRejectRegistration(){
-        Utils::checkSession();
 
-        //$this->jobOfferDAO->notifyEndedJobOffers();
+    public function createEmailJobOffer($studentList, $jobOfferId, $select)
+    {
+        $jobPosition = $this->jobPositionDAO->getPositionById($jobOfferId);
+        
+        if (!empty($studentList)) {
 
-        require_once(VIEWS_PATH . "admin-firstpage.php");
+            $mail = new Mail();
 
+            if ($select == 0)
+                $mail->emailApplicationRejected($studentList, $jobPosition);
+
+            else if ($select == 1) {
+                foreach ($studentList as $student) {
+                    $mail->emailEndJobOffer($student, $jobPosition);
+                }
+            }
+        }
     }
 }
-
-

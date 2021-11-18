@@ -6,7 +6,8 @@ use \Exception as Exception;
 use DAO\IJobOfferDAO as IJobOfferDAO;
 use Models\JobOffer as JobOffer;
 use DAO\Connection as Connection;
-use Models\Student;
+use Models\Student as Student;
+use Models\Mail as Mail;
 
 class JobOfferDAO implements IJobOfferDAO
 {
@@ -370,21 +371,42 @@ class JobOfferDAO implements IJobOfferDAO
         }
     }
 
-    public function createPDF(){
 
-        // $jobOffer = new JobOfferController();
-    
-        // $jobOfferList = $jobOffer->getAll();
-        
-        $pdf = new FPDF();
-        $pdf->AliasNbPages();
-        $pdf->AddPage();
-        $pdf->SetFont('Arial','',16);
-        
-        while(){
-    
+
+    public function deleteAplicationJobOffer($idJobOffer, $idStudent){
+        $query = "DELETE FROM studentXjobOffer WHERE student_id = :student_id AND id_jobOffer = :id_jobOffer;";
+
+        $parameters['student_id'] = $idStudent;
+        $parameters['id_jobOffer'] = $idJobOffer;
+
+        try {
+            $this->connection = Connection::getInstance();
+            return $this->connection->executeNonQuery($query, $parameters);
+        } catch (Exception $exception) {
+            throw $exception;
         }
+    } //si retorna 1 elimino, si no retorna 0
+
     
-        $pdf->Output();
-    }
+ 
+
+
+
+    // public function createPDF(){
+
+    //     // $jobOffer = new JobOfferController();
+    
+    //     // $jobOfferList = $jobOffer->getAll();
+        
+    //     $pdf = new FPDF();
+    //     $pdf->AliasNbPages();
+    //     $pdf->AddPage();
+    //     $pdf->SetFont('Arial','',16);
+        
+    //     while(){
+    
+    //     }
+    
+    //     $pdf->Output();
+    // }
 }
