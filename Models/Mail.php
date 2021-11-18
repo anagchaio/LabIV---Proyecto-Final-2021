@@ -21,7 +21,7 @@ class Mail
 
         try {
                 //Server settings
-            // $mail->SMTPDebug =0;                      // Enable verbose debug output
+                $mail->SMTPDebug =0;                      // Enable verbose debug output
                 $mail->isSMTP();                                            // Send using SMTP
                 $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                            // Enable SMTP authentication
@@ -32,16 +32,18 @@ class Mail
                 $mail->CharSet = "UTF-8";
             
                 //Recipients
-                $mail->setFrom(ADMIN_EMAIL,'WorkPlace');
-                $mail->addAddress($email);                                     // Name is optional
+                $mail->setFrom(ADMIN_EMAIL,'JobUTN');
+                $mail->addAddress($email);        
+                // $mail->addAddress('jobUTN@gmail.com');                                     // Name is optional
+                // Name is optional
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
                 $i=1;
-                $body = "Welcome to Find Your Job " . $student->getFirstName() . " " . $student->getLastName() . " your email is the web side is: " . $student->getEmail();
-          
+                 $body = "Bienvenido a Jobs UTN " . $student->getFirstName() . " " . $student->getLastName() . " tu mail para ingresar es: " . $student->getEmail();
+                // $body ="welcome to this job";
                 $mail->Body  = $body;
-                $mail->Subject = "REGISTER FIND YOUR JOB";
+                $mail->Subject = "Aplicaste para una propuesta laboral";
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
                 $mail->send();
 
@@ -52,7 +54,7 @@ class Mail
 
     }
 
-    public function sendEmailEndedJobOffer($student, $jobPosition){
+    public function emailEndJobOffer($student, $jobOffer){
 
         $mail = new PHPMailer(true);
 
@@ -63,22 +65,24 @@ class Mail
                 $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                            // Enable SMTP authentication
                 $mail->Username   = ADMIN_EMAIL;                     // SMTP username
-                $mail->Password   = ADMIN_PASSWORD ;                               // SMTP password
+                $mail->Password   = ADMIN_PASSWORD;                               // SMTP password
                 $mail->SMTPSecure = "tls";         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port       = "587";                                    // TCP port to connect to
                 $mail->CharSet = "UTF-8";
             
                 //Recipients
-                $mail->setFrom(ADMIN_EMAIL,'WorkPlace');
-                $mail->addAddress($student->getEmail());                                     // Name is optional
+                $mail->setFrom(ADMIN_EMAIL,'JobUTN');
+                $mail->addAddress($student->getEmail());   
+                // $mail->addAddress(ADMIN_EMAIL);   
+
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
                 $i=1;
-                $body = "Dear " . $student->getEmail() .", the job offer you applied to with the position of: ". $jobPosition->getDescription() ." has come to an end. <br><br> Please wait for the company administration to contact you back.";
+                $body =  $student->getEmail() .", La oferta laboral a la cual aplicó en " . $jobOffer->getCompany_name() . " ah sido finalizada.";
           
                 $mail->Body  = $body;
-                $mail->Subject = "Job Offer - ". $jobPosition->getDescription();
+                $mail->Subject = "Job Offer - ". $jobOffer->getCompany_name();
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
                 $mail->send();
 
@@ -88,7 +92,7 @@ class Mail
         }
     }
 
-    public function sendEmailDeclinatedApplication($student, $jobPosition){
+    public function emailApplicationRejected($student, $jobOffer){
 
         $mail = new PHPMailer(true);
 
@@ -99,22 +103,22 @@ class Mail
                 $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                            // Enable SMTP authentication
                 $mail->Username   = ADMIN_EMAIL;                     // SMTP username
-                $mail->Password   = ADMIN_PASSWORD ;                               // SMTP password
+                $mail->Password   = ADMIN_PASSWORD;                               // SMTP password
                 $mail->SMTPSecure = "tls";         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port       = "587";                                    // TCP port to connect to
                 $mail->CharSet = "UTF-8";
             
                 //Recipients
-                $mail->setFrom(ADMIN_EMAIL,'WorkPlace');
+                $mail->setFrom(ADMIN_EMAIL,'JobUTN');
                 $mail->addAddress($student->getEmail());                                     // Name is optional
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
                 $i=1;
-                $body = "Dear " . $student->getEmail() .", your application to the job offer you applied to with the position of: ". $jobPosition->getDescription() ." has been declined. <br><br> If you have any doubt please contact the student administration.";
+                $body = "Estimado " . $student->getEmail() .", su inscripción a la oferta laboral de: ". $jobOffer->getCompany_name() ." ha sido rechazada";
           
                 $mail->Body  = $body;
-                $mail->Subject = "Declinated application - ". $jobPosition->getDescription();
+                $mail->Subject = " Aplicación rechazada - ". $jobOffer->getCompany_name();
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
                 $mail->send();
 

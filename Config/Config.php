@@ -20,8 +20,8 @@ define("DB_PASS", "");
 define("API_KEY", '4f3bceed-50ba-4461-a910-518598664c08');
 define("API_URL", 'https://utn-students-api.herokuapp.com/api/');
 
-define("ADMIN_EMAIL", "admin@admin.com");
-define("ADMIN_PASSWORD", "admin");
+define("ADMIN_EMAIL", "jobUTN@gmail.com");
+define("ADMIN_PASSWORD", "tpfinal2021");
 define("IMAGES_TYPE", array(0=>'image/jpg',1=>'image/jpeg',2=>'image/png'));
 
 ?>
