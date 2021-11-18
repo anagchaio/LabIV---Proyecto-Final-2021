@@ -382,20 +382,7 @@ class JobOfferDAO implements IJobOfferDAO
 
             $resultSet = $this->connection->Execute($query);
 
-            $pdf = new FPDF();
-
-            $pdf->AliasNbPages();
-            $pdf->AddPage();
-            $pdf->SetFont('Arial', '', 16);
-
-            while ($row = $resultSet->fetch_assoc()) {
-                $pdf->Cell(90, 10, $row['id_user'], 1, 0, 'C', 0);
-                $pdf->Cell(90, 10, $row['name'], 1, 0, 'C', 0);
-                $pdf->Cell(90, 10, $row['email'], 1, 1, 'C', 0);
-                // $pdf->Cell(90,10,$row[''],1,1,'C',0);
-            }
-
-            $pdf->Output();
+            
         } catch (Exception $exception) {
             throw $exception;
         }

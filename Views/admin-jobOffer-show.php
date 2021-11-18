@@ -186,7 +186,7 @@ require_once('nav.php');
                                             <?php
                                             }
                                             ?>
-                                             <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Reporte PDF</a>
+                                            <a class="btn btn-primary btn-lg btn-block" target="_blank"  href="<?php echo FRONT_ROOT . "JobOffer/createPDFReport/" . $jobOffer->getJobOfferId()?>">Reporte PDF</a>
                                             <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Volver</a>
 
 

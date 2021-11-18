@@ -13,6 +13,7 @@ use DAO\StudentDAO as StudentDAO;
 use DAO\CareerDAO as CareerDAO;
 use DAO\UserDAO as UserDAO;
 use Models\Career;
+use Controllers\FpdfController as FpdfController;
 use \Exception as Exception;
 
 class JobOfferController
@@ -201,9 +202,7 @@ class JobOfferController
     {
         Utils::checkAdminCompanySession();
         try {
-<<<<<<< HEAD
-            $this->jobOfferDAO->closeOffer($jobOfferId);
-=======
+
             //me tengo que traer el array de alumnos los cuales aplicaron a la job offer
 
             $studentList = $this->jobOfferDAO->GetStudentsByJobOffer($jobOfferId);
@@ -213,10 +212,6 @@ class JobOfferController
 
              $this->jobOfferDAO->closeOffer($jobOfferId);
 
-
-
-
->>>>>>> master
             $this->ShowOffer($jobOfferId);
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
@@ -283,6 +278,21 @@ class JobOfferController
             $careers = $this->careerDAO->GetAllActive();
             $_SESSION['offerList'] = $jobOfferId;
             require_once(VIEWS_PATH . "student-list.php");
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
+        }
+    }
+
+    public function createPDFReport($jobOfferId)
+    {
+        try {
+            Utils::checkAdminCompanySession();
+            $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+            $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());        
+            
+            $fpdfController = new FpdfController();
+            $fpdfController->createPDF($students,$jobOffer);
+            
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }

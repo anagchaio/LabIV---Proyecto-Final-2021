@@ -2,40 +2,72 @@
 
 namespace Controllers;
 
-require_once('./Fpdf/fpdf.php');
+use Exception;
+use Models\Student as Student;
+use Models\Career as Career;
+use Models\JobOffer as JobOffer;
+use fpdf\FPDF as FPDF;
 
-use Controllers\JobOfferController as JobOfferController;
-use DAO\JobOfferDAO as JobOfferDAO;
-use DAO\JobPositionDAO as JobPositionDAO;
-use DAO\CompanyDAO as CompanyDAO;
-use DAO\StudentDAO as StudentDAO;
-use DAO\CareerDAO as CareerDAO;
 
 class FpdfController
 {
 
-    function Header()
+    function Header($title, $pdf)
     {
         // Logo
         // $this->Image('logo.png',10,8,33);
         // Arial bold 15
-        $this->SetFont('Arial', 'C', 18);
+
+        $pdf->SetFont('Arial', 'C', 18);
         // Movernos a la derecha
-        $this->Cell(80);
+        $pdf->Cell(80);
         // Título
-        $this->Cell(30, 10, 'JobOffers', 0, 0, 'C');
+        $pdf->Cell(30, 10, $title, 0, 0, 'C');
         // Salto de línea
-        $this->Ln(20);
+        $pdf->Ln(20);
+        // Cabecera de tabla
+        $pdf->Cell(90, 10, "Nombre", 1, 0, 'B', 0);
+        $pdf->Cell(90, 10, "Apellido", 1, 0, 'B', 0);
+        $pdf->Cell(90, 10, "email", 1, 0, 'B', 0);
+        $pdf->Cell(90, 10, "Telefono", 1, 0, 'B', 0);
     }
 
     // Pie de página
-    function Footer()
+    function Footer($pdf)
     {
         // Posición: a 1,5 cm del final
-        $this->SetY(-15);
+        $pdf->SetY(-15);
         // Arial italic 8
-        $this->SetFont('Arial', 'I', 8);
+       $pdf->SetFont('Arial', 'I', 8);
         // Número de página
-        $this->Cell(0, 10, utf8_decode('Page ') . $this->PageNo() . '/{nb}', 0, 0, 'C');
+        $pdf->Cell(0, 10, utf8_decode('Page ') . $pdf->PageNo() . '/{nb}', 0, 0, 'C');
+    }
+
+    function createPDF($StudentList, $jobOffer)
+    {
+        try {
+            $pdf = new FPDF();
+            $this->Header($jobOffer->getCompany_name(), $pdf);
+
+            $pdf->AliasNbPages();
+            $pdf->AddPage();
+            $pdf->SetFont('Arial', '', 16);
+
+            foreach ($StudentList as $student) {
+                $pdf->Cell(90, 10, $student->getFirstName(), 1, 0, 'C', 0);
+                $pdf->Cell(90, 10, $student->getLastName(), 1, 0, 'C', 0);
+                $pdf->Cell(90, 10, $student->getEmail(), 1, 0, 'C', 0);
+                $pdf->Cell(90, 10, $student->getPhoneNumber(), 1, 1, 'C', 0);
+            }
+            $this->Footer($pdf);
+
+            $pdf->Output();
+        } catch (Exception $exception) {
+            die(var_dump($exception));
+            //throw $exception;
+
+        }
+
+        // return $pdf;
     }
 }
