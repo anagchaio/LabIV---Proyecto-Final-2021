@@ -70,7 +70,6 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setState($row["state"]);
                 $jobOffer->setCompanyId($row["company_id"]);
                 $jobOffer->setJobPositionId($row["job_position_id"]);
-                $jobOffer->setUserId($row["user_id"]);
                 $jobOffer->setStudentList($this->GetStudentsByJobOffer($row["id_jobOffer"]));
 
                 array_push($jobOfferList, $jobOffer);
