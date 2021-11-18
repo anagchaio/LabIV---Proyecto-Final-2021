@@ -97,7 +97,7 @@ require_once('nav.php');
 
                                                   <button type="submit" name="modify-company-button" class="btn btn-primary btn-lg btn-block">Guardar</button>
 
-                                                  <?php if(isset($_SESSION['admin'])) { ?>
+                                                  <?php if(isset($_SESSION['admin']) || isset($_SESSION['company'])) { ?>
 
                                                   
                                                   <a class="btn btn-primary btn-lg btn-block" href="<?php if (isset($company)) {

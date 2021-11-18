@@ -33,7 +33,6 @@ require_once(VIEWS_PATH . "nav-student.php");
                 <div class="card-footer text-muted">
                     <div class="d-grid gap-2 col-6 mx-auto">
                     <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT .  "Student/ShowStudent/" . $_SESSION['student']->getStudentId()  ?>">Perfil</a>
-                    <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT .  "JobOffer/SendEmailRegistration/" . $_SESSION['student']->getEmail()  ?>">ENVIAR MAIL</a>
 
                     </div>
                 </div>

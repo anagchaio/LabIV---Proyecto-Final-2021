@@ -207,11 +207,17 @@ class JobOfferController
     {
         Utils::checkAdminCompanySession();
         try {
-            $this->jobOfferDAO->closeOffer($jobOfferId);
             //me tengo que traer el array de alumnos los cuales aplicaron a la job offer
+
             $studentList = $this->jobOfferDAO->GetStudentsByJobOffer($jobOfferId);
 
             $this->createEmailJobOffer($studentList, $jobOfferId, 1);
+
+
+             $this->jobOfferDAO->closeOffer($jobOfferId);
+
+
+
 
             $this->ShowOffer($jobOfferId);
         } catch (Exception $exception) {
@@ -294,25 +300,26 @@ class JobOfferController
 
     public function createEmailJobOffer($studentList, $jobOfferId, $select)
     {
-        $jobPosition = $this->jobPositionDAO->getPositionById($jobOfferId);
+        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+ 
 
         if (!empty($studentList)) {
 
             $mail = new Mail();
 
-            if ($select == 0)
-                $mail->emailApplicationRejected($studentList, $jobPosition);
+            if ($select == 0) {
+                 $mail->emailApplicationRejected($studentList, $jobOffer);
 
-            else if ($select == 1) {
+            } else if ($select == 1) {
                 foreach ($studentList as $student) {
-                    $mail->emailEndJobOffer($student, $jobPosition);
+                    $mail->emailEndJobOffer($student, $jobOffer);
                 }
             }
         }
     }
 
-    public function createPDF($jobOfferId){
+    public function createPDF($jobOfferId)
+    {
         $this->jobOfferDAO->createReportPdf($jobOfferId);
     }
-    
 }

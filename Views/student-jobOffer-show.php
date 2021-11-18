@@ -5,7 +5,6 @@ if (isset($_SESSION['admin'])) {
 } else {
     require_once('nav-student.php');
 }
-var_dump($jobOffer);
 ?>
 
 
