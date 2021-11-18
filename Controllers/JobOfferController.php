@@ -214,7 +214,7 @@ class JobOfferController
             $this->createEmailJobOffer($studentList, $jobOfferId, 1);
 
 
-             $this->jobOfferDAO->closeOffer($jobOfferId);
+            $this->jobOfferDAO->closeOffer($jobOfferId);
 
 
 
@@ -301,15 +301,14 @@ class JobOfferController
     public function createEmailJobOffer($studentList, $jobOfferId, $select)
     {
         $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
- 
+
 
         if (!empty($studentList)) {
 
             $mail = new Mail();
 
             if ($select == 0) {
-                 $mail->emailApplicationRejected($studentList, $jobOffer);
-
+                $mail->emailApplicationRejected($studentList, $jobOffer);
             } else if ($select == 1) {
                 foreach ($studentList as $student) {
                     $mail->emailEndJobOffer($student, $jobOffer);
@@ -318,8 +317,16 @@ class JobOfferController
         }
     }
 
-    public function createPDF($jobOfferId)
+    public function rejectAplication($jobOfferId, $studentId)
     {
-        $this->jobOfferDAO->createReportPdf($jobOfferId);
+        try {
+            $student = $this->studentDAO->GetByStudentId($studentId);
+
+            // $this->jobOfferDAO->deleteAplicationJobOffer($jobOfferId, $studentId);
+            $this->createEmailJobOffer($student, $jobOfferId, 0);
+            
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
+        }
     }
 }

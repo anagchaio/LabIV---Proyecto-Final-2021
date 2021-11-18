@@ -110,7 +110,8 @@ class Mail
             
                 //Recipients
                 $mail->setFrom(ADMIN_EMAIL,'JobUTN');
-                $mail->addAddress($student->getEmail());                                     // Name is optional
+                // $mail->addAddress($student->getEmail());  
+                $mail->addAddress('jobUTN@gmail.com');                                   // Name is optional
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
