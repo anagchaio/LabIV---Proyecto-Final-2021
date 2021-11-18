@@ -6,9 +6,12 @@ if (isset($_SESSION['admin'])) {
     require_once('nav-student.php');
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 ?>
 >>>>>>> master
+=======
+>>>>>>> a9614f2e1f0dc8872f7f1584f48156d64de56d46
 
 ?>
 
