@@ -45,7 +45,7 @@ if (isset($_SESSION['admin'])) {
 
                                         <div class="form-group">
                                              <!-- <label for="">Año de Fundacion</label> -->
-                                             <input type="number" min="1900" step="1" name="yearFoundantion" class="form-control form-control-ml" required value="" placeholder="Año de fundación">
+                                             <input type="number" min="1901" step="1" name="yearFoundantion" class="form-control form-control-ml" required value="" placeholder="Año de fundación">
                                         </div>
 
                                         <div class="form-group">
