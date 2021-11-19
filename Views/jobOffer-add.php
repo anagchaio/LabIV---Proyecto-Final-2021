@@ -48,7 +48,10 @@ if (isset($_SESSION['admin'])) {
                                                   }
                                                   ?>
                                              </select>
+                                             <input hidden name="companyName" class="form-control form-control-ml" value="null">
+                                             
                                              <?php } else if (isset($_SESSION['company'])){ ?>
+                                                  <input hidden name="companyId" class="form-control form-control-ml" value=" <?php echo $_SESSION['company']->getCompanyId(); ?>">
                                                   <input readonly name="companyName" class="form-control form-control-ml" value=" <?php echo $_SESSION['company']->getName(); ?>">
                                              <?php } ?>
                                         </div>

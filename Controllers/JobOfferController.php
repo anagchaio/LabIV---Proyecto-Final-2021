@@ -36,7 +36,7 @@ class JobOfferController
         $this->userDAO = new UserDAO();
     }
 
-    public function add($companyId, $jobPositionId, $jobOffer_description, $limitDate, $flyer)
+    public function add($companyId, $companyName, $jobPositionId, $jobOffer_description, $limitDate, $flyer)
     {
         Utils::checkAdminCompanySession();
         try {
@@ -64,7 +64,8 @@ class JobOfferController
                 require_once(VIEWS_PATH . "jobOffer-add.php");
             }
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
+            //$DBerror = $exception->getMessage();
+            echo $exception->getMessage();
             require_once(VIEWS_PATH . "jobOffer-add.php");
         }
     }
