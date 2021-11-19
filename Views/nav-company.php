@@ -31,7 +31,7 @@
 
             </li>
             <li class="has-subnav">
-                <a href="<?php echo FRONT_ROOT ?>JobOffer/">
+                <a href="<?php echo FRONT_ROOT ?>JobOffer/RedirectAddFormJobOffer">
                     <i class="fa fa-laptop fa-2x"></i>
                     <span class="nav-text">
                         Agregar propuesta

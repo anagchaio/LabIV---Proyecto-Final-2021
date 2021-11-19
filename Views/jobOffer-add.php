@@ -37,7 +37,7 @@ if (isset($_SESSION['admin'])) {
 
                                              <?php if (isset($_SESSION['admin'])) { ?>                                        
                                               
-                                             <select name="companyId" required class="form-control form-control-ml">
+                                             <select required name="companyId" required class="form-control form-control-ml">
                                                   <option style="color:grey" hidden selected>Empresa</option>
 
                                                   <?php
@@ -57,7 +57,7 @@ if (isset($_SESSION['admin'])) {
                                         </div>
                                         <div class="form-group">
                                              <!-- <label for="">Puesto</label> -->
-                                             <select name="jobPositionId" class="form-control form-control-ml">
+                                             <select required name="jobPositionId" class="form-control form-control-ml">
                                                   <option hidden selected style="color:gray">Puesto</option>
 
                                                   <?php
@@ -86,14 +86,8 @@ if (isset($_SESSION['admin'])) {
 
                                    </div>
                                    <button type="submit" name="button" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Agregar</button>
-                                   <!-- <a class="btn btn-primary btn-lg btn-block" href="<?php if (isset($jobOffer)) {
-                                                                                               echo FRONT_ROOT . "JobOffer/deleteByBD/" . $jobOffer->getJobOfferId();
-                                                                                          }; ?>">Eliminar</a> -->
-                                   
-                                        <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Home/RedirectHome/">Volver</a>
-
-
-
+                                                                      
+                                   <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Home/RedirectHome/">Volver</a>
 
                               </div>
                          </div>
