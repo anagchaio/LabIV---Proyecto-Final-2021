@@ -110,17 +110,8 @@ class JobOfferController
 
 
 
-    public function update($jobOfferId, $companyId,$companyName, $jobPositionId, $jobOffer_description, $limitDate, $state, $students, $flyer)
+    public function update($jobOfferId, $companyId,$companyName, $jobPositionId, $jobOffer_description, $limitDate, $state, $students, $variable, $flyer)
     {
-        var_dump($jobOfferId);
-        var_dump($companyId);
-        var_dump($companyName);
-        var_dump($jobPositionId);
-        var_dump($jobOffer_description);
-        var_dump($limitDate);
-        var_dump($state);
-        var_dump($students);
-        var_dump($flyer);
         Utils::checkAdminCompanySession();
         try {
             $companies = $this->CompanyDAO->GetAll();
@@ -140,14 +131,18 @@ class JobOfferController
                     if ($flyer['error'] == 0) {
                         $uploadSuccess = Utils::UploadImage($flyer);
 
-                        if ($uploadSuccess) {
+                        if ($uploadSuccess) {            
                             $modifiedJobOffer->setFlyer($flyer['name']);
                         } else {
                             $updateSuccess = false;
                             $notImageError = true;
+                            
                             require_once(VIEWS_PATH . "admin-joboffer-show.php");
                         }
+                    } else {
+                        $modifiedJobOffer->setFlyer($jobOffer->getFlyer());
                     }
+                    var_dump($modifiedJobOffer->getFlyer());
 
                     $this->jobOfferDAO->modify($modifiedJobOffer);
 
@@ -218,8 +213,6 @@ class JobOfferController
     {
         Utils::checkAdminCompanySession();
         try {
-
-            //me tengo que traer el array de alumnos los cuales aplicaron a la job offer
 
             $studentList = $this->jobOfferDAO->GetStudentsByJobOffer($jobOfferId);
 
