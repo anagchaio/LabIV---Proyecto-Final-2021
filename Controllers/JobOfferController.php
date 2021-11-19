@@ -213,7 +213,6 @@ class JobOfferController
 
             $this->createEmailJobOffer($studentList, $jobOfferId, 1);
 
-
             $this->jobOfferDAO->closeOffer($jobOfferId);
 
             $this->ShowOffer($jobOfferId);
@@ -283,6 +282,7 @@ class JobOfferController
                 $_SESSION['jobOffer'] = $jobOffer;
                 require_once(VIEWS_PATH . "student-list.php");
             } else {
+                $jobOffers = $this->jobOfferDAO->GetList();
                 require_once(VIEWS_PATH . "JobOffer-list.php");
             }
         } catch (Exception $exception) {
@@ -349,6 +349,7 @@ class JobOfferController
             $this->jobOfferDAO->deleteAplicationJobOffer($jobOfferId, $studentId);
             $this->createEmailJobOffer($student, $jobOfferId, 0);
             $this->ShowStudentList($jobOfferId);
+
         } catch (phpmailerException $ex) {
             Utils::ShowEmailError($ex->getMessage());
         } catch (Exception $exception) {
