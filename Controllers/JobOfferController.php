@@ -15,6 +15,7 @@ use DAO\UserDAO as UserDAO;
 use Models\Career;
 use Controllers\FpdfController as FpdfController;
 use \Exception as Exception;
+use PHPMailer\PHPMailer\phpmailerException as phpmailerException;
 
 class JobOfferController
 {
@@ -70,18 +71,18 @@ class JobOfferController
 
     public function Delete($jobOfferId)
     {
-        Utils::checkAdminSession();
+        Utils::checkAdminCompanySession();
         try {
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-            if (isset($_SESSION['admin'])) {
+            if (isset($_SESSION['admin']) || ($_SESSION['company'])) {
+                if ($jobOffer->getState() == "Opened") {
+                    $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
+                    if ($value == 1) {
 
-                $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
-                $this->jobOfferDAO->DeleteStudentsOfDeletedJobOffer($jobOfferId);
-                
-                if ($value == 1) {
-                    $jobOffers = $this->jobOfferDAO->GetList();
-                    require_once(VIEWS_PATH . "jobOffer-list.php");
-                }
+                        $jobOffers = $this->jobOfferDAO->GetList();
+                        require_once(VIEWS_PATH . "jobOffer-list.php");
+                    }
+                } 
             }
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
@@ -213,6 +214,8 @@ class JobOfferController
              $this->jobOfferDAO->closeOffer($jobOfferId);
 
             $this->ShowOffer($jobOfferId);
+        } catch (phpmailerException $ex) {
+            Utils::ShowEmailError($ex->getMessage());
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }
@@ -228,9 +231,6 @@ class JobOfferController
 
             $this->jobOfferDAO->AddStudentToJobOffer($jobOfferId, $studentId);
             $SubscribeSuccess = true;
-
-            // $this->SendEmailRegistration($email); // esta linea es para que se mande el mensaje predeterminado
-            //cuando este alumno se registre
 
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
             require_once(VIEWS_PATH . "student-jobOffer-show.php");
@@ -276,8 +276,12 @@ class JobOfferController
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
             $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
             $careers = $this->careerDAO->GetAllActive();
-            $_SESSION['offerList'] = $jobOfferId;
-            require_once(VIEWS_PATH . "student-list.php");
+            if ($students) {
+                $_SESSION['offerList'] = $jobOfferId;
+                require_once(VIEWS_PATH . "student-list.php");
+            } else {
+                require_once(VIEWS_PATH . "JobOffer-list.php");
+            }
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }
@@ -308,26 +312,45 @@ class JobOfferController
 
     public function createEmailJobOffer($studentList, $jobOfferId, $select)
     {
-        $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
- 
+        try {
 
-        if (!empty($studentList)) {
+            $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
 
-            $mail = new Mail();
 
-            if ($select == 0) {
-                 $mail->emailApplicationRejected($studentList, $jobOffer);
+            if (!empty($studentList)) {
 
-            } else if ($select == 1) {
-                foreach ($studentList as $student) {
-                    $mail->emailEndJobOffer($student, $jobOffer);
+                $mail = new Mail();
+
+                if ($select == 0) {
+                    $mail->emailApplicationRejected($studentList, $jobOffer);
+                } else if ($select == 1) {
+                    foreach ($studentList as $student) {
+                        $mail->emailEndJobOffer($student, $jobOffer);
+                    }
+                } else if ($select == 2) {
+                    $mail->sendMailRegister($studentList);
                 }
             }
+        } catch (phpmailerException $ex) {
+            throw $ex;
+        } catch (Exception $exception) {
+            throw $exception;
         }
     }
 
-    public function createPDF($jobOfferId)
+    public function rejectAplication($jobOfferId, $studentId)
     {
-        $this->jobOfferDAO->createReportPdf($jobOfferId);
+        try {
+
+            $student = $this->studentDAO->GetByStudentId($studentId);
+
+            $this->jobOfferDAO->deleteAplicationJobOffer($jobOfferId, $studentId);
+            $this->createEmailJobOffer($student, $jobOfferId, 0);
+            $this->ShowStudentList($jobOfferId);
+        } catch (phpmailerException $ex) {
+            Utils::ShowEmailError($ex->getMessage());
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
+        }
     }
 }

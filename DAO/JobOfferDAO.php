@@ -370,24 +370,6 @@ class JobOfferDAO implements IJobOfferDAO
         }
     }
 
-    public function createReportPdf($jobOfferId)
-    {
-
-        try {
-
-            $query = "SELECT" . $this->tableStudentXjobOffer . "            
-            WHERE id_jobOffer = " . $jobOfferId . ";";
-
-            $this->connection = Connection::GetInstance();
-
-            $resultSet = $this->connection->Execute($query);
-
-            
-        } catch (Exception $exception) {
-            throw $exception;
-        }
-    }
-
 
     public function DeleteStudentsOfDeletedJobOffer($jobOfferId)
     {
@@ -406,9 +388,6 @@ class JobOfferDAO implements IJobOfferDAO
             throw $exception;
         }
     }
-    
-
-
 
 
     public function deleteAplicationJobOffer($idJobOffer, $idStudent)
