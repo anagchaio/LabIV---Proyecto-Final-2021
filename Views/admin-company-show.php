@@ -1,5 +1,9 @@
 <?php
-require_once('nav.php');
+if (isset($_SESSION['admin'])) {
+     require_once('nav.php');
+ } else if (isset($_SESSION['company'])) {
+     require_once('nav-company.php');
+ }
 ?>
 <main class="py-5">
      <div class="conteiner-card">
@@ -97,18 +101,15 @@ require_once('nav.php');
 
                                                   <button type="submit" name="modify-company-button" class="btn btn-primary btn-lg btn-block">Guardar</button>
 
-                                                  <?php if(isset($_SESSION['admin']) || isset($_SESSION['company'])) { ?>
-
-                                                  
+                                                  <?php if(isset($_SESSION['admin'])) { ?>
                                                   <a class="btn btn-primary btn-lg btn-block" href="<?php if (isset($company)) {
                                                                                                          echo FRONT_ROOT . "Company/DeleteCompany/" . $company->getIdCompany();
                                                                                                     }; ?>">Eliminar Empresa</a>
-                                                  <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Company/ShowListView/">Volver</a>
-                                                  <?php } else { ?>
-                                                       <!-- Agregar href para volver al Home de company -->
-                                                       <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Home/RedirectHome/">Volver</a>
-
-                                                  <!--     <a class="btn btn-primary btn-lg btn-block" href="">Volver</a> -->  
+                                                  
+                                                  <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Company/ShowListView/">Volver a la Lista</a>
+                                                  <?php } else if (isset($_SESSION['company'])){ ?>
+                                                      
+                                                       <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Home/RedirectHome/">Home</a>                                                  
                                                   <?php } ?>
 
                                              </div>

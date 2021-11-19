@@ -1,7 +1,5 @@
 <?php
 
-use Models\JobOffer;
-
 if (isset($_SESSION['admin'])) {
     require_once('nav.php');
 } else if (isset($_SESSION['company'])) {
