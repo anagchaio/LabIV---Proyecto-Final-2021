@@ -30,8 +30,10 @@ if (isset($_SESSION['admin'])) {
                          <p class="card-text">Some quick example text </p> -->
 
                          <?php
+                         
                          if (isset($_SESSION['jobOffer']) && $_SESSION['jobOffer'] != NULL) {
                               $jobOffer = $_SESSION['jobOffer'];
+                              $_SESSION['jobOffer'] = null;
                               $jobOfferId = $jobOffer->getJobOfferId();
                               
                               if($jobOffer->getState() == 'Opened') {
@@ -45,7 +47,7 @@ if (isset($_SESSION['admin'])) {
                                         <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Rechazar</button>
                                    </form>
                                <?php } 
-                               $_SESSION['jobOffer'] = null;?>
+                              ?>
 
                               <a href="<?php echo FRONT_ROOT . "JobOffer/ShowStudentList/" . $jobOfferId; ?>" class="btn btn-primary btn-lg btn-block" style="margin-top: 2vh;">Volver a la lista</a>
                          <?php

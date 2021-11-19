@@ -170,7 +170,7 @@ class JobOfferController
                 $student = $this->studentDAO->GetByStudentId($user->getStudentId());
                 $careerId = $student->getCareerId();
                 $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
-                // die(var_dump($jobOffers));
+                
             } else {
                 $user = $_SESSION['company'];
                 $jobOffers = $this->jobOfferDAO->GetListByCompanyId($user->getCompanyId());

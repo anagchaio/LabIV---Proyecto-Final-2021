@@ -64,6 +64,7 @@ class StudentController
     public function ShowListView()
     {
         Utils::checkSession();
+        $_SESSION['jobOffer'] = null;
         try {
             $students = $this->studentDAO->GetAllActive();
             $careers = $this->APIcareerDAO->GetAll();
