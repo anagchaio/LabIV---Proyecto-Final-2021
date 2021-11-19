@@ -75,16 +75,21 @@ class JobOfferController
         Utils::checkAdminCompanySession();
         try {
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-            if (isset($_SESSION['admin']) || ($_SESSION['company'])) {
+           
                 if ($jobOffer->getState() == "Opened") {
                     $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
                     if ($value == 1) {
-
-                        $jobOffers = $this->jobOfferDAO->GetList();
+                        if (isset($_SESSION['admin'])){
+                            $jobOffers = $this->jobOfferDAO->GetList();                            
+                        }
+                        if( isset($_SESSION['company'])){
+                            $jobOffers = $this->jobOfferDAO->GetListByCompanyId($_SESSION['company']->getCompanyId());
+                        }
                         require_once(VIEWS_PATH . "jobOffer-list.php");
+                        
                     }
                 } 
-            }
+            
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }
@@ -105,8 +110,17 @@ class JobOfferController
 
 
 
-    public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state, $students, $flyer)
+    public function update($jobOfferId, $companyId,$companyName, $jobPositionId, $jobOffer_description, $limitDate, $state, $students, $flyer)
     {
+        var_dump($jobOfferId);
+        var_dump($companyId);
+        var_dump($companyName);
+        var_dump($jobPositionId);
+        var_dump($jobOffer_description);
+        var_dump($limitDate);
+        var_dump($state);
+        var_dump($students);
+        var_dump($flyer);
         Utils::checkAdminCompanySession();
         try {
             $companies = $this->CompanyDAO->GetAll();

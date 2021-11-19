@@ -49,7 +49,7 @@ if (isset($_SESSION['admin'])) {
                                                   ?>
                                              </select>
                                              <input hidden name="companyName" class="form-control form-control-ml" value="null">
-                                             
+
                                              <?php } else if (isset($_SESSION['company'])){ ?>
                                                   <input hidden name="companyId" class="form-control form-control-ml" value=" <?php echo $_SESSION['company']->getCompanyId(); ?>">
                                                   <input readonly name="companyName" class="form-control form-control-ml" value=" <?php echo $_SESSION['company']->getName(); ?>">
@@ -81,7 +81,7 @@ if (isset($_SESSION['admin'])) {
                                         </div>
                                         <div class="form-group">
                                              <label>Flyer:</label>
-                                             <input type="file" name="flyer" class="form-control-file">
+                                             <input required type="file" name="flyer" class="form-control-file">
                                         </div>
 
                                    </div>
