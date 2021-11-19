@@ -140,7 +140,6 @@ class JobOfferController
                 } else {
                     $modifiedJobOffer->setFlyer($jobOffer->getFlyer());
                 }
-                var_dump($modifiedJobOffer->getFlyer());
 
                 $this->jobOfferDAO->modify($modifiedJobOffer);
 
