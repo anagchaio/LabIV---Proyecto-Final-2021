@@ -48,7 +48,7 @@ class CompanyController
                 require_once(VIEWS_PATH . "company-add.php");
             }
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
+            $DBerror = $exception->getMessage();            
             require_once(VIEWS_PATH . "company-user-registration.php");
         }
     }

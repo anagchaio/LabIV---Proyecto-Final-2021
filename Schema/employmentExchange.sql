@@ -18,7 +18,7 @@ CREATE TABLE companies(
 	description varchar(100) NOT NULL,
 	logo varchar(200) NOT NULL,
 	email varchar(50) unique NOT NULL,
-	phonenumber int NOT NULL,
+	phonenumber bigint NOT NULL,
 	constraint pk_company primary key (id_company)
 );
 
