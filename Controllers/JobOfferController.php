@@ -292,7 +292,7 @@ class JobOfferController
             $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
             $careers = $this->careerDAO->GetAllActive();
             if ($students) {
-                $_SESSION['offerList'] = $jobOfferId;
+                $_SESSION['jobOffer'] = $jobOffer;
                 require_once(VIEWS_PATH . "student-list.php");
             } else {
                 require_once(VIEWS_PATH . "JobOffer-list.php");

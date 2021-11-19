@@ -58,7 +58,7 @@ require_once('nav.php');
                                             </select>
                                             <input hidden name="companyName" class="form-control form-control-ml" value="null">
                                         <?php
-                                        } else {
+                                        } else if(isset($_SESSION['company'])) {
                                         ?>
                                             <input hidden name="companyId" class="form-control form-control-ml" value=" <?php echo $_SESSION['company']->getCompanyId(); ?>">
                                             <input readonly name="companyName" class="form-control form-control-ml" value=" <?php echo $jobOffer->getCompany_name(); ?>">

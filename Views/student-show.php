@@ -30,24 +30,23 @@ if (isset($_SESSION['admin'])) {
                          <p class="card-text">Some quick example text </p> -->
 
                          <?php
-                         if (isset($_SESSION['offerList']) && $_SESSION['offerList'] != NULL) {
-                              $jobOfferId = $_SESSION['offerList'];
-                               var_dump($student->getStudentId());
-                               var_dump($jobOfferId);
-                         ?>
-                              <form action="<?php echo FRONT_ROOT ?>JobOffer/rejectAplication/" method="POST">
-
-                                   <input type="text" value="<?php echo $jobOfferId ?>" name="jobOfferId" hidden>
-                                   
-                                   <input type="text" value="<?php echo $student->getStudentId() ?>" name="studentId" hidden>
-
-                                   <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Rechazar</button>
-                              </form>
-
-                              <?php
-                              // $jobOfferId = $_SESSION['offerList'];
-                              $_SESSION['offerList'] = null;
+                         if (isset($_SESSION['jobOffer']) && $_SESSION['jobOffer'] != NULL) {
+                              $jobOffer = $_SESSION['jobOffer'];
+                              $jobOfferId = $jobOffer->getJobOfferId();
+                              
+                              if($jobOffer->getState() == 'Opened') {
                               ?>
+                                   <form action="<?php echo FRONT_ROOT ?>JobOffer/rejectAplication/" method="POST">
+
+                                        <input type="text" value="<?php echo $jobOfferId ?>" name="jobOfferId" hidden>
+                                        
+                                        <input type="text" value="<?php echo $student->getStudentId() ?>" name="studentId" hidden>
+
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Rechazar</button>
+                                   </form>
+                               <?php } 
+                               $_SESSION['jobOffer'] = null;?>
+
                               <a href="<?php echo FRONT_ROOT . "JobOffer/ShowStudentList/" . $jobOfferId; ?>" class="btn btn-primary btn-lg btn-block" style="margin-top: 2vh;">Volver a la lista</a>
                          <?php
                          } else if (isset($_SESSION['admin'])) {
