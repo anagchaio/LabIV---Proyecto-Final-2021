@@ -37,15 +37,15 @@ if (isset($_SESSION['admin'])) {
 
                                              <?php if (isset($_SESSION['admin'])) { ?>                                        
                                               
-                                             <select required name="companyId" required class="form-control form-control-ml">
-                                                  <option style="color:grey" hidden selected>Empresa</option>
+                                             <select name="companyId"  class="form-control form-control-ml" required>
+                                                  <option style="color:grey" required hidden selected value="<?php echo null; ?>">Empresa</option>
 
                                                   <?php
                                                   if (isset($companies)) {
                                                        foreach ($companies as $company) {
-                                                            echo "<option value=" . $company->getIdCompany() . ">" . $company->getName() . "</option>";
+                                                            echo "<option required value=" . $company->getIdCompany() . ">" . $company->getName() . "</option>";
                                                        }
-                                                  }
+                                                  }                                                  
                                                   ?>
                                              </select>
                                              <input hidden name="companyName" class="form-control form-control-ml" value="null">
@@ -57,13 +57,13 @@ if (isset($_SESSION['admin'])) {
                                         </div>
                                         <div class="form-group">
                                              <!-- <label for="">Puesto</label> -->
-                                             <select required name="jobPositionId" class="form-control form-control-ml">
-                                                  <option hidden selected style="color:gray">Puesto</option>
+                                             <select required name="jobPositionId" class="form-control form-control-ml" >
+                                                  <option hidden selected style="color:gray" value="<?php echo null; ?>">Puesto</option>
 
                                                   <?php
                                                   if (isset($jobPositions)) {
                                                        foreach ($jobPositions as $jobPosition) {
-                                                            echo "<option value=" . $jobPosition->getJobPositionId() . ">" . $jobPosition->getDescription() . "</option>";
+                                                            echo "<option required value=" . $jobPosition->getJobPositionId() . ">" . $jobPosition->getDescription() . "</option>";
                                                        }
                                                   }
                                                   ?>

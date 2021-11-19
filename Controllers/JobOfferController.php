@@ -58,9 +58,9 @@ class JobOfferController
                     require_once(VIEWS_PATH . "jobOffer-add.php");
                 }
             } else {
-                $invalidDate = true;
                 $companies = $this->CompanyDAO->GetAll();
                 $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
+                $invalidDate = true;
                 require_once(VIEWS_PATH . "jobOffer-add.php");
             }
         } catch (Exception $exception) {
@@ -170,7 +170,6 @@ class JobOfferController
                 $student = $this->studentDAO->GetByStudentId($user->getStudentId());
                 $careerId = $student->getCareerId();
                 $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
-                
             } else {
                 $user = $_SESSION['company'];
                 $jobOffers = $this->jobOfferDAO->GetListByCompanyId($user->getCompanyId());
