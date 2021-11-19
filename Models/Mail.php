@@ -3,7 +3,7 @@ namespace Models;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\phpmailerException;
 use Models\Student as Student;
 
 
@@ -14,7 +14,7 @@ require './Vendor/PHPMailer/SMTP.php';
 class Mail
 {
     
-    public function sendMail($email,$student)
+    public function sendMailRegister($student)
     {
 
         $mail = new PHPMailer(true);
@@ -33,9 +33,7 @@ class Mail
             
                 //Recipients
                 $mail->setFrom(ADMIN_EMAIL,'JobUTN');
-                $mail->addAddress($email);        
-                // $mail->addAddress('jobUTN@gmail.com');                                     // Name is optional
-                // Name is optional
+                $mail->addAddress($student->getEmail());                        // Name is optional
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
@@ -47,9 +45,9 @@ class Mail
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
                 $mail->send();
 
-            } catch (Exception $ex) {
+            } catch (phpmailerException $ex) {
 
-                echo  $ex->getMessage();
+                throw $ex;
             }
 
     }
@@ -72,8 +70,8 @@ class Mail
             
                 //Recipients
                 $mail->setFrom(ADMIN_EMAIL,'JobUTN');
-                $mail->addAddress($student->getEmail());   
-                // $mail->addAddress(ADMIN_EMAIL);   
+                 $mail->addAddress($student->getEmail());   
+                // $mail->addAddress(ADMIN_EMAIL); //USA ESTE MAIL PARA PROBAR QUE LLEGAN LOS MENSAJES   
 
 
                 // Content
@@ -86,9 +84,9 @@ class Mail
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
                 $mail->send();
 
-            } catch (Exception $ex) {
+            } catch (phpmailerException $ex) {
 
-                echo  $ex->getMessage();
+              throw $ex;
         }
     }
 
@@ -110,8 +108,9 @@ class Mail
             
                 //Recipients
                 $mail->setFrom(ADMIN_EMAIL,'JobUTN');
-                // $mail->addAddress($student->getEmail());  
-                $mail->addAddress('jobUTN@gmail.com');                                   // Name is optional
+                $mail->addAddress($student->getEmail());  
+                // $mail->addAddress(ADMIN_EMAIL); //USA ESTE MAIL PARA PROBAR QUE LLEGAN LOS MENSAJES   
+
 
                 // Content
                 $mail->isHTML(true);                                  // Set email format to HTML
@@ -123,12 +122,10 @@ class Mail
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
                 $mail->send();
 
-            } catch (Exception $ex) {
+            } catch (phpmailerException $ex) {
 
-                echo  $ex->getMessage();
+                throw $ex;
         }
     }
 
 }
-
-?>

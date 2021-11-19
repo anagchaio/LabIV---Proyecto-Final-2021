@@ -129,13 +129,12 @@ require_once('nav.php');
                                     </div>
                                     <div class="form-group">
                                         <label for="">Estado</label>
-                                        <input readonly name="state" class="form-control form-control-ml" 
-                                        value="<?php if ($jobOffer->getState() == "Opened") {
-                                                echo "Abierta";
-                                            } else {
-                                                echo "Cerrada";
-                                            } ?>">
-                                            
+                                        <input readonly name="state" class="form-control form-control-ml" value="<?php if ($jobOffer->getState() == "Opened") {
+                                                                                                                        echo "Abierta";
+                                                                                                                    } else {
+                                                                                                                        echo "Cerrada";
+                                                                                                                    } ?>">
+
                                     </div>
 
                                     <div class="form-group">
@@ -153,16 +152,15 @@ require_once('nav.php');
                                     ?>
                                         <div class="form-group">
                                             <label for="">Aviso:</label>
-                                            <a class="form-control form-control-ml" target="_blank" 
-                                            href="<?php if (isset($jobOffer)) {
-                                                        echo FRONT_ROOT . UPLOADS_PATH . $jobOffer->getFlyer();
-                                                    }; ?>">Ver Imagen</a>                                            
+                                            <a class="form-control form-control-ml" target="_blank" href="<?php if (isset($jobOffer)) {
+                                                                                                                echo FRONT_ROOT . UPLOADS_PATH . $jobOffer->getFlyer();
+                                                                                                            }; ?>">Ver Imagen</a>
                                         </div>
                                         <div class="form-group">
-                                            
-                                        <?php if ($jobOffer->getState() == "Opened") {  ?>
-                                            <label for="">Cambiar imagen:</label>
-                                            <input type="file" name="flyer">
+
+                                            <?php if ($jobOffer->getState() == "Opened") {  ?>
+                                                <label for="">Cambiar imagen:</label>
+                                                <input type="file" name="flyer">
                                             <?php } ?>
                                         </div>
                                     <?php } ?>
@@ -178,15 +176,17 @@ require_once('nav.php');
                                                     echo FRONT_ROOT . "JobOffer/Close/" . $jobOffer->getJobOfferId();
                                                 }; ?>">Cerrar Oferta</a>
 
-                                                <a class="btn btn-primary btn-lg btn-block" href="
-                                                <?php if (isset($jobOffer)) {
-                                                    echo FRONT_ROOT . "JobOffer/Delete/" . $jobOffer->getJobOfferId();
-                                                }; ?>">Eliminar Oferta</a>
 
                                             <?php
                                             }
-                                            ?>
-                                             <!-- <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Reporte PDF</a> -->
+
+                                            if ($jobOffer->getStudentList() == null) { ?>
+                                                <a class="btn btn-primary btn-lg btn-block" href="
+                                                <?php if (isset($jobOffer)) {
+                                                    echo FRONT_ROOT . "JobOffer/Delete/" . $jobOffer->getJobOfferId();
+                                                }; ?>">Eliminar Oferta</a><?php
+                                                                        } ?>
+
                                             <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Volver</a>
 
 

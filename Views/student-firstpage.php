@@ -20,6 +20,8 @@ require_once(VIEWS_PATH . "nav-student.php");
                         <?php                        
                         if (isset($DBerror)) {
                             echo "Error: No se puede acceder a la base de datos. Intente mas tarde.";
+                        }  if (isset($Emailerror)) {
+                            echo "Error: El servicio de Email no funcionó correctamente.";
                         }
                         ?>
                     </h4>

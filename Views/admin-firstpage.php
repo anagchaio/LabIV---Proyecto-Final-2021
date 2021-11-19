@@ -20,6 +20,10 @@ require_once('nav.php');
                         if (isset($DBerror)) {
                             echo "Error: No se puede acceder a la base de datos. Intente mas tarde.";
                         }
+                        if (isset($Emailerror)) {
+                            echo "Error: El servicio de Email no funcionó correctamente.";
+                        }
+
                         ?>
                     </h4>
                     <div class="d-grid gap-2 col-6 mx-auto">

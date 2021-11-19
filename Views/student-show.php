@@ -32,13 +32,14 @@ if (isset($_SESSION['admin'])) {
                          <?php
                          if (isset($_SESSION['offerList']) && $_SESSION['offerList'] != NULL) {
                               $jobOfferId = $_SESSION['offerList'];
-                              // var_dump($student->getStudentId());
+                               var_dump($student->getStudentId());
+                               var_dump($jobOfferId);
                          ?>
                               <form action="<?php echo FRONT_ROOT ?>JobOffer/rejectAplication/" method="POST">
 
-                                   <input type="text" value="<?php $jobOfferId ?>" name="jobOfferId" hidden>
+                                   <input type="text" value="<?php echo $jobOfferId ?>" name="jobOfferId" hidden>
                                    
-                                   <input type="text" value="<?php $student->getStudentId() ?>" name="studentId" hidden>
+                                   <input type="text" value="<?php echo $student->getStudentId() ?>" name="studentId" hidden>
 
                                    <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Rechazar</button>
                               </form>
@@ -47,7 +48,7 @@ if (isset($_SESSION['admin'])) {
                               // $jobOfferId = $_SESSION['offerList'];
                               $_SESSION['offerList'] = null;
                               ?>
-                              <a href="<?php echo FRONT_ROOT . "JobOffer/ShowStudentList/" . $jobOfferId; ?>" class="btn btn-primary btn-lg btn-block" style="margin-top: 2vh;>Volver a la lista</a>
+                              <a href="<?php echo FRONT_ROOT . "JobOffer/ShowStudentList/" . $jobOfferId; ?>" class="btn btn-primary btn-lg btn-block" style="margin-top: 2vh;">Volver a la lista</a>
                          <?php
                          } else if (isset($_SESSION['admin'])) {
                          ?>
