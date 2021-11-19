@@ -28,8 +28,22 @@ class Utils {
             require_once(VIEWS_PATH . "admin-firstpage.php");
         } else if (isset($_SESSION['student'])) {
             require_once(VIEWS_PATH . "student-firstpage.php");
+        }else{
+            require_once(VIEWS_PATH . "company-firstpage.php");
         }
     }
+
+    public static function ShowEmailError($Emailerror)
+    {               
+        if (isset($_SESSION['admin'])) {
+            require_once(VIEWS_PATH . "admin-firstpage.php");
+        } else if (isset($_SESSION['student'])) {
+            require_once(VIEWS_PATH . "student-firstpage.php");
+        } else{
+            require_once(VIEWS_PATH . "company-firstpage.php");
+        }
+    }
+
 
     public static function strStartsWith(String $haystack, String $needle){
         return $needle != '' && strncmp($haystack, $needle, strlen($needle)) == 0;

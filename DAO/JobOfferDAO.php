@@ -371,36 +371,36 @@ class JobOfferDAO implements IJobOfferDAO
         }
     }
 
-    public function createReportPdf($jobOfferId)
-    {
+    // public function createReportPdf($jobOfferId)
+    // {
 
-        try {
+    //     try {
 
-            $query = "SELECT" . $this->tableStudentXjobOffer . "            
-            WHERE id_jobOffer = " . $jobOfferId . ";";
+    //         $query = "SELECT" . $this->tableStudentXjobOffer . "            
+    //         WHERE id_jobOffer = " . $jobOfferId . ";";
 
-            $this->connection = Connection::GetInstance();
+    //         $this->connection = Connection::GetInstance();
 
-            $resultSet = $this->connection->Execute($query);
+    //         $resultSet = $this->connection->Execute($query);
 
-            $pdf = new FPDF();
+    //         $pdf = new FPDF();
 
-            $pdf->AliasNbPages();
-            $pdf->AddPage();
-            $pdf->SetFont('Arial', '', 16);
+    //         $pdf->AliasNbPages();
+    //         $pdf->AddPage();
+    //         $pdf->SetFont('Arial', '', 16);
 
-            while ($row = $resultSet->fetch_assoc()) {
-                $pdf->Cell(90, 10, $row['id_user'], 1, 0, 'C', 0);
-                $pdf->Cell(90, 10, $row['name'], 1, 0, 'C', 0);
-                $pdf->Cell(90, 10, $row['email'], 1, 1, 'C', 0);
-                // $pdf->Cell(90,10,$row[''],1,1,'C',0);
-            }
+    //         while ($row = $resultSet->fetch_assoc()) {
+    //             $pdf->Cell(90, 10, $row['id_user'], 1, 0, 'C', 0);
+    //             $pdf->Cell(90, 10, $row['name'], 1, 0, 'C', 0);
+    //             $pdf->Cell(90, 10, $row['email'], 1, 1, 'C', 0);
+    //             // $pdf->Cell(90,10,$row[''],1,1,'C',0);
+    //         }
 
-            $pdf->Output();
-        } catch (Exception $exception) {
-            throw $exception;
-        }
-    }
+    //         $pdf->Output();
+    //     } catch (Exception $exception) {
+    //         throw $exception;
+    //     }
+    // }
 
 
 
