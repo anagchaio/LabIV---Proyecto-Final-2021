@@ -58,9 +58,9 @@ class JobOfferController
                     require_once(VIEWS_PATH . "jobOffer-add.php");
                 }
             } else {
-                $invalidDate = true;
                 $companies = $this->CompanyDAO->GetAll();
                 $jobPositions = $this->JobPositionDAO->GetAllActiveCareers();
+                $invalidDate = true;
                 require_once(VIEWS_PATH . "jobOffer-add.php");
             }
         } catch (Exception $exception) {
@@ -75,21 +75,19 @@ class JobOfferController
         Utils::checkAdminCompanySession();
         try {
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-           
-                if ($jobOffer->getState() == "Opened") {
-                    $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
-                    if ($value == 1) {
-                        if (isset($_SESSION['admin'])){
-                            $jobOffers = $this->jobOfferDAO->GetList();                            
-                        }
-                        if( isset($_SESSION['company'])){
-                            $jobOffers = $this->jobOfferDAO->GetListByCompanyId($_SESSION['company']->getCompanyId());
-                        }
-                        require_once(VIEWS_PATH . "jobOffer-list.php");
-                        
+
+            if ($jobOffer->getState() == "Opened") {
+                $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
+                if ($value == 1) {
+                    if (isset($_SESSION['admin'])) {
+                        $jobOffers = $this->jobOfferDAO->GetList();
                     }
-                } 
-            
+                    if (isset($_SESSION['company'])) {
+                        $jobOffers = $this->jobOfferDAO->GetListByCompanyId($_SESSION['company']->getCompanyId());
+                    }
+                    require_once(VIEWS_PATH . "jobOffer-list.php");
+                }
+            }
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }
@@ -110,17 +108,8 @@ class JobOfferController
 
 
 
-    public function update($jobOfferId, $companyId,$companyName, $jobPositionId, $jobOffer_description, $limitDate, $state, $students, $flyer)
+    public function update($jobOfferId, $companyId, $companyName, $jobPositionId, $jobOffer_description, $limitDate, $state, $students, $variable, $flyer)
     {
-        var_dump($jobOfferId);
-        var_dump($companyId);
-        var_dump($companyName);
-        var_dump($jobPositionId);
-        var_dump($jobOffer_description);
-        var_dump($limitDate);
-        var_dump($state);
-        var_dump($students);
-        var_dump($flyer);
         Utils::checkAdminCompanySession();
         try {
             $companies = $this->CompanyDAO->GetAll();
@@ -128,37 +117,39 @@ class JobOfferController
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
             $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
 
-            if ($jobOffer->getState() == "Opened") {
-                if ($limitDate >= date("Y-m-d")) {
-                    $modifiedJobOffer = new JobOffer();
-                    $modifiedJobOffer->setJobOfferId($jobOfferId);
-                    $modifiedJobOffer->setJobOffer_description($jobOffer_description);
-                    $modifiedJobOffer->setLimitDate($limitDate);
-                    $modifiedJobOffer->setCompanyId($companyId);
-                    $modifiedJobOffer->setJobPositionId($jobPositionId);
 
-                    if ($flyer['error'] == 0) {
-                        $uploadSuccess = Utils::UploadImage($flyer);
+            if ($limitDate >= date("Y-m-d")) {
+                $modifiedJobOffer = new JobOffer();
+                $modifiedJobOffer->setJobOfferId($jobOfferId);
+                $modifiedJobOffer->setJobOffer_description($jobOffer_description);
+                $modifiedJobOffer->setLimitDate($limitDate);
+                $modifiedJobOffer->setCompanyId($companyId);
+                $modifiedJobOffer->setJobPositionId($jobPositionId);
 
-                        if ($uploadSuccess) {
-                            $modifiedJobOffer->setFlyer($flyer['name']);
-                        } else {
-                            $updateSuccess = false;
-                            $notImageError = true;
-                            require_once(VIEWS_PATH . "admin-joboffer-show.php");
-                        }
+                if ($flyer['error'] == 0) {
+                    $uploadSuccess = Utils::UploadImage($flyer);
+
+                    if ($uploadSuccess) {
+                        $modifiedJobOffer->setFlyer($flyer['name']);
+                    } else {
+                        $updateSuccess = false;
+                        $notImageError = true;
+
+                        require_once(VIEWS_PATH . "admin-joboffer-show.php");
                     }
-
-                    $this->jobOfferDAO->modify($modifiedJobOffer);
-
-                    $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-                    $updateSuccess = true;
                 } else {
-                    $invalidDate = true;
+                    $modifiedJobOffer->setFlyer($jobOffer->getFlyer());
                 }
+                var_dump($modifiedJobOffer->getFlyer());
+
+                $this->jobOfferDAO->modify($modifiedJobOffer);
+
+                $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+                $updateSuccess = true;
             } else {
-                $closedOffer = true;
+                $invalidDate = true;
             }
+
             require_once(VIEWS_PATH . "admin-jobOffer-show.php");
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
@@ -179,7 +170,6 @@ class JobOfferController
                 $student = $this->studentDAO->GetByStudentId($user->getStudentId());
                 $careerId = $student->getCareerId();
                 $jobOffers = $this->jobOfferDAO->GetListByCareer($careerId);
-                // die(var_dump($jobOffers));
             } else {
                 $user = $_SESSION['company'];
                 $jobOffers = $this->jobOfferDAO->GetListByCompanyId($user->getCompanyId());
@@ -219,14 +209,11 @@ class JobOfferController
         Utils::checkAdminCompanySession();
         try {
 
-            //me tengo que traer el array de alumnos los cuales aplicaron a la job offer
-
             $studentList = $this->jobOfferDAO->GetStudentsByJobOffer($jobOfferId);
 
             $this->createEmailJobOffer($studentList, $jobOfferId, 1);
 
-
-             $this->jobOfferDAO->closeOffer($jobOfferId);
+            $this->jobOfferDAO->closeOffer($jobOfferId);
 
             $this->ShowOffer($jobOfferId);
         } catch (phpmailerException $ex) {
@@ -292,9 +279,10 @@ class JobOfferController
             $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
             $careers = $this->careerDAO->GetAllActive();
             if ($students) {
-                $_SESSION['offerList'] = $jobOfferId;
+                $_SESSION['jobOffer'] = $jobOffer;
                 require_once(VIEWS_PATH . "student-list.php");
             } else {
+                $jobOffers = $this->jobOfferDAO->GetList();
                 require_once(VIEWS_PATH . "JobOffer-list.php");
             }
         } catch (Exception $exception) {
@@ -307,11 +295,10 @@ class JobOfferController
         try {
             Utils::checkAdminCompanySession();
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-            $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());        
-            
+            $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());
+
             $fpdfController = new FpdfController();
-            $fpdfController->createPDF($students,$jobOffer);
-            
+            $fpdfController->createPDF($students, $jobOffer);
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }
@@ -362,6 +349,7 @@ class JobOfferController
             $this->jobOfferDAO->deleteAplicationJobOffer($jobOfferId, $studentId);
             $this->createEmailJobOffer($student, $jobOfferId, 0);
             $this->ShowStudentList($jobOfferId);
+
         } catch (phpmailerException $ex) {
             Utils::ShowEmailError($ex->getMessage());
         } catch (Exception $exception) {

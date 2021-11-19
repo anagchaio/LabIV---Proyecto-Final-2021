@@ -37,15 +37,15 @@ if (isset($_SESSION['admin'])) {
 
                                              <?php if (isset($_SESSION['admin'])) { ?>                                        
                                               
-                                             <select name="companyId" required class="form-control form-control-ml">
-                                                  <option style="color:grey" hidden selected>Empresa</option>
+                                             <select name="companyId"  class="form-control form-control-ml" required>
+                                                  <option style="color:grey" required hidden selected value="<?php echo null; ?>">Empresa</option>
 
                                                   <?php
                                                   if (isset($companies)) {
                                                        foreach ($companies as $company) {
-                                                            echo "<option value=" . $company->getIdCompany() . ">" . $company->getName() . "</option>";
+                                                            echo "<option required value=" . $company->getIdCompany() . ">" . $company->getName() . "</option>";
                                                        }
-                                                  }
+                                                  }                                                  
                                                   ?>
                                              </select>
                                              <input hidden name="companyName" class="form-control form-control-ml" value="null">
@@ -57,13 +57,13 @@ if (isset($_SESSION['admin'])) {
                                         </div>
                                         <div class="form-group">
                                              <!-- <label for="">Puesto</label> -->
-                                             <select name="jobPositionId" class="form-control form-control-ml">
-                                                  <option hidden selected style="color:gray">Puesto</option>
+                                             <select required name="jobPositionId" class="form-control form-control-ml" >
+                                                  <option hidden selected style="color:gray" value="<?php echo null; ?>">Puesto</option>
 
                                                   <?php
                                                   if (isset($jobPositions)) {
                                                        foreach ($jobPositions as $jobPosition) {
-                                                            echo "<option value=" . $jobPosition->getJobPositionId() . ">" . $jobPosition->getDescription() . "</option>";
+                                                            echo "<option required value=" . $jobPosition->getJobPositionId() . ">" . $jobPosition->getDescription() . "</option>";
                                                        }
                                                   }
                                                   ?>
@@ -86,14 +86,8 @@ if (isset($_SESSION['admin'])) {
 
                                    </div>
                                    <button type="submit" name="button" class="btn btn-primary btn-lg btn-block" style="margin-top: 5vh;">Agregar</button>
-                                   <!-- <a class="btn btn-primary btn-lg btn-block" href="<?php if (isset($jobOffer)) {
-                                                                                               echo FRONT_ROOT . "JobOffer/deleteByBD/" . $jobOffer->getJobOfferId();
-                                                                                          }; ?>">Eliminar</a> -->
-                                   
-                                        <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Home/RedirectHome/">Volver</a>
-
-
-
+                                                                      
+                                   <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>Home/RedirectHome/">Volver</a>
 
                               </div>
                          </div>
