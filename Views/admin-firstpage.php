@@ -7,7 +7,7 @@ require_once('nav.php');
 
     <header>
 
-        <div class="conteiner-card" style="margin-left:8.5vh">
+        <div class="conteiner-card" style="margin-left:8.5vh;">
             <div class="card text-center " style="width: 60rem;">
                 <div class="card-header">
                     Home
