@@ -157,9 +157,9 @@ class CompanyController
     }
 
 
-    public function ModifyCompany($companyId, $companyName, $yearFoundantion, $city, $description, $email, $phoneNumber, $logoName, $logo)
+    public function ModifyCompany($companyId, $companyName, $yearFoundantion, $city, $email, $phoneNumber, $description, $logoName, $logo)
     {
-        Utils::checkAdminSession();
+        Utils::checkAdminCompanySession();
         try {
             $company = $this->companyDAO->GetByCompanyId($companyId);
             $updateSuccess = true;

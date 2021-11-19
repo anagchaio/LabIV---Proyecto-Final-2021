@@ -72,7 +72,6 @@ class JobOfferDAO implements IJobOfferDAO
                 $jobOffer->setState($row["state"]);
                 $jobOffer->setCompanyId($row["company_id"]);
                 $jobOffer->setJobPositionId($row["job_position_id"]);
-                $jobOffer->setUserId($row["user_id"]);
                 $jobOffer->setStudentList($this->GetStudentsByJobOffer($row["id_jobOffer"]));
 
                 array_push($jobOfferList, $jobOffer);
@@ -371,38 +370,24 @@ class JobOfferDAO implements IJobOfferDAO
         }
     }
 
-    // public function createReportPdf($jobOfferId)
-    // {
 
-    //     try {
+    public function DeleteStudentsOfDeletedJobOffer($jobOfferId)
+    {
+        try {
+            $studentList = array();
+            $query = "DELETE FROM ". $this->tableStudentXjobOffer ."            
+                WHERE id_jobOffer = " . $jobOfferId . ";";
 
-    //         $query = "SELECT" . $this->tableStudentXjobOffer . "            
-    //         WHERE id_jobOffer = " . $jobOfferId . ";";
+            $parameters["id_jobOffer"] = $jobOfferId;
 
-    //         $this->connection = Connection::GetInstance();
+            $this->connection = Connection::GetInstance();
 
-    //         $resultSet = $this->connection->Execute($query);
+            return $this->connection->ExecuteNonQuery($query, $parameters);
 
-    //         $pdf = new FPDF();
-
-    //         $pdf->AliasNbPages();
-    //         $pdf->AddPage();
-    //         $pdf->SetFont('Arial', '', 16);
-
-    //         while ($row = $resultSet->fetch_assoc()) {
-    //             $pdf->Cell(90, 10, $row['id_user'], 1, 0, 'C', 0);
-    //             $pdf->Cell(90, 10, $row['name'], 1, 0, 'C', 0);
-    //             $pdf->Cell(90, 10, $row['email'], 1, 1, 'C', 0);
-    //             // $pdf->Cell(90,10,$row[''],1,1,'C',0);
-    //         }
-
-    //         $pdf->Output();
-    //     } catch (Exception $exception) {
-    //         throw $exception;
-    //     }
-    // }
-
-
+        } catch (Exception $exception) {
+            throw $exception;
+        }
+    }
 
 
     public function deleteAplicationJobOffer($idJobOffer, $idStudent)
@@ -421,3 +406,4 @@ class JobOfferDAO implements IJobOfferDAO
     } //si retorna 1 elimino, si no retorna 0
 
 }
+

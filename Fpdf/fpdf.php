@@ -6,8 +6,8 @@
 * Date:    2021-08-28                                                          *
 * Author:  Olivier PLATHEY                                                     *
 *******************************************************************************/
-namespace Models;
-
+namespace fpdf;
+use \Exception as Exception;
 define('FPDF_VERSION','1.84');
 
 class FPDF
@@ -1139,7 +1139,7 @@ protected function _loadfont($font)
 	// Load a font definition file from the font directory
 	if(strpos($font,'/')!==false || strpos($font,"\\")!==false)
 		$this->Error('Incorrect font definition file name: '.$font);
-	include($this->fontpath.$font);
+	$this->fontpath.$font;
 	if(!isset($name))
 		$this->Error('Could not include font definition file');
 	if(isset($enc))

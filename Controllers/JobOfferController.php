@@ -13,6 +13,7 @@ use DAO\StudentDAO as StudentDAO;
 use DAO\CareerDAO as CareerDAO;
 use DAO\UserDAO as UserDAO;
 use Models\Career;
+use Controllers\FpdfController as FpdfController;
 use \Exception as Exception;
 use PHPMailer\PHPMailer\phpmailerException as phpmailerException;
 
@@ -35,7 +36,7 @@ class JobOfferController
         $this->userDAO = new UserDAO();
     }
 
-    public function add($companyId, $jobPositionId, $jobOffer_description, $limitDate, $flyer)
+    public function add($companyId, $companyName, $jobPositionId, $jobOffer_description, $limitDate, $flyer)
     {
         Utils::checkAdminCompanySession();
         try {
@@ -63,7 +64,8 @@ class JobOfferController
                 require_once(VIEWS_PATH . "jobOffer-add.php");
             }
         } catch (Exception $exception) {
-            $DBerror = $exception->getMessage();
+            //$DBerror = $exception->getMessage();
+            echo $exception->getMessage();
             require_once(VIEWS_PATH . "jobOffer-add.php");
         }
     }
@@ -73,18 +75,21 @@ class JobOfferController
         Utils::checkAdminCompanySession();
         try {
             $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
-            if (isset($_SESSION['admin']) || ($_SESSION['company'])) {
+           
                 if ($jobOffer->getState() == "Opened") {
-
-
                     $value = $this->jobOfferDAO->deleteJobOfferByID($jobOfferId);
                     if ($value == 1) {
-
-                        $jobOffers = $this->jobOfferDAO->GetList();
+                        if (isset($_SESSION['admin'])){
+                            $jobOffers = $this->jobOfferDAO->GetList();                            
+                        }
+                        if( isset($_SESSION['company'])){
+                            $jobOffers = $this->jobOfferDAO->GetListByCompanyId($_SESSION['company']->getCompanyId());
+                        }
                         require_once(VIEWS_PATH . "jobOffer-list.php");
+                        
                     }
                 } 
-            }
+            
         } catch (Exception $exception) {
             Utils::ShowDateBaseError($exception->getMessage());
         }
@@ -105,8 +110,17 @@ class JobOfferController
 
 
 
-    public function update($jobOfferId, $companyId, $jobPositionId, $jobOffer_description, $limitDate, $state, $students, $flyer)
+    public function update($jobOfferId, $companyId,$companyName, $jobPositionId, $jobOffer_description, $limitDate, $state, $students, $flyer)
     {
+        var_dump($jobOfferId);
+        var_dump($companyId);
+        var_dump($companyName);
+        var_dump($jobPositionId);
+        var_dump($jobOffer_description);
+        var_dump($limitDate);
+        var_dump($state);
+        var_dump($students);
+        var_dump($flyer);
         Utils::checkAdminCompanySession();
         try {
             $companies = $this->CompanyDAO->GetAll();
@@ -204,6 +218,7 @@ class JobOfferController
     {
         Utils::checkAdminCompanySession();
         try {
+
             //me tengo que traer el array de alumnos los cuales aplicaron a la job offer
 
             $studentList = $this->jobOfferDAO->GetStudentsByJobOffer($jobOfferId);
@@ -212,9 +227,6 @@ class JobOfferController
 
 
              $this->jobOfferDAO->closeOffer($jobOfferId);
-
-
-
 
             $this->ShowOffer($jobOfferId);
         } catch (phpmailerException $ex) {
@@ -290,6 +302,27 @@ class JobOfferController
         }
     }
 
+    public function createPDFReport($jobOfferId)
+    {
+        try {
+            Utils::checkAdminCompanySession();
+            $jobOffer = $this->jobOfferDAO->GetJobOffer($jobOfferId);
+            $students = $this->studentDAO->GetFullStudentList($jobOffer->getStudentList());        
+            
+            $fpdfController = new FpdfController();
+            $fpdfController->createPDF($students,$jobOffer);
+            
+        } catch (Exception $exception) {
+            Utils::ShowDateBaseError($exception->getMessage());
+        }
+    }
+
+    public function SendEmailRegistration($email)
+    {
+        $student = $this->studentDAO->GetByStudentEmail($email);
+        $this->studentDAO->generateEmail($email, $student);
+        require_once(VIEWS_PATH . "student-firstpage.php");
+    }
 
 
     public function createEmailJobOffer($studentList, $jobOfferId, $select)
