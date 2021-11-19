@@ -1,10 +1,10 @@
 <?php
 
- if (isset($_SESSION['admin'])) {
+if (isset($_SESSION['admin'])) {
     require_once('nav.php');
 } else if (isset($_SESSION['company'])) {
     require_once('nav-company.php');
-} 
+}
 
 ?>
 <main class="py-5">
@@ -62,7 +62,7 @@
                                             </select>
                                             <input hidden name="companyName" class="form-control form-control-ml" value="null">
                                         <?php
-                                        } else if(isset($_SESSION['company'])) {
+                                        } else if (isset($_SESSION['company'])) {
                                         ?>
                                             <input hidden name="companyId" class="form-control form-control-ml" value=" <?php echo $_SESSION['company']->getCompanyId(); ?>">
                                             <input readonly name="companyName" class="form-control form-control-ml" value=" <?php echo $jobOffer->getCompany_name(); ?>">
@@ -167,20 +167,17 @@
                                             ?>
                                                 <button type="submit" name="update-button" class="btn btn-primary btn-lg btn-block">Guardar</button>
 
-                                                <a class="btn btn-primary btn-lg btn-block" href="
-                                                <?php if (isset($jobOffer)) {
-                                                    echo FRONT_ROOT . "JobOffer/Close/" . $jobOffer->getJobOfferId();
-                                                }; ?>">Cerrar Oferta</a>
+                                                <a class="btn btn-primary btn-lg btn-block" 
+                                                href="<?php if (isset($jobOffer)) {echo FRONT_ROOT . "JobOffer/Close/" . $jobOffer->getJobOfferId();}; ?>">Cerrar Oferta</a>
+                                                
+                                                
+                                                <?php if ($jobOffer->getStudentList() == null) { ?>
 
+                                                    <a class="btn btn-primary btn-lg btn-block" 
+                                                    href="<?php if (isset($jobOffer)) {  echo FRONT_ROOT . "JobOffer/Delete/" . $jobOffer->getJobOfferId();}; ?>">Eliminar Oferta</a>                                                           
+                                       
+                                                <?php } ?>
 
-                                            <?php
-                                            }
-
-                                            if ($jobOffer->getStudentList() == null) { ?>
-                                                <a class="btn btn-primary btn-lg btn-block" href="
-                                                <?php if (isset($jobOffer)) {
-                                                    echo FRONT_ROOT . "JobOffer/Delete/" . $jobOffer->getJobOfferId();
-                                                }; ?>">Eliminar Oferta</a>
                                             <?php } ?>
 
                                             <a class="btn btn-primary btn-lg btn-block" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView/">Volver</a>
@@ -203,7 +200,7 @@
 
             </div>
             <div class="card-footer text-muted">
-                <div class="form-group">                    
+                <div class="form-group">
                     <a class="form-control form-control-ml" target="_blank" href="<?php if (isset($jobOffer)) {
                                                                                         echo FRONT_ROOT . UPLOADS_PATH . $jobOffer->getFlyer();
                                                                                     }; ?>">Ver Flyer</a>
